@@ -1,0 +1,5 @@
+{% for ability in ability_list %}
+    <h1>{{ ability.name }} ({{ ability.type }}, Cost: {{ ability.cost }})</h1>
+    <p>{{ ability.description|linebreaks }}</p>
+    <hr/>
+{% endfor %}
