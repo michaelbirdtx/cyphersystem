@@ -38,6 +38,29 @@ class Descriptor(models.Model):
     def __str__(self):
         return self.name
 
+class Ability(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Abilities'
+    name = models.CharField(max_length=50,unique=True)
+    ABILITY_USAGE_CHOICES = (
+        ('Action', 'Action'),
+        ('Enabler', 'Enabler'),
+    )
+    usage = models.CharField(
+            max_length=10,
+            choices = ABILITY_USAGE_CHOICES,
+            default='Action')
+    cost = models.CharField(default='-',max_length=20)
+    description = models.TextField(blank=True)
+    slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    def truncated_description(self):
+        return truncate_to(truncate_length, self.description)
+    truncated_description.short_description = 'Short Description'
+    def __str__(self):
+        return self.name
+
 class Type(models.Model):
     class Meta:
         ordering = ['name']
@@ -52,14 +75,25 @@ class Type(models.Model):
     cypher_limit = models.IntegerField(default=2)
     pool_points = models.IntegerField(default=6)
     description = models.TextField(blank=True)
-    abilities = models.TextField('base abilities', blank=True)
+    base_abilities = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
     sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    abilities = models.ManyToManyField(Ability, through='TypeAbility')
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
     truncated_description.short_description = 'Short Description'
     def __str__(self):
         return self.name
+
+class TypeAbility(models.Model):
+    class Meta:
+        ordering = ['tier', 'ability__name']
+        verbose_name_plural = 'Type Abilities'
+    type = models.ForeignKey(Type, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
+    tier = models.IntegerField(default=1)
+    def __str__(self):
+        return self.ability.name
 
 class Focus(models.Model):
     class Meta:
@@ -71,34 +105,22 @@ class Focus(models.Model):
     other_details = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
     sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    abilities = models.ManyToManyField(Ability, through='FocusAbility')
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
     truncated_description.short_description = 'Short Description'
     def __str__(self):
         return self.name
 
-class Ability(models.Model):
+class FocusAbility(models.Model):
     class Meta:
-        ordering = ['name']
-        verbose_name_plural = 'Abilities'
-    name = models.CharField(max_length=50,unique=True)
-    ABILITY_TYPE_CHOICES = (
-        ('Action', 'Action'),
-        ('Enabler', 'Enabler'),
-    )
-    type = models.CharField(
-            max_length=10,
-            choices = ABILITY_TYPE_CHOICES,
-            default='Action')
-    cost = models.CharField(default='-',max_length=20)
-    description = models.TextField(blank=True)
-    slug = models.SlugField(max_length=50)
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
-    def truncated_description(self):
-        return truncate_to(truncate_length, self.description)
-    truncated_description.short_description = 'Short Description'
+        ordering = ['tier', 'ability__name']
+        verbose_name_plural = 'Focus Abilities'
+    focus = models.ForeignKey(Focus, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
+    tier = models.IntegerField(default=1)
     def __str__(self):
-        return self.name
+        return self.ability.name
 
 class Skill(models.Model):
     class Meta:
@@ -137,23 +159,3 @@ class Cypher(models.Model):
     truncated_effect.short_description = 'Effect'
     def __str__(self):
         return self.name
-
-class FocusAbility(models.Model):
-    class Meta:
-        ordering = ['tier', 'ability__name']
-        verbose_name_plural = 'Focus Abilities'
-    focus = models.ForeignKey(Focus, on_delete=models.CASCADE)
-    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
-    tier = models.IntegerField(default=1)
-    def __str__(self):
-        return self.ability.name
-
-class TypeAbility(models.Model):
-    class Meta:
-        ordering = ['tier', 'ability__name']
-        verbose_name_plural = 'Type Abilities'
-    type = models.ForeignKey(Type, on_delete=models.CASCADE)
-    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
-    tier = models.IntegerField(default=1)
-    def __str__(self):
-        return self.ability.name

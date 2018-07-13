@@ -23,10 +23,14 @@ class DescriptorAdmin(admin.ModelAdmin):
 class TypeAbilitiesInline(admin.TabularInline):
     model = TypeAbility
     extra = 0
+    def get_queryset(self, request):
+        qs = super(TypeAbilitiesInline, self).get_queryset(request)
+        qs = qs.prefetch_related('ability')
+        return qs
 
 class TypeAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('TYPE DEFINITION', {'fields': [('name'), ('description'), ('abilities'), ('slug', 'sourcebook')]}),
+        ('TYPE DEFINITION', {'fields': [('name'), ('description'), ('base_abilities'), ('slug', 'sourcebook')]}),
         ('BASE STATS', {'fields': [('might_pool', 'speed_pool', 'intellect_pool'), ('might_edge', 'speed_edge', 'intellect_edge'), ('cypher_limit', 'effort', 'pool_points')]}),
     ]
     inlines = [TypeAbilitiesInline]
@@ -37,6 +41,10 @@ class TypeAdmin(admin.ModelAdmin):
 class FocusAbilitiesInline(admin.TabularInline):
     model = FocusAbility
     extra = 0
+    def get_queryset(self, request):
+        qs = super(FocusAbilitiesInline, self).get_queryset(request)
+        qs = qs.prefetch_related('ability')
+        return qs
 
 class FocusAdmin(admin.ModelAdmin):
     inlines = [FocusAbilitiesInline]
@@ -44,7 +52,7 @@ class FocusAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class AbilityAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'cost', 'truncated_description', 'slug', 'sourcebook')
+    list_display = ('name', 'usage', 'cost', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
