@@ -35,9 +35,9 @@
                     {% for item in focus.focusability_set.all %}
                                 <h3>Tier {{ item.tier }},
                                 {{ item.ability.name }},
-                                {{ item.ability.type }},
+                                {{ item.ability.usage }},
                                 Cost: {{ item.ability.cost }}</h3>
-                                {{ item.ability.description }}
+                                {{ item.ability.description|linebreaks }}
                     {% endfor %}
                     <hr/>
                     <a href="../../">Index</a> | <a href="../">Focus List</a> | {{ focus.name }}

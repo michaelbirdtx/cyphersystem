@@ -18,8 +18,19 @@
                 <div class="twelve columns">
                     <h1>Descriptor: {{ descriptor.name }}</h1>
                     <hr/>
-                    <p>{{ descriptor.description|linebreaks }}</p>
+
+                    <h2>Description</h2>
+                    {{ descriptor.description|linebreaks }}
                     <hr/>
+
+                    <h2>Characteristics</h2>
+                    {{ descriptor.characteristics|linebreaks }}
+                    <hr/>
+
+                    <h2>Starting Link</h2>
+                    {{ descriptor.starting_link|linebreaks }}
+                    <hr/>
+
                     <a href="../../">Index</a> | <a href="../">Descriptor List</a> | {{ descriptor.name }}
                 </div>
             </div>
