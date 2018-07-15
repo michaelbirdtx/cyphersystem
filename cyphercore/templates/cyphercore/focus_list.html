@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     </head>
-        <title>Cyphercore &mdash; Index</title>
+        <title>Cyphercore &mdash; Foci</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,23 +10,21 @@
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
-        <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+        <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="twelve columns">
-                    <h1>Cyphercore &mdash; Index</h1>
+                    <h1>Cyphercore &mdash; Types</h1>
                     <hr/>
                     <ul>
-                        <li><a href="abilities/">Abilities</a></li>
-                        <li><a href="descriptors/">Descriptors</a></li>
-                        <li><a href="equipment/">Equipment</a></li>
-                        <li><a href="foci/">Foci</a></li>
-                        <li><a href="skills/">Skills</a></li>
-                        <li><a href="types/">Types</a></li>
+                        {% for focus in focus_list %}
+                        <li><a href="{{ focus.slug }}">{{ focus.name }}</a></li>
+                        {% endfor %}
                     </ul>
-                    <a href="/admin/cyphercore/">Admin</a>
+                    <hr/>
+                    <a href="../">Show Index</a>
                 </div>
             </div>
         </div>

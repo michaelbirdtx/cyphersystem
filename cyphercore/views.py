@@ -27,6 +27,10 @@ class EquipmentListView(generic.ListView):
 	model = Equipment
 	template_name = 'cyphercore/equipment_list.html'
 
+class FocusListView(generic.ListView):
+	model = Focus
+	template_name = 'cyphercore/focus_list.html'
+
 class FocusDetailView(generic.DetailView):
 	model = Focus
 	template_name = 'cyphercore/focus_detail.html'

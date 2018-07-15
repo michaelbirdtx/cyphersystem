@@ -11,6 +11,7 @@ urlpatterns = [
     path('descriptors/', views.DescriptorListView.as_view(), name='descriptor_list'),
     path('descriptors/<slug:slug>/', views.DescriptorDetailView.as_view(), name='descriptor_detail'),
     path('equipment/', views.EquipmentListView.as_view(), name='equipment_list'),
+    path('foci/', views.FocusListView.as_view(), name='focus_list'),
     path('foci/<slug:slug>/', views.FocusDetailView.as_view(), name='focus_detail'),
     path('skills/', views.SkillListView.as_view(), name='skill_list'),
     path('types/', views.TypeListView.as_view(), name='type_list'),
