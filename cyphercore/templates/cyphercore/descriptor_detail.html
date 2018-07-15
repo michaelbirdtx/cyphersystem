@@ -12,16 +12,17 @@
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
         <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
     </head>
-
-    <div class="container">
-        <div class="row">
-            <div class="twelve columns">
-                <h1>{{ descriptor.name }}</h1>
-                <hr/>
-                <p>{{ descriptor.description|linebreaks }}</p>
-                <hr/>
-                <a href="../">Show All Descriptors</a>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="twelve columns">
+                    <h1>{{ descriptor.name }}</h1>
+                    <hr/>
+                    <p>{{ descriptor.description|linebreaks }}</p>
+                    <hr/>
+                    <a href="../">Show All Descriptors</a>
+                </div>
             </div>
         </div>
-    </div>
+    </body>
 </html>

@@ -12,17 +12,18 @@
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
         <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
     </head>
-
-    <div class="container">
-        <div class="row">
-            <div class="twelve columns">
-                <h1>{{ ability.name }}</h1>
-                <h2>{{ ability.usage }}, Cost: {{ ability.cost }}</h2>
-                <hr/>
-                <p>{{ ability.description|linebreaks }}</p>
-                <hr/>
-                <a href="../">Show All Abilities</a>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="twelve columns">
+                    <h1>{{ ability.name }}</h1>
+                    <h2>{{ ability.usage }}, Cost: {{ ability.cost }}</h2>
+                    <hr/>
+                    <p>{{ ability.description|linebreaks }}</p>
+                    <hr/>
+                    <a href="../">Show All Abilities</a>
+                </div>
             </div>
         </div>
-    </div>
+    </body>
 </html>

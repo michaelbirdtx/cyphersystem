@@ -12,34 +12,35 @@
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
         <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
     </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="twelve columns">
+                    <h1>{{ focus.name }}</h1>
+                    <hr/>
 
-    <div class="container">
-        <div class="row">
-            <div class="twelve columns">
-                <h1>{{ focus.name }}</h1>
-                <hr/>
+                    <h2>Description</h2>
+                    {{ focus.description|linebreaks }}
+                    <hr/>
 
-                <h2>Description</h2>
-                {{ focus.description|linebreaks }}
-                <hr/>
+                    <h2>Connections</h2>
+                    {{ focus.connections|linebreaks }}
+                    <hr/>
 
-                <h2>Connections</h2>
-                {{ focus.connections|linebreaks }}
-                <hr/>
+                    <h2>Other Details</h2>
+                    {{ focus.other_details|linebreaks }}
+                    <hr/>
 
-                <h2>Other Details</h2>
-                {{ focus.other_details|linebreaks }}
-                <hr/>
-
-                <h2>Abilities</h2>
-                {% for item in focus.focusability_set.all %}
-                            <h3>Tier {{ item.tier }},
-                            {{ item.ability.name }},
-                            {{ item.ability.type }},
-                            Cost: {{ item.ability.cost }}</h3>
-                            {{ item.ability.description }}
-                {% endfor %}
+                    <h2>Abilities</h2>
+                    {% for item in focus.focusability_set.all %}
+                                <h3>Tier {{ item.tier }},
+                                {{ item.ability.name }},
+                                {{ item.ability.type }},
+                                Cost: {{ item.ability.cost }}</h3>
+                                {{ item.ability.description }}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
+    </body>
 </html>

@@ -12,32 +12,33 @@
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
         <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
     </head>
-
-    <div class="container">
-        <div class="row">
-            <div class="twelve columns">
-                <h1>Cyphercore &mdash; Equipment</h1>
-                <hr/>
-                <table>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>Genre</th>
-                        <th>Type</th>
-                        <th>Base Cost</th>
-                        <th>Notes</th>
-                    </tr>
-                    {% for equipment in equipment_list %}
-                    <tr>
-                        <td>{{ equipment.name }}</td>
-                        <td>{{ equipment.genre }}</td>
-                        <td>{{ equipment.type }}</td>
-                        <td>{{ equipment.base_cost }}</td>
-                        <td>{{ equipment.notes }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-                <a href="../">Show Index</a>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="twelve columns">
+                    <h1>Cyphercore &mdash; Equipment</h1>
+                    <hr/>
+                    <table>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Genre</th>
+                            <th>Type</th>
+                            <th>Base Cost</th>
+                            <th>Notes</th>
+                        </tr>
+                        {% for equipment in equipment_list %}
+                        <tr>
+                            <td>{{ equipment.name }}</td>
+                            <td>{{ equipment.genre }}</td>
+                            <td>{{ equipment.type }}</td>
+                            <td>{{ equipment.base_cost }}</td>
+                            <td>{{ equipment.notes }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <a href="../">Show Index</a>
+                </div>
             </div>
         </div>
-    </div>
+    </body>
 </html>
