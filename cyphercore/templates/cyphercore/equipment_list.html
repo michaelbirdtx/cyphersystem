@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     </head>
-        <title>Cyphercore &mdash; Abilities</title>
+        <title>Cyphercore &mdash; Equipment</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,14 +16,26 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h1>Cyphercore &mdash; Abilities</h1>
+                <h1>Cyphercore &mdash; Equipment</h1>
                 <hr/>
-                <ul>
-                    {% for ability in ability_list %}
-                    <li><a href="{{ ability.slug }}">{{ ability.name }}</a> ({{ ability.usage }}, Cost: {{ ability.cost }})</li>
+                <table>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Genre</th>
+                        <th>Type</th>
+                        <th>Base Cost</th>
+                        <th>Notes</th>
+                    </tr>
+                    {% for equipment in equipment_list %}
+                    <tr>
+                        <td>{{ equipment.name }}</td>
+                        <td>{{ equipment.genre }}</td>
+                        <td>{{ equipment.type }}</td>
+                        <td>{{ equipment.base_cost }}</td>
+                        <td>{{ equipment.notes }}</td>
+                    </tr>
                     {% endfor %}
-                </ul>
-                <hr/>
+                </table>
                 <a href="../">Show Index</a>
             </div>
         </div>

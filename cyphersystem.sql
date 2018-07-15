@@ -523,7 +523,8 @@ ALTER SEQUENCE public.cyphercore_genre_id_seq OWNED BY public.cyphercore_genre.i
 
 CREATE TABLE public.cyphercore_skill (
     id integer NOT NULL,
-    name character varying(100) NOT NULL
+    name character varying(100) NOT NULL,
+    slug character varying(100) NOT NULL
 );
 
 
@@ -1424,43 +1425,43 @@ COPY public.cyphercore_genre (id, name, sourcebook_id) FROM stdin;
 -- Data for Name: cyphercore_skill; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cyphercore_skill (id, name) FROM stdin;
-3	Healing
-4	Astronomy
-5	Balancing
-6	Biology
-7	Botany
-8	Carrying
-9	Climbing
-10	Computers
-11	Deceiving
-12	Disguise
-13	Escaping
-14	Geography
-15	Geology
-16	History
-17	Identifying
-18	Initiative
-19	Intimidation
-20	Jumping
-21	Leatherworking
-22	Lockpicking
-23	Machinery
-24	Metalworking
-25	Perception
-26	Persuasion
-27	Philosophy
-28	Physics
-29	Pickpocketing
-30	Piloting
-31	Repairing
-32	Riding
-33	Smashing
-34	Sneaking
-35	Stealth
-36	Swimming
-37	Vehicle driving
-38	Woodworking
+COPY public.cyphercore_skill (id, name, slug) FROM stdin;
+3	Healing	healing
+4	Astronomy	astronomy
+5	Balancing	balancing
+6	Biology	biology
+7	Botany	botany
+8	Carrying	carrying
+9	Climbing	climbing
+10	Computers	computers
+11	Deceiving	deceiving
+12	Disguise	disguise
+13	Escaping	escaping
+14	Geography	geography
+15	Geology	geology
+16	History	history
+17	Identifying	identifying
+18	Initiative	initiative
+19	Intimidation	intimidation
+20	Jumping	jumping
+21	Leatherworking	leatherworking
+22	Lockpicking	lockpicking
+23	Machinery	machinery
+24	Metalworking	metalworking
+25	Perception	perception
+26	Persuasion	persuasion
+27	Philosophy	philosophy
+28	Physics	physics
+29	Pickpocketing	pickpocketing
+30	Piloting	piloting
+31	Repairing	repairing
+32	Riding	riding
+33	Smashing	smashing
+34	Sneaking	sneaking
+35	Stealth	stealth
+36	Swimming	swimming
+37	Vehicle driving	vehicle driving
+38	Woodworking	woodworking
 \.
 
 

@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'cyphersystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test',
+        'NAME': 'cyphersystem',
         'USER': 'postgres',
         'PASSWORD': 'blackbox',
         'HOST': 'localhost',

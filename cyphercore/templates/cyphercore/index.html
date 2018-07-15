@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     </head>
-        <title>Cyphercore &mdash; {{ ability.name }}</title>
+        <title>Cyphercore &mdash; Index</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,12 +16,15 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h1>{{ ability.name }}</h1>
-                <h2>{{ ability.usage }}, Cost: {{ ability.cost }}</h2>
+                <h1>Cyphercore &mdash; Index</h1>
                 <hr/>
-                <p>{{ ability.description|linebreaks }}</p>
-                <hr/>
-                <a href="../">Show All Abilities</a>
+                <ul>
+                    <li><a href="abilities/">Abilities</a></li>
+                    <li><a href="descriptors/">Descriptors</a></li>
+                    <li><a href="equipment/">Equipment</a></li>
+                    <li><a href="skills/">Skills</a></li>
+                    <li><a href="types/">Types</a></li>
+                </ul>
             </div>
         </div>
     </div>

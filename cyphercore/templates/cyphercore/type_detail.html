@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h1>{{ type.name }}</h1>
+                <h1>Cyphercore &mdash; {{ type.name }}</h1>
                 <hr/>
 
                 <h2>Description</h2>
@@ -24,7 +24,7 @@
                 <hr/>
 
                 <h2>Base Abiliites</h2>
-                {{ type.abilities|linebreaks }}
+                {{ type.base_abilities|linebreaks }}
                 <hr/>
 
                 <h2>Available Abilities</h2>
@@ -35,6 +35,8 @@
                     Cost: {{ item.ability.cost }}</h3>
                     <p>{{ item.ability.description }}</p>
                 {% endfor %}
+                <hr/>
+                <a href="../">Show All Types</a>
             </div>
         </div>
     </div>
