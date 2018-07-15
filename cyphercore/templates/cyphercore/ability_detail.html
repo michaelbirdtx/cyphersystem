@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     </head>
-        <title>Cyphercore &mdash; {{ ability.name }}</title>
+        <title>Cypher Core: {{ ability.name }}</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="twelve columns">
-                    <h1>{{ ability.name }}</h1>
+                    <h1>Ability: {{ ability.name }}</h1>
                     <h2>{{ ability.usage }}, Cost: {{ ability.cost }}</h2>
                     <hr/>
                     <p>{{ ability.description|linebreaks }}</p>
