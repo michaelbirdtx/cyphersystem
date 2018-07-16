@@ -16,6 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="twelve columns">
+                    <a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}
                     <h1>Type: {{ type.name }}</h1>
                     <hr/>
 
@@ -57,8 +58,6 @@
                         Cost: {{ item.ability.cost }}</h3>
                         <p>{{ item.ability.description|linebreaks }}</p>
                     {% endfor %}
-                    <hr/>
-                    <a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}
                 </div>
             </div>
         </div>
