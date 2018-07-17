@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="twelve columns">
-                    <a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}</span>
                     <h1>Type: {{ type.name }}</h1>
                     <hr/>
 
@@ -59,7 +59,7 @@
                         <p>{{ item.ability.description|linebreaks }}</p>
                     {% endfor %}
                     <hr />
-                    <a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}</span>
                 </div>
             </div>
         </div>

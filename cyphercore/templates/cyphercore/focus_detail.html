@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="twelve columns">
-                    <a href="../../">Index</a> | <a href="../">Focus List</a> | {{ focus.name }}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Focus List</a> | {{ focus.name }}</span>
                     <h1>Focus: {{ focus.name }}</h1>
                     <hr/>
 
@@ -41,7 +41,7 @@
                                 {{ item.ability.description|linebreaks }}
                     {% endfor %}
                     <hr />
-                    <a href="../../">Index</a> | <a href="../">Focus List</a> | {{ focus.name }}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Focus List</a> | {{ focus.name }}</span>
                 </div>
             </div>
         </div>
