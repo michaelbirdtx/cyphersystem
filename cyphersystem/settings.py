@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'cyphersystem',
         'USER': 'postgres',
         'PASSWORD': 'blackbox',
-        'HOST': 'localhost',
+        'HOST': '192.168.1.201',
         'PORT': '5432',
     }
 }
