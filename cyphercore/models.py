@@ -159,3 +159,23 @@ class Cypher(models.Model):
     truncated_effect.short_description = 'Effect'
     def __str__(self):
         return self.name
+
+class Artifact(models.Model):
+    class Meta:
+        ordering = ['name']
+    name = models.CharField(max_length=50)
+    genre = models.ForeignKey(Genre, default=1, on_delete=models.PROTECT)
+    level_range = models.CharField(max_length=10)
+    form = models.TextField()
+    effect = models.TextField()
+    depletion = models.CharField(max_length=20)
+    slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    def truncated_form(self):
+        return truncate_to(truncate_length, self.form)
+    truncated_form.short_description = 'Form'
+    def truncated_effect(self):
+        return truncate_to(truncate_length, self.effect)
+    truncated_effect.short_description = 'Effect'
+    def __str__(self):
+        return self.name
