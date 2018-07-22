@@ -2,21 +2,33 @@
 <html>
     </head>
         <title>Cypher Core: {{ character.name }}</title>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
         <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
+        <style>
+            {% if "summary" in request.path %}
+            #stat-pools { display: none; }
+            #other-stats { display: none; }
+            #recovery-damage { display: none; }
+            #equipment { display: none; }
+            #cyphers { display: none; }
+            #artifacts { display: none; }
+            {% endif %}
+        </style>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="twelve columns">
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }}</span>
+                    {% if "summary" in request.path %}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | <a href="../">{{ character.name }}</a> | Summary</span>
+                    {% else %}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+                    {% endif %}
                     <h1>{{ character.name }}</h1>
                     <p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}} who {{ character.focus }}</strong></p>
                     <hr />
@@ -243,7 +255,11 @@
                         </div>
                         <hr />
                     </section>
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }}</span>
+                    {% if "summary" in request.path %}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | <a href="../">{{ character.name }}</a> | Summary</span>
+                    {% else %}
+                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+                    {% endif %}
                 </div>
             </div>
         </div>
