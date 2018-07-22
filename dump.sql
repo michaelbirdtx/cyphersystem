@@ -291,6 +291,291 @@ ALTER SEQUENCE public.cyphercore_ability_id_seq OWNED BY public.cyphercore_abili
 
 
 --
+-- Name: cyphercore_artifact; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cyphercore_artifact (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    level_range character varying(10) NOT NULL,
+    effect text NOT NULL,
+    depletion character varying(20) NOT NULL,
+    slug character varying(50) NOT NULL,
+    genre_id integer NOT NULL,
+    sourcebook_id integer NOT NULL,
+    form text NOT NULL
+);
+
+
+ALTER TABLE public.cyphercore_artifact OWNER TO postgres;
+
+--
+-- Name: cyphercore_artifact_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cyphercore_artifact_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cyphercore_artifact_id_seq OWNER TO postgres;
+
+--
+-- Name: cyphercore_artifact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cyphercore_artifact_id_seq OWNED BY public.cyphercore_artifact.id;
+
+
+--
+-- Name: cyphercore_character; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cyphercore_character (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    background text NOT NULL,
+    notes text NOT NULL,
+    tier integer NOT NULL,
+    effort integer NOT NULL,
+    cypher_limit integer NOT NULL,
+    money integer NOT NULL,
+    xp integer NOT NULL,
+    might_current integer NOT NULL,
+    might_pool integer NOT NULL,
+    might_edge integer NOT NULL,
+    speed_current integer NOT NULL,
+    speed_pool integer NOT NULL,
+    speed_edge integer NOT NULL,
+    intellect_current integer NOT NULL,
+    intellect_pool integer NOT NULL,
+    intellect_edge integer NOT NULL,
+    armor integer NOT NULL,
+    recovery_roll integer NOT NULL,
+    impaired boolean NOT NULL,
+    debilitated boolean NOT NULL,
+    one_action boolean NOT NULL,
+    ten_minutes boolean NOT NULL,
+    one_hour boolean NOT NULL,
+    ten_hours boolean NOT NULL,
+    slug character varying(100) NOT NULL,
+    descriptor_id integer NOT NULL,
+    focus_id integer NOT NULL,
+    type_id integer NOT NULL,
+    genre_id integer NOT NULL,
+    portrait_link character varying(200) NOT NULL
+);
+
+
+ALTER TABLE public.cyphercore_character OWNER TO postgres;
+
+--
+-- Name: cyphercore_character_abilities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cyphercore_character_abilities (
+    id integer NOT NULL,
+    character_id integer NOT NULL,
+    ability_id integer NOT NULL
+);
+
+
+ALTER TABLE public.cyphercore_character_abilities OWNER TO postgres;
+
+--
+-- Name: cyphercore_character_abilities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cyphercore_character_abilities_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cyphercore_character_abilities_id_seq OWNER TO postgres;
+
+--
+-- Name: cyphercore_character_abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cyphercore_character_abilities_id_seq OWNED BY public.cyphercore_character_abilities.id;
+
+
+--
+-- Name: cyphercore_character_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cyphercore_character_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cyphercore_character_id_seq OWNER TO postgres;
+
+--
+-- Name: cyphercore_character_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cyphercore_character_id_seq OWNED BY public.cyphercore_character.id;
+
+
+--
+-- Name: cyphercore_characterartifact; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cyphercore_characterartifact (
+    id integer NOT NULL,
+    level integer NOT NULL,
+    artifact_id integer NOT NULL,
+    character_id integer NOT NULL
+);
+
+
+ALTER TABLE public.cyphercore_characterartifact OWNER TO postgres;
+
+--
+-- Name: cyphercore_characterartifact_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cyphercore_characterartifact_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cyphercore_characterartifact_id_seq OWNER TO postgres;
+
+--
+-- Name: cyphercore_characterartifact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cyphercore_characterartifact_id_seq OWNED BY public.cyphercore_characterartifact.id;
+
+
+--
+-- Name: cyphercore_charactercypher; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cyphercore_charactercypher (
+    id integer NOT NULL,
+    level integer NOT NULL,
+    appearance text NOT NULL,
+    character_id integer NOT NULL,
+    cypher_id integer NOT NULL
+);
+
+
+ALTER TABLE public.cyphercore_charactercypher OWNER TO postgres;
+
+--
+-- Name: cyphercore_charactercypher_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cyphercore_charactercypher_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cyphercore_charactercypher_id_seq OWNER TO postgres;
+
+--
+-- Name: cyphercore_charactercypher_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cyphercore_charactercypher_id_seq OWNED BY public.cyphercore_charactercypher.id;
+
+
+--
+-- Name: cyphercore_characterequipment; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cyphercore_characterequipment (
+    id integer NOT NULL,
+    quantity integer NOT NULL,
+    character_id integer NOT NULL,
+    equipment_id integer NOT NULL
+);
+
+
+ALTER TABLE public.cyphercore_characterequipment OWNER TO postgres;
+
+--
+-- Name: cyphercore_characterequipment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cyphercore_characterequipment_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cyphercore_characterequipment_id_seq OWNER TO postgres;
+
+--
+-- Name: cyphercore_characterequipment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cyphercore_characterequipment_id_seq OWNED BY public.cyphercore_characterequipment.id;
+
+
+--
+-- Name: cyphercore_characterskill; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cyphercore_characterskill (
+    id integer NOT NULL,
+    skill_level character varying(1) NOT NULL,
+    character_id integer NOT NULL,
+    skill_id integer NOT NULL
+);
+
+
+ALTER TABLE public.cyphercore_characterskill OWNER TO postgres;
+
+--
+-- Name: cyphercore_characterskill_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cyphercore_characterskill_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cyphercore_characterskill_id_seq OWNER TO postgres;
+
+--
+-- Name: cyphercore_characterskill_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cyphercore_characterskill_id_seq OWNED BY public.cyphercore_characterskill.id;
+
+
+--
 -- Name: cyphercore_cypher; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -844,6 +1129,55 @@ ALTER TABLE ONLY public.cyphercore_ability ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: cyphercore_artifact id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_artifact ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_artifact_id_seq'::regclass);
+
+
+--
+-- Name: cyphercore_character id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_character_id_seq'::regclass);
+
+
+--
+-- Name: cyphercore_character_abilities id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character_abilities ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_character_abilities_id_seq'::regclass);
+
+
+--
+-- Name: cyphercore_characterartifact id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterartifact ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_characterartifact_id_seq'::regclass);
+
+
+--
+-- Name: cyphercore_charactercypher id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_charactercypher ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_charactercypher_id_seq'::regclass);
+
+
+--
+-- Name: cyphercore_characterequipment id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterequipment ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_characterequipment_id_seq'::regclass);
+
+
+--
+-- Name: cyphercore_characterskill id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterskill ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_characterskill_id_seq'::regclass);
+
+
+--
 -- Name: cyphercore_cypher id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1009,6 +1343,24 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 52	Can add genre	17	add_genre
 53	Can change genre	17	change_genre
 54	Can delete genre	17	delete_genre
+55	Can add artifact	18	add_artifact
+56	Can change artifact	18	change_artifact
+57	Can delete artifact	18	delete_artifact
+58	Can add character	19	add_character
+59	Can change character	19	change_character
+60	Can delete character	19	delete_character
+61	Can add character skill	20	add_characterskill
+62	Can change character skill	20	change_characterskill
+63	Can delete character skill	20	delete_characterskill
+64	Can add character equipment	21	add_characterequipment
+65	Can change character equipment	21	change_characterequipment
+66	Can delete character equipment	21	delete_characterequipment
+67	Can add character cypher	22	add_charactercypher
+68	Can change character cypher	22	change_charactercypher
+69	Can delete character cypher	22	delete_charactercypher
+70	Can add character artifact	23	add_characterartifact
+71	Can change character artifact	23	change_characterartifact
+72	Can delete character artifact	23	delete_characterartifact
 \.
 
 
@@ -1017,7 +1369,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$100000$ENZUADOjHpQB$XcTiRpibv9DDpedp0MloJRQbPKEtp0ST0pxFEPAnsL4=	2018-07-13 23:58:26.285344-05	t	admin			michaelbirdtx@icloud.com	t	t	2018-07-03 23:43:27.897349-05
+1	pbkdf2_sha256$100000$tgVvlTAuZ6eE$ZHttJYXDJ5HOa7vCrJujk/cINW1k4NNYTlpuz0hhHxI=	2018-07-21 19:43:00.73126-05	t	michael	Michael	Bird	michaelbirdtx@icloud.com	t	t	2018-07-03 23:43:27-05
 \.
 
 
@@ -1165,6 +1517,7 @@ COPY public.cyphercore_ability (id, name, usage, cost, description, slug, source
 94	Regeneration	Action	6 Intellect	You restore points to a target’s Might Pool or Speed Pool in one of two ways: either the chosen Pool regains up to 6 points, or it is restored to a total value of 12. You make this decision when you initiate this ability. Points are restored at a rate of 1 point each round. You must maintain contact with the target the whole time. In no case can this ability raise a Pool higher than its normal maximum. Action.	regeneration	1
 95	Reshape	Action	5 Intellect	You reshape matter within short range in an area no larger than a 5-foot (1 m) cube. If you spend only one action on this ability, the changes you make are crude at best. If you spend at least ten minutes and succeed at an appropriate crafting task (with a difficulty at least one step higher than normal, due to the circumstances), you can make complex changes to the material. You can’t change the nature of the material, only its shape. Thus, you can make a hole in a wall or floor, or you can seal one up. You can fashion a rudimentary sword from a large piece of iron. You can break or repair a chain. With multiple uses of this ability, you could bring about large changes, making a bridge, a wall, or a similar structure. Action.	reshape	1
 147	Again and Again	Enabler	8 Speed	You can take an additional action in a round in which you have already acted. Enabler.	again-and-again	1
+311	Abiding	Enabler	-	Either you keep fit (giving you 5 points to divide between your Might Pool and your Speed Pool however you wish) or you have street smarts (giving you 5 points to add to your Intellect Pool)—your choice. Enabler.	abiding	1
 98	Absorb Energy	Action	7 Intellect	You touch an object and absorb its energy, if any. If you touch a cypher, you render it useless. If you touch an artifact, roll for its depletion. If you touch another kind of powered machine or device, the GM determines whether its power is fully drained. In any case, you absorb energy from the object touched and regain 1d10 Intellect points. If this would give you more Intellect than your Pool’s maximum, the extra points are lost, and you must make a Might defense roll with a difficulty equal to the number of extra points you absorbed. If you fail the roll, you take 5 points of damage and are unable to act for one round. You can use this ability as a defense action when you’re the target of an incoming energy-based attack. Doing so cancels the incoming attack, and you absorb the energy as if it were a device. Action.	absorb_energy	1
 101	Create	Action	7 Intellect	You create something from nothing. You can create any item you choose that would ordinarily have a difficulty of 5 or lower (using the crafting rules). Once created, the item lasts for a number of hours equal to 6 minus the difficulty to create it. Thus, if you create a motorbike (difficulty 5), it would last for one hour. Action.	create	1
 102	Divide Your Mind	Action	7 Intellect	You split your consciousness into two parts. For one minute, you can take two actions on each of your turns, but only one of them can be to use a special ability. Action.	divide_your_mind	1
@@ -1261,6 +1614,223 @@ COPY public.cyphercore_ability (id, name, usage, cost, description, slug, source
 215	Robot Control	Action	2+ Intellect	You use your knowledge of robot command and control (and possibly devices that transmit on the proper frequency) to affect any mechanized system or robot of level 2 or lower within short range. You can render several targets inactive for as long as you focus all your attention on them. If you focus on just one target, you can attempt to take active control of it for one minute, commanding it to do simple tasks on your behalf while you concentrate. Instead of applying Effort to decrease the difficulty, you can apply Effort to increase the maximum level of the mechanized system or robot. Thus, to affect a level 4 target (two levels above the normal limit), you must apply two levels of Effort. Action to initiate.	robot-control	1
 216	Robot Improvement	Enabler	-	Your artificial assistant increases to level 4. Enabler.	robot-improvement	1
 217	Robot Upgrade	Enabler	-	You modify your artificial assistant with one new capability. Standard options include the following. Work with your GM if you prefer a different capability.\r\nFlight. The robot can fly a long distance each round. It can carry you, but only for up to an hour between each of your ten-hour recovery rolls. Enabler.\r\nCypher Pod. The robot can carry one extra cypher for you. Enabler.\r\nForce Shield. The robot can erect an opaque level 5 force field around itself and anyone within 10 feet (3 m) of it for one minute (or until it is destroyed). It cannot do so again until after your next recovery roll. Action.\r\nMounted Laser Configuration. The robot can reconfigure itself and become an immobile laser weapon on a gimbal mount. In this configuration, the robot is a heavy weapon that deals 7 points of damage. If the robot acts as an autonomous turret, treat it as a level 3 creature instead of level 4. However, if the laser is fired by you or someone else who has your permission, the difficulty of the laser attacks is decreased by one step. Action to reconfigure; action to return to normal robot configuration.	robot-upgrade	1
+220	Predictive Equation	Action	2 Intellect	You observe or study a creature, object, or location for at least one round. The next time you interact with it (possibly in the following round), the difficulty of a related task (such as persuading the creature, attacking it, or defending from its attack) is reduced by one step. Action.	predictive-equation	1
+221	Higher Mathematics	Enabler	-	You are trained in standard and higher mathematics.	higher-mathematics	1
+222	Predictive Model	Action	2+ Intellect	If you’ve used Predictive Equation on a creature, object, or location within the last few days, you can learn one random fact about the subject that is pertinent to a topic you designate. If you also have the magic flavor ability Premonition, one use of either ability grants you two random but related facts about the subject. In addition, you can use Predictive Model on the same subject multiple times (even if you’ve learned a creature’s level), but each time you do, you must apply one additional level of Effort than on your previous use. Action.	predictive-model	1
+223	Subconscious Defense	Enabler	-	Your subconscious constantly runs predictive models for avoiding danger. The difficulty of your Speed defense tasks is reduced by one step. Enabler.	subconscious-defense	1
+224	Cognizant Offense	Enabler	-	During combat, your brain shifts into a sort of battle mode where all potential attacks you could make are plotted on vector graphs in your mind’s eye, which always provides the best option. The difficulty of your attacks is reduced by one step. Enabler.	cognizant-offense	1
+225	Genius	Enabler	-	The more you use your brain, the better it gets. You add 5 points to your Intellect Pool. Enabler.	genius	1
+226	One Step Ahead of Everyone	Action	6 Intellect	Few things elude your intellectual grasp. Ask the GM one question and get a general answer. The GM assigns a level to the question, so the more obscure the answer, the more difficult the task. Generally, knowledge that you could find by looking somewhere other than your current location is level 1, and obscure knowledge of the past is level 7. Gaining knowledge of the future is impossible, unless you have the ability to see into the future through other means. Action.	one-step-ahead-everyone	1
+227	Archer	Enabler	-	To be truly deadly with a bow, you must know where to aim. You can spend points from either your Speed Pool or your Intellect Pool to apply levels of Effort to increase your bow damage. As usual, each level of Effort adds 3 points of damage to a successful attack. Enabler.	archer	1
+228	Fletcher	Enabler	-	You are trained in making arrows. Enabler.	fletcher	1
+229	Covering Fire	Enabler	1 Speed	In a round where you attack with your bow, if you fire an additional arrow, the difficulty of attacks and special abilities used by the target is increased by one step. Enabler.	covering-fire	1
+230	Bowyer	Enabler	-	You are trained in making bows. Enabler.	bowyer	1
+231	Trained Archer	Enabler	-	You are trained in using bows. Enabler.	trained-archer	1
+232	Master Fletcher	Enabler	-	You are specialized in making arrows. Enabler.	master-fletcher	1
+233	Quick Shot	Enabler	-	If you roll a natural 17 or higher with a bow attack, instead of adding damage or having a minor or major effect, you can make another attack with your bow. This attack reuses the same Effort and bonuses (if any) from the first attack. Enabler.	quick-shot	1
+234	Master Bowyer	Enabler	-	You are specialized in making bows. Enabler.	master-bowyer	1
+235	Phenomenal Archer	Enabler	-	You are specialized in using bows. Enabler.	phenomenal-archer	1
+236	Powerful Shot	Enabler	2 Might	You inflict 3 additional points of damage with a bow. The Might points spent to use this ability are in addition to any Speed points spent on the attack. Enabler.	powerful-shot	1
+237	Spellbook 1	Enabler	-	You’ve compiled a tome of spells, formulas, and notes that grants you flexibility that other sorcerers don’t possess. With your spellbook, you can replace one of your readied spells (such as Arcane Flare, Magic Shield, Ray of Confusion, and so on) with a different one of the same tier that is also in your spellbook. You can have only one readied spell of a given tier at a time. To make the switch, spend ten minutes studying your spellbook, after which time your readied spell is changed out. A spellcaster can choose to vary her readied spells up to twice per day, immediately after a one-hour or ten- hour recovery roll. (Changing out the spell requires only about a minute.)\r\nChoose one of the following spells as your readied spell for tier 1.\r\nArcane Flare (1 Intellect point). You enhance the damage of another attack spell with an extra charge of energy so that it deals 1 additional point of damage. Alternatively, you attack a target within long range by projecting a flare of raw magic that inflicts 4 points of damage. Enabler for enhancement; action for long-range attack.\r\nMagic Shield (1 Intellect point). You gain +1 to Armor for an hour. Action to initiate.	spellbook-1	1
+238	Spellbook 2	Enabler	-	You add the following spells to your spellbook. Choose one of them as your readied spell for tier 2.\r\nRay of Confusion (2 Intellect points). You project a grey beam of confusion at a creature within short range, inflicting 1 point of damage that ignores Armor. In addition, until the end of the next round, the difficulty of all tasks, attacks, and defenses the target attempts is modified by one step to its detriment. Action.\r\nLock (2+ Intellect points). A door, gate, chest, drawer, locket, or other object that can be closed within long range snaps shut and is magically locked (level 3 effect) for one hour. If an object or creature is physically holding the target object open, you must also succeed on an Intellect-based attack. For each level of Effort you apply, the quality of the magical lock increases by one level. Action to initiate.	spellbook-2	1
+239	Spellbook 3	Enabler	-	Tier 3: Spellbook. You add the following spells to your spellbook. Choose one of them as your readied spell for tier 3.\r\nFire Bloom (4+ Intellect points). Fire blooms within long range, filling an area 10 feet\r\n(3 m) in radius and inflicting 3 points of damage on all affected targets. Effort applied to one attack counts for all attacks against targets in the area of the bloom. Even on an unsuccessful attack, a target in the area still takes 1 point of damage. Flammable objects in the area may catch fire. Action.\r\nSummon Giant Spider (4+ Intellect points). A giant spider appears within immediate range. If you applied a level of Effort as part of the summoning, the spider is amenable to your instructions; otherwise, it acts according to its nature. Regardless, the creature persists for up to one minute before it fades away. Action to initiate.	spellbook-3	1
+308	Taking Care of Yourself	Enabler	-	Choose one type of attack in which you are not already trained: light bashing, light bladed, light ranged, medium bashing, medium bladed, medium ranged, heavy bashing, heavy bladed, or heavy ranged. You are trained in attacks using that type of weapon. Enabler.	taking-care-yourself	1
+240	Spellbook 4	Enabler	-	You add the following spells to your spellbook. Choose one of them as your readied spell for tier 4.\r\nSoul Interrogation (5 Intellect points). You determine the weaknesses, vulnerabilities, qualities, and mannerisms of a single creature within long range. The GM should reveal the creature’s level, basic abilities, and obvious weaknesses (if any). The difficulty of all actions you attempt that affect that creature—attack, defense, interaction, and so on—is reduced by one step for a few months afterward. Action.\r\nElemental Protection (4+ Intellect points). You and every target you designate within immediate range gains +5 to Armor against direct damage from one type of elemental damage (such as fire, lightning, shadow, or thorn) for one hour, or until you cast this spell again. Each level of Effort applied increases the elemental protection by +2. Action to initiate.	spellbook-4	1
+241	Spellbook 5	Enabler	-	You add the following spells to your spellbook. Choose one of them as your readied spell for tier 5.\r\nDragon’s Maw (6 Intellect points). You fashion and control a “hovering” phantasmal construct of magic within long range that resembles a dragon’s head. The construct lasts for up to an hour, until it is destroyed, or until you cast another spell. It is a level 4 construct that inflicts 6 points of damage with its bite when directed. While the construct persists, you can use it to manipulate large objects, carry heavy items in its mouth, or attack foes. If you use it to attack foes, you must spend your action directly controlling the phantom maw for each attack. Action to initiate.\r\nGranite Wall (7+ Intellect points). You create a level 6 granite wall within short range. The wall is 1 foot (30 cm) thick and up to 20 feet by 20 feet (6 m by 6 m) in size. It appears resting on a solid foundation and lasts for about ten hours. If you apply three levels of Effort, the wall is permanent until destroyed naturally. Action to initiate.	spellbook-5	1
+242	Spellbook 6	Enabler	-	You add the following spells to your spellbook. Choose one of them as your readied spell for tier 6.\r\nSummon Demon (7+ Intellect points). A demon appears within immediate range. If you applied a level of Effort as part of the summoning, the demon is amenable to your instructions; otherwise, it acts according to its nature. Regardless, the demon persists for up to one minute before it fades away—you hope. Action to initiate.\r\nWord of Death (5+ Intellect points). Your attack is the utterance of a magic word so terrible that it snuffs the life from a living target within short range. The target must be level 1. Instead of applying Effort to decrease the difficulty, you can apply Effort to increase the maximum level of the target. Thus, to kill a level 5 target (four levels above the normal limit), you must apply four levels of Effort. Action.	spellbook-6	1
+243	Divine Knowledge	Enabler	-	You are trained in all tasks related to knowledge of godly beings. Enabler.	divine-knowledge	1
+244	Blessing of the Gods	Enabler	-	As a servant of the gods, you can call up blessings in their name. This blessing depends on the god’s general demeanor and area of influence. Choose two of the abilities described below.\r\nAuthority/Law/Peace (3 Intellect points). You prevent a foe that can hear and understand you from attacking anyone or anything for one round. Action.\r\nBenevolence/Righteousness/Spirit (2+ Intellect points). One level 1 demon, spirit, or similar creature within short range is destroyed or banished. Instead of applying Effort to decrease the difficulty, you can apply Effort to increase the maximum level of the target. Thus, to destroy or banish a level 5 target (four levels above the normal limit), you must apply four levels of Effort. Action.\r\nDeath/Darkness (2 Intellect points). A target you choose within short range withers, suffering 3 points of damage. Action.\r\nDesire/Love/Health (3 Intellect points). With a touch, you restore 1d6 points to one stat Pool of any creature, including yourself. This ability is a difficulty 2 Intellect task. Each time you attempt to heal the same creature, the task difficulty increases by one step. The difficulty returns to 2 after that creature rests for ten hours. Action.\r\nEarth/Stone. You are trained in climbing, stonecraft, and spelunking. Enabler.\r\nKnowledge/Wisdom (3 Intellect points). Choose up to three creatures (potentially including yourself). For one minute, the difficulty of a particular type of task (but not an attack roll or defense roll) is reduced by one step for those creatures, but only while they remain within immediate range of you. Action.\r\nNature/Animals/Plants. You are trained in botany and handling natural animals. Enabler.\r\nProtection/Silence (3 Intellect points). You create a quiet bubble of protection around you to an immediate radius for one minute. The bubble moves with you. The difficulty of all defense rolls for you and all creatures you designate within the bubble is decreased by one step, and no noise, regardless of its origin, sounds louder than a normal speaking voice. Action to initiate.\r\nSky/Air (2 Intellect points). A creature you touch is immune to airborne toxins or contaminants for ten minutes. Action.\r\nSun/Light/Fire (2 Intellect points). You cause one creature or object within short range to catch fire, inflicting 1 point of ambient damage each round until the fire is extinguished (requiring an action). Action.\r\nTrickery/Greed/Commerce. You are trained in detecting the deceptions of other creatures. Enabler.\r\nWar (1 Intellect point). A target you choose within short range (potentially yourself) deals 2 additional points of damage with its next successful weapon attack. Action.\r\nWater/The Sea (2 Intellect points). A target you touch can breathe water for ten minutes. Action.	blessing-gods	1
+245	Divine Fortitude	Enabler	-	Your faith gives you additional reserves. Add 4 points to your Intellect Pool.	divine-fortitude	1
+246	Divine Radiance	Action	2 Intellect	Your prayer calls divine radiance from the heavens to punish an unworthy target within long range, inflicting 4 points of damage. If the target is a demon, spirit, or something similar, it also stands in unwilling awe of the divine energy coursing through it and is unable to act on its next turn. Once exposed to this blessing, the target can’t be awed by this attack again for several hours. Action.	divine-radiance	1
+247	Overawe	Action	5 Intellect	A blast of divine radiance from the heavens spotlights a target you select within long range, pushing the target to its knees (or similar appendages, if any) and rendering it helpless in the light for up to ten minutes, or until it breaks free. The overawed target cannot defend itself, make attacks, or attempt anything other than to shake free of the divine awe each round. If the target is a demon, spirit, or something similar, it also takes 1 point of damage that ignores Armor each round it remains affected. Action to initiate.	overawe	1
+248	Divine Intervention	Action	See Description	You ask the divine to intervene on your behalf, usually against a creature within long range, changing the course of its life in a small way by introducing a major special effect upon it. The major special effect is akin to what occurs when you roll a natural 20 on an attack. If you want to try for a larger effect, and if the GM allows it, you can attempt a divine intervention with a more far-reaching effect, which is more like the kind of GM intrusion initiated by the GM on her players. In this case, Divine Intervention costs 4 XP, the effect may not work out exactly like you hope, and you may not make another plea for divine intervention for a week. Action.	divine-intervention	1
+249	Divine Symbol	Action	5+ Intellect	You invoke divine power by scribing a glowing symbol in the air with your fingers. Writhing pillars of divine radiance spear up to five targets within long range. A successful attack on a target inflicts 5 points of damage. If you apply Effort to increase the damage, you deal 2 additional points of damage per level of Effort (instead of 3 points); however, targets take 1 point of damage even if you fail the attack roll. Action.	divine-symbol	1
+309	Life Lessons 2	Enabler	-	Choose any two noncombat skills. You are trained in those skills. Enabler.	life-lessons-2	1
+333	Defensive Phasing	Action	-	You can change your phase so that some attacks pass through you harmlessly. For the next ten minutes, the difficulty of all your Speed defense tasks is reduced by one step, but during this time you lose any benefit from armor you wear. Action to initiate.	defensive-phasing	1
+250	Telepathic	Action	1+ Intellect	You can speak telepathically with others who are within short range. Communication is two-way, but the other party must be willing and able to communicate. You don’t have to see the target, but you must know that it’s within range. You can have more than one active contact at once, but you must establish contact with each target individually. Each contact lasts up to ten minutes. If you apply a level of Effort to increase the duration rather than affect the difficulty, the contact lasts for twenty-four hours. Action to establish contact.	telepathic	1
+251	Psychic Burst	Action	3+ Intellect	You blast waves of mental force into the minds of up to three targets within short range (make an Intellect roll against each target). This burst inflicts 3 points of Intellect damage (ignores Armor). For each 2 additional Intellect points you spend, you can make an Intellect attack roll against an additional target. Action.	psychic-burst	1
+252	Use Senses of Others	Action	4 Intellect	You can see, hear, smell, touch, and taste through the senses of anyone with whom you have telepathic contact. You can attempt to use this ability on a willing or unwilling target within long range; an unwilling target can try to resist. You don’t need to see the target, but you must know that it’s within range. Your shared senses last ten minutes. Action to establish.	use-senses-others	1
+253	Telepathic Network	Enabler	0+ Intellect	When you wish it, you can contact up to ten creatures known to you, no matter where they are. All targets must be willing and able to communicate. You automatically succeed at establishing a telepathic network; no roll is required. All creatures in the network are linked and can communicate telepathically with one another. They can also “overhear” anything said in the network, if they wish. Activating this ability doesn’t require an action and doesn’t cost Intellect points; to you, it’s as easy as speaking out loud. The network lasts until you choose to end it. If you spend 5 Intellect points, you can contact twenty creatures at once, and for every 1 Intellect point you spend above that, you can add ten more creatures to the network. These larger networks last for ten minutes. Creating a network of twenty or more creatures does require an action to establish contact. Enabler.	telepathic-network	1
+254	Lab Analysis	Action	3 Intellect	You analyze the scene of a crime, the site of a mysterious incident, or a series of unexplained phenomena, and maybe learn a surprising amount of information about the perpetrators, the participants, or force(s) responsible. To do so, you must collect samples from the scene. Samples are paint or wood scrapings, dirt, photographs of the area, hair, an entire corpse, and so on. With samples in hand, you can discover up to three pertinent pieces of information about the scene, possibly clearing up a lesser mystery and pointing the way to solving a greater one. The GM will decide what you learn and what level of difficulty is needed to learn it. (For comparison, discovering that a victim was killed not by a fall, as seems immediately obvious, but rather by electrocution, is a difficulty 3 task for you.) The difficulty of the task is modified by one step in your favor if you take the time to transport the samples to a permanent lab (if you have access to one), as opposed to conducting the analysis with your field science kit. Action to initiate, 2d20 minutes to complete.	lab-analysis	1
+255	Scientist	Enabler	-	You are trained in one area of scientific knowledge of your choice.	scientist	1
+256	Modify Device	Action	4 Intellect	You jury-rig a piece of mechanical or electrical equipment to make it function above its rated specs for a very limited time. To do so, you must use spare parts equal to an expensive item, have a field science kit (or a permanent lab, if you have access to one), and succeed at a difficulty 3 Intellect-based task. When complete, using the device modifies all tasks performed in conjunction with the device by one step in the user’s favor, until the device inevitably breaks. For example, you could overclock a computer so research tasks using it are easier, modify an espresso maker so that each cup of coffee made with it is better, modify a car’s engine so that it goes faster (or its steering, so it handles better), and so on. Each use of the modified device requires a depletion roll of 1–5 on a d20. Action to initiate, one hour to complete.	modify-device	1
+257	Better Living Through Chemistry	Action	4 Intellect	You’ve developed drug cocktails specifically designed to work with your own biochemistry. Depending on which one you inject, it makes you smarter, faster, or tougher, but when it wears off, the crash is a doozy, so you use it only in desperate situations. You gain 2 to your Might Edge, Speed Edge, or Intellect Edge for one minute, after which you can’t gain the benefit again for one hour. During this follow-up hour, every time you spend points from a Pool, increase the cost by 1. Action.	better-living-through-chemistry	1
+258	Extensive Training	Enabler	-	You are specialized in one area of knowledge of your choice. Enabler.	extensive-training	1
+259	Just a Bit Mad	Enabler	-	You are trained in Intellect defense tasks. Enabler.	just-bit-mad	1
+260	Weird Science Breakthrough	Action	5 Intellect	Your research leads to a breakthrough, and you imbue an object with a truly amazing property, though you can use the item only once. To do so, you must buy spare parts equivalent to an expensive item, have a field science kit (or a permanent lab, if you have access to one), and succeed at a difficulty 4 Intellect-based roll to create a random cypher of up to level 2. The GM decides the nature of the cypher you create. Attempting to create a specified cypher increases the difficulty by two steps. Creating a cypher does not allow you to surpass your normal cypher limit. Action to initiate, one hour to complete.	weird-science-breakthrough	1
+261	Incredible Feat of Science	Action	12 Intellect	You do something amazing in the lab. This takes a full day of work (or longer, depending on the circumstances) and parts and materials equivalent to three expensive items. Possible incredible feats include:\r\n• Reanimate and command a dead body for one hour.\r\n• Create an engine that runs on perpetual motion.\r\n• Create a teleportation gate that remains open for one minute.\r\n• Transmute one substance into another substance.\r\n• Cure one person with an incurable disease or condition.\r\n• Create a weapon designed to hurt something that can’t otherwise be hurt.\r\n• Create a defense designed to protect against something that can’t otherwise be stopped.	incredible-feat-science	1
+262	Improved Weird Science Breakthrough	Enabler	-	When you successfully use Weird Science Breakthrough, you can create a cypher of up to level 6. Enabler.	improved-weird-science-breakthrough	1
+263	Speaker for the Dead	Action	2+ Intellect	You can ask a question of a dead being whose corpse you are touching. Because the answer comes through the filter of the being’s understanding and personality, it can’t answer questions that it wouldn’t have understood in life, and it can’t provide answers that it wouldn’t have known in life. In fact, the being is not compelled to answer at all, so you might need to interact with it in a way that would have convinced it to answer while it was alive. For each additional Intellect point you spend when you activate the ability, you can ask the being an additional question. Action.	speaker-dead	1
+264	Necromancy	Action	3+ Intellect	You animate the body of a dead creature of approximately your size or smaller, creating a level 1 creature. It has none of the intelligence, memories, or special abilities that it had in life. The creature follows your verbal commands for one hour, after which it becomes an inert corpse. Unless the creature is killed by damage, you can reanimate it again when its time expires, but any damage it had when it became inert applies to its newly reanimated state. If you have access to multiple bodies, you can create an additional undead creature for each additional Intellect point you spend when you activate the ability. Action to animate.	necromancy	1
+265	Reading the Room	Action	3 Intellect	You gain knowledge about an area by speaking with dead spirits or reading residual energies from the past. You can ask the GM a single, matter-of-fact question about the location and get an answer if you succeed on the Intellect roll. “What killed the cattle in this barn?” is a good example of a simple question. “Why were these cattle killed?” is not an appropriate question because it has more to do with the mindset of the killer than the barn. Simple questions usually have a difficulty of 2, but extremely technical questions or those that involve facts meant to be kept secret can have a much higher difficulty. Action.	reading-room	1
+266	Greater Necromancy	Action	5+ Intellect	This ability works like the second- tier Necromancy ability except that it creates a level 3 creature. Action to animate.	greater-necromancy	1
+267	Death Gaze	Action	6 Intellect	You project a chilling gaze at all living creatures within short range who can see you. Make a separate Intellect attack roll for each target. Success means that the creature is frozen in fear, not moving or taking actions for one minute or until it is attacked. Some creatures without minds (such as robots) might be immune to Death Gaze. Action.	death-gaze	1
+268	True Necromancy	Action	8+ Intellect	This ability works like the second-tier Necromancy ability except that it creates a level 5 creature. Action to animate.	true-necromancy	1
+269	Beast Companion	Enabler	-	A level 2 creature of your size or smaller accompanies you and follows your instructions. You and\r\nthe GM must work out the details of your creature, and you’ll probably make rolls for it in combat or when it takes actions. The beast companion acts on your turn. Its movement is based on its creature type (avian, swimmer, and so on). If your beast companion dies, you can hunt in the wild for 1d6 days to find a new companion. Enabler.	beast-companion	1
+270	Soothe the Savage	Action	2 Intellect	You calm a nonhuman beast within 30 feet (9 m). You must speak to it (although it doesn’t need to understand your words), and it must see you. It remains calm for one minute or for as long as you focus all your attention on it. The GM has final say over what counts as a nonhuman beast, but unless some kind of deception is at work, you should know whether you can affect a creature before you attempt to use this ability on it. Aliens, extradimensional entities, very intelligent creatures, and automatons never count. Action.	soothe-savage	1
+271	Communication	Action	2 Intellect	You can convey a basic concept to a creature that normally can’t speak or understand speech. The creature can also give you a very basic answer to a simple question. Action.	communication	1
+272	Mount	Enabler	-	A level 3 creature serves you as a mount and follows your instructions. While you’re mounted on it, the creature can move and you can attack on your turn, or it can attack foes when you do. You and the GM must work out the details of the creature, and you’ll probably make rolls for it in combat or when it takes actions. The mount acts on your turn. If your mount dies, you can hunt in the wild for 3d6 days to find a new one. Enabler.	mount	1
+273	Beast Eyes	Action	3 Intellect	You can sense through your beast companion’s senses if it is within 1 mile (2 km) of you. This effect lasts up to ten minutes. Action to establish.	beast-eyes	1
+275	Beast Call	Action	5 Intellect	You summon a horde of small animals or a single level 4 beast to help you temporarily. These creatures do your bidding for as long as you focus your attention, but you must use your action each turn to direct them. Creatures are native to the area and arrive under their own power, so if you’re in an unreachable place, this ability won’t work. Action.	beast-call	1
+276	Control the Savage	Action	6 Intellect	You can control a calm nonhuman beast within 30 feet (9 m). You control it for as long as you focus all your attention on it, using your turn each round. The GM has final say over what counts as a nonhuman beast, but unless some kind of deception is at work, you should know whether you can affect a creature before you attempt to use this ability on it. Aliens, extradimensional entities, very intelligent creatures, and robots never count. Action.	control-savage	1
+277	Improved Companion 2	Enabler	-	Your beast companion increases to level 5. Enabler.	improved-companion-2	1
+274	Improved Companion 1	Enabler	-	Your beast companion increases to level 4. Enabler.	improved-companion-1	1
+278	Lessening Gravity’s Pull	Enabler	-	By manipulating gravity’s pull on yourself, you gain +1 to your Speed Edge. Enabler.	lessening-gravitys-pull	1
+279	Gravity Cleave	Action	3 Intellect	You can harm a target within short range by rapidly increasing gravity’s pull on one portion of the target and decreasing it on another, inflicting 6 points of damage. Action.	gravity-cleave	1
+280	Field of Gravity	Enabler	4 Intellect	When you wish it, a field of manipulated gravity around you pulls incoming ranged projectile attacks to the ground. You are immune to such attacks until your turn in the next round. You must be aware of an attack to foil it. This ability does not work on energy attacks. Enabler.	field-gravity	1
+281	Flight	Action	4+ Intellect	You can float and fly through the air for one hour. For each level of Effort applied, you can affect one additional creature of your size or smaller. You must touch the creature to bestow the power of flight. You direct the other creature’s movement, and while flying, it must remain within sight of you or fall. In terms of overland movement, a flying creature moves about 20 miles (32 km) per hour and is not affected by terrain. Action to initiate.	flight	1
+282	Weight of the World	Action	6+ Intellect	You can increase a target’s weight dramatically. The target is pulled to the ground and can’t move physically under its own power for one minute. The target must be within short range. For each level of Effort applied, you can affect one additional creature. Action.	weight-world	1
+310	The Best Offense	Enabler	-	You are trained in Might defense, Speed defense, or Intellect defense (your choice). If you are already trained in that type of defense, you are specialized. Enabler.	best-offense	1
+335	Ghost	Action	4 Intellect	For the next ten minutes, you are trained in sneaking tasks. During this time, you can move through solid barriers (but not energy barriers) at a rate of 1 foot (30 cm) per round, and you can perceive while phased within a barrier or object, which allows you to peek through walls. Action to initiate.	ghost	1
+283	Minor Illusion	Action	1 Intellect	You create a single image of a creature or object within immediate range. The image must fit within a 10-foot (3 m) cube. The image can move (for example, you could make the illusion of a person walk or attack), but it can’t leave the area defined by the cube. The illusion includes sound but not smell. It lasts for ten minutes, but if you want to change the original illusion significantly— such as making a creature appear to be wounded—you must concentrate on it again (though doing so doesn’t cost additional Intellect points). If you move beyond immediate range of the cube, the illusion vanishes. Action to create; action to modify.	minor-illusion	1
+284	Disguise	Action	2+ Intellect	You appear to be someone or something else, roughly of your size and shape, for up to one hour. Once created, the disguise requires no concentration. For each additional Intellect point you spend, you can disguise one other creature. All disguised creatures must stay within sight of you or lose their disguise. Action to create.	disguise	1
+285	Major Illusion	Action	3 Intellect	You create a complex scene of images within immediate range. The entire scene must fit within a 100-foot (30 m) cube. The images can move, but they can’t leave the area defined by the cube. The illusion includes sound and smell. It lasts for ten minutes and changes as you direct (no concentration is needed). If you move beyond immediate range of the cube, the illusion vanishes. Action to create.	major-illusion	1
+286	Illusory Selves	Action	4 Intellect	You create four holographic duplicates of yourself within short range. The duplicates last for one minute. You mentally direct their actions, and the duplicates aren’t mirror images—each one can do different things. If struck violently, they either disappear permanently or freeze motionless (your choice). Action to create.	illusory-selves	1
+287	Terrifying Image	Action	6 Intellect	You use a bit of subtle telepathy to learn which images would appear terrifying to creatures that you choose within long range. Those images appear within that area and menace the appropriate creatures. Make an Intellect attack roll against each creature you want to affect. Success means the creature flees in terror for one minute, pursued by its nightmares. Failure means the creature ignores the images, which do not hamper it in any way. Action.	terrifying-image	1
+288	Grandiose Illusion	Action	8 Intellect	You create a fantastically complex scene of images that fit within a 1-mile (2 km) cube that you are also within. You must be able to see the images when you create them. The images can move in the cube and act in accordance with your desires. They can also act logically (such as reacting appropriately to fire or attacks) when you aren’t directly observing them. The illusion includes sound and smell. For example, armies can clash in battle, with air support from machines or flying creatures, on and above terrain of your creation. The illusion lasts for one hour (or longer, if you concentrate on it after that time). Action.	grandiose-illusion	1
+289	Crafter	Enabler	-	You are trained in the crafting of two kinds of items. Enabler.	crafter	1
+290	Master Identifier	Action	-	You are trained in identifying the function of any kind of device. Enabler.	master-identifier	1
+291	Tinkerer	Enabler	-	If you spend at least one day tinkering with an artifact in your possession, it functions at one level higher than normal. This applies to all artifacts in your possession, but they retain this bonus only for you. Enabler.	tinkerer	1
+292	Quick Work	Action	3+ Intellect	One use of any artifact (or one minute of its continuous function) is increased by one level if you use it within the next minute. If you spend 4 additional Intellect points, the use is increased by two levels if you use it within the next minute. Action.	quick-work	1
+293	Master Crafter	Enabler	-	You are trained in the crafting of two more kinds of items, or you are specialized in two kinds of items that you are already trained in. Enabler.	master-crafter	1
+294	Cyphersmith	Enabler	-	All cyphers you use function at one level higher than normal. If given a week and the right tools, chemicals, and parts, you can tinker with one of your cyphers, transforming it into another cypher of the same type that you had in the past. The GM and player should collaborate to ensure that the transformation is logical— for example, you probably can’t transform a pill into a helmet. Enabler.	cyphersmith	1
+295	Innovator	Enabler	-	You can modify any artifact to give it different or better abilities as if that artifact were one level lower than normal, and the modification takes half the normal time. Enabler.	innovator	1
+296	Inventor	Enabler	-	You can create new artifacts in half the time, as if they were two levels lower, by spending half the normal XP. Enabler.	inventor	1
+297	Courageous	Enabler	-	You are trained in Intellect defense tasks and initiative tasks. Enabler.	courageous	1
+298	Warding Shield	Enabler	-	You have +1 to Armor while you are wielding a shield. Enabler.	warding-shield	1
+299	Devoted Defender	Action	2 Intellect	Choose one character you can see. That character becomes your ward. You are trained in all tasks involving finding, healing, interacting with, and protecting your ward. You can have only one ward at a time. Action to initiate.	devoted-defender	1
+300	Astute	Enabler	-	You are trained in tasks to discern others’ motives and to ascertain their general nature. You have a knack for sensing whether or not someone is truly innocent. Enabler.	astute	1
+301	True Guardian	Enabler	2 Might	When you stand guard as your action, you decrease the difficulty of all defense tasks by one step for characters you choose that are adjacent to you. This lasts until the end of your next turn. Enabler.	true-guardian	1
+302	Combat Challenge	Enabler	-	You are trained in intimidation tasks and in Intellect tasks made to draw an attack. Enabler.	combat-challenge	1
+303	Willing Sacrifice	Enabler	-	When you take an attack for another character, the attack does not deal 1 additional point of damage. Enabler.	willing-sacrifice	1
+304	Drive Back	Enabler	4 Might	When you deal damage with an attack, you can drive the creature away from your companions. Until the end of the next round, all characters other than you have an asset on Speed defense rolls made to resist attacks from this creature. Enabler.	drive-back	1
+305	True Defender	Action	6 Intellect	This ability functions as your Devoted Defender ability, except the benefit applies to up to three characters you choose. If you choose just one character, you become specialized in the tasks described under the Devoted Defender ability. Action to initiate.	true-defender	1
+307	Totally Chill	Enabler	-	Your ten-minute recovery roll takes you only one round. Enabler.	totally-chill	1
+306	Life Lessons 1	Enabler	-	Choose any two noncombat skills. You are trained in those skills. Enabler.	life-lessons-1	1
+312	Drawing on Life’s Experiences	Action	6 Intellect	You’ve seen a lot and done a lot, and that experience comes in handy. Ask the GM one question, and you’ll receive a general answer. The GM assigns a level to the question, so the more obscure the answer, the more difficult the task. Generally, knowledge that you could find by looking somewhere other than your current location is level 1, and obscure knowledge of the past is level 7. Action.	drawing-lifes-experiences	1
+313	Move Metal	Action	1 Intellect	You can exert force on metal objects within short range for one round. Once activated, your power has an effective Might Pool of 10, a Might Edge of 1, and an Effort of 2 (approximately equal to the strength of a fit, capable adult human), and you can use it to move metal objects, push against metal objects, and so on. For example, in your round, you could lift and pull a light metal object anywhere within range to yourself or move a heavy object (like a piece of furniture) about 10 feet (3 m). This power lacks the fine control to wield a weapon or move objects with much speed, so in most situations, it’s not a means of attack. You can’t use this ability on your own body. Action.	move-metal	1
+314	Repel Metal	Enabler	-	By manipulating magnetism, you are trained in Speed defense tasks against any incoming attack that uses metal. Enabler.	repel-metal	1
+315	Destroy Metal	Action	3 Intellect	You instantly tear, rip, or burst a metal object that is within sight, within short range, and no bigger than half your size. Make an Intellect roll to destroy the object; the difficulty of this task is decreased by three steps (compared to breaking it with brute strength). Action.	destroy-metal	1
+316	Magnetic Field	Enabler	4 Intellect	When you wish it, a field of magnetism around you pulls incoming ranged, metallic projectile attacks (such as arrows, bullets, a thrown metal knife, and so on) to the ground. You are immune to such attacks for one round. You must be aware of an attack to foil it. Enabler.	magnetic-field	1
+317	Command Metal	Action	5 Intellect	You reshape a metallic item as you desire. The item must be within sight and within short range, and its mass can be no greater than your own. You can affect multiple items at once as long as their combined mass falls within these limits. You can fuse multiple items together. You can use this power to destroy a metal object (as the Destroy Metal ability), or you can craft it into another desired shape (crudely, unless you have the proper crafting skills). You can then move the new object anywhere within range. For example, you could take a few metal shields, fuse them together, and use the resulting shape to block a doorway. You can use this ability to make an attack— causing a foe’s armor to constrict, rendering a metal item into shards that you fling across the battlefield, and so on—against one target within short range. Regardless of the form of the attack, it is an Intellect action that deals 7 points of damage. Action.	command-metal	1
+318	Diamagnetism	Enabler	-	You magnetize any nonmetallic object within short range so that it can be affected by your other powers. Thus, with Move Metal, you can move any object. With Repel Metal, you are trained in all Speed defense tasks, regardless of whether the incoming attack uses metal. And so on. Enabler.	diamagnetism	1
+319	Levity	Enabler	-	Through wit, charm, humor, and grace, you are trained in all social interactions other than those involving coercion or intimidation. During rests, you put friends and comrades at ease so much that they gain +1 to their recovery rolls. Enabler.	levity	1
+320	Inspiration	Enabler	-	Through stories, songs, art, or other forms of entertainment, you inspire your friends. After spending twenty-four hours with you, once per day each of your friends can decrease the difficulty of a task by one step. This benefit is ongoing while you remain in the friend’s company. It ends if you leave, but it resumes if you return to the friend’s company within twenty-four hours. If you leave the friend’s company for longer than that, you must spend another twenty-four hours together to reactivate the benefit. Enabler.	inspiration	1
+321	Knowledge	Enabler	-	Your stories and songs contain truth. You are trained in two areas of knowledge of your choosing. Enabler.	knowledge	1
+322	Calm	Action	3 Intellect	Through jokes, song, or other art, you prevent a living foe from attacking anyone or anything for one round. Action.	calm	1
+323	Able Assistance	Enabler	-	When you help someone with a task, you always reduce the difficulty of the task by one step regardless of your own skill at that task. Enabler.	able-assistance	1
+324	Master Entertainer	Enabler	-	Your Inspiration ability works more effectively, allowing your friends to decrease the difficulty of a task by two steps rather than one step. Enabler.	master-entertainer	1
+325	Duplicate	Action	2 Might	You cause a duplicate of yourself to appear at any point you can see within short range. The duplicate has no clothing or possessions when it appears. The duplicate is a level 2 NPC with 6 health. The duplicate obeys your commands and does as you direct it. The duplicate remains until you dismiss it using an action or until it is killed. When the duplicate disappears, it leaves behind anything it was wearing or carrying. If the duplicate disappears because it was killed, you take 4 points of damage that ignore Armor, and you lose your next action. Action to initiate.	duplicate	1
+326	Share Senses	Enabler	-	While your duplicate is in existence and within 1 mile (2 km), you know everything it experiences and can communicate with it telepathically. Enabler.	share-senses	1
+327	Superior Duplicate	Enabler	2 Might	When you use your Duplicate ability, you can create a superior duplicate instead of a normal duplicate. A superior duplicate is a level 3 NPC with 15 health. Enabler.	superior-duplicate	1
+328	Damage Transference	Enabler	-	When you or your duplicate would take damage, you can transfer 1 point of damage from one to the other provided that you and your duplicate are within 1 mile (2 km) of each other. Enabler.	damage-transference	1
+329	Coordinated Effort	Action	3 Intellect	When you and your duplicate would attack the same creature, you can choose to make one attack roll with an asset. If you hit, you inflict damage with both attacks and treat the attacks as if they were one attack for the purpose of subtracting Armor from the damage. Action.	coordinated-effort	1
+330	Resilient Duplicate	Enabler	-	Increase the health of any duplicate you create by 5.	resilient-duplicate	1
+331	Multiplicity	Action	6 Might	This ability functions as Duplicate, except you can create two duplicates. Action to initiate.	multiplicity	1
+332	Walk Through Walls	Action	2 Intellect	You can slowly pass through physical barriers at a rate of 1 inch (3 cm) per round (minimum of one round to pass through any barrier). You can’t act (other than moving) or perceive anything until you pass entirely through the barrier. You can’t pass through energy barriers. Action.	walk-through-walls	1
+334	Phased Attack	Enabler	3 Intellect	The attack you make on this turn ignores your foe’s Armor. The ability works for whatever kind of attack you use (melee, ranged, energy, and so on). Enabler.	phased-attack	1
+336	Untouchable	Action	6 Intellect	You change your phase state for the next minute so that you can’t affect or be affected by normal matter or energy. Only mental attacks and special transdimensional energies, devices, or abilities can affect you, but likewise you can’t attack, touch, or otherwise affect anything. Action to initiate.	untouchable	1
+337	Enhanced Phased Attack	Enabler	5 Intellect	This ability works like the third-tier Phased Attack ability except that your attack also disrupts the foe’s vitals, dealing 5 additional points of damage. Enabler.	enhanced-phased-attack	1
+338	Trained Explorer	Enabler	-	You are trained in searching, listening, climbing, balancing, and jumping tasks. Enabler.	trained-explorer	1
+339	Trained Infiltrator	Enabler	-	You are trained in lockpicking and tinkering with devices. Enabler.	trained-infiltrator	1
+340	Eyes Adjusted	Enabler	-	You can see in very dim light as though it were bright light. You can see in total darkness as if it were very dim. Enabler.	eyes-adjusted	1
+341	Slippery Customer	Enabler	-	You are trained in escaping from bonds, fitting in tight spaces, and other contortionist tasks. Thanks to your experience, you also are trained in Speed defense tasks while wearing light armor or no armor. Enabler.	slippery-customer	1
+342	Resilient	Enabler	-	In your explorations of dark places, you’ve been exposed to all sorts of terrible things and are developing a general resistance. You gain +1 to Armor and are trained in Might defense tasks. Enabler.	resilient	1
+343	Dark Explorer	Enabler	-	You ignore penalties for any action (including fighting) in very dim light or in cramped spaces. Combined with your Eyes Adjusted ability, you can act without penalty even in total darkness. You are also trained in sneaking tasks while in dim or no light. Enabler.	dark-explorer	1
+344	Blinding Attack	Action	3 Speed	If you have a source of light, you can use it to make a melee attack against a target. If successful, the attack deals no damage, but the target is blinded for one minute. Action.	blinding-attack	1
+345	Diver	Enabler	-	You can safely dive into water from heights of up to 100 feet (30 m), and you can withstand pressure when in water as deep as 100 feet (30 m). Enabler.	diver	1
+346	Hold Breath	Enabler	-	You can hold your breath for up to five minutes. Enabler.	hold-breath	1
+347	Trained Swimmer	Enabler	-	While underwater, you are trained in escaping, perception, sneaking, and swimming tasks, as well as in tasks to identify aquatic creatures and geography. Enabler.	trained-swimmer	1
+348	Resist Underwater Hazards	Enabler	-	Whether you’re resisting the crushing waters from exploring the depths or a sting from a poisonous fish, the difficulty of all defense actions while submerged in water is reduced by one step. Enabler.	resist-underwater-hazards	1
+349	Aquatic Combat	Enabler	-	You ignore penalties for any action (including fighting) in underwater environments. Enabler.	aquatic-combat	1
+350	Athletic Conditioning	Enabler	-	You add 1 point to your Might Pool and your Speed Pool. Enabler.	athletic-conditioning	1
+351	Nimble Swimmer	Enabler	-	You are trained in all defense actions while underwater. Enabler.	nimble-swimmer	1
+352	Swim	Action	1+ Intellect	You can swim like a fish through water and similar liquid for one hour. For each level of Effort applied, you can extend the duration by one hour. You swim about 10 miles (16 km) per hour, and you are not affected by currents in the water. Action to initiate.	swim	1
+353	Communication (Underwater)	Action	2 Intellect	You can convey a basic concept or ask a simple question to a creature that lives underwater and cannot speak or understand speech, and the creature can provide you with a basic answer. Action.	communication-underwater	1
+354	Elusive	Enabler	2 Speed	When you succeed on a Speed defense action, you immediately gain an action. You can use this action only to move. Enabler.	elusive	1
+355	Deep Water Guide	Enabler	-	While underwater, any creature you choose that can see you has an asset on swimming tasks. Enabler.	deep-water-guide	1
+356	Master of the Deep Waters	Enabler	-	While underwater, your Might Edge, Speed Edge, and Intellect Edge each increase by 1. Enabler.	master-deep-waters	1
+357	Water Adaptation	Enabler	-	You can breathe water as easily as you breathe air. Enabler.	water-adaptation	1
+358	Taking Advantage	Enabler	-	When your foe is weakened, dazed, stunned, moved down the damage track, or disadvantaged in some other way, the difficulty of your attacks against that foe is decreased by one step beyond any other modifications due to the disadvantage. Enabler.	taking-advantage	1
+359	Liar	Enabler	-	You are trained in all forms of deception. Enabler.	liar	1
+360	Eye Gouge	Action	2 Speed	You make an attack against a creature with an eye. The difficulty of the attack is increased by one step, but if you hit, the creature has trouble seeing for the next hour. During this time, the difficulty of the creature’s tasks that rely on sight (which is most tasks) is increased by one step. Action.	eye-gouge	1
+361	Spot Weakness	Enabler	-	If a creature that you can see has a special weakness, such as a vulnerability to fire, a negative modification to perception, or so on, you know what it is. (Ask and the GM will tell you.) Enabler.	spot-weakness	1
+362	Betrayal	Enabler	-	Any time you convince a foe that you are not a threat and then suddenly attack it (without provocation), the attack deals 4 additional points of damage. Enabler.	betrayal	1
+363	Mind Games	Action	3 Intellect	You use lies and trickery against a foe that can understand you. If successful, the foe is stunned for one round and cannot act, and it is dazed in the following round, during which time the difficulty of its tasks is increased by one step.	mind-games	1
+364	Tooth and Nail	Enabler	-	If, during a melee combat, you are willing to literally bite and claw at a foe in addition to attacking with your normal weapon, you inflict 1 additional point of damage each time you strike with your standard attack. Some creatures (such as automatons or incorporeal creatures) might not be subject to this, and attempting to bite some creatures might be dangerous. Enabler.	tooth-and-nail	1
+365	Using the Environment	Action	4 Intellect	You find some way to use the environment to your advantage in a fight. For the next ten minutes, the difficulty of attack rolls and Speed defense rolls is decreased by one step. Action to initiate.	using-environment	1
+366	Twisting the Knife	Action	4 Speed	In a round after successfully striking a foe with a melee weapon, you can opt to automatically deal standard damage to the foe with that same weapon without any modifiers (2 points for a light weapon, 4 points for a medium weapon, or 6 points for a heavy weapon). Action.	twisting-knife	1
+\.
+
+
+--
+-- Data for Name: cyphercore_artifact; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cyphercore_artifact (id, name, level_range, effect, depletion, slug, genre_id, sourcebook_id, form) FROM stdin;
+1	Angelic Ward	1d6+2	Once activated, the figurine’s spirit emerges and becomes semisolid as a glowing, human-sized winged angel. It follows within 3 feet (1 m) of the figurine owner. Anything within long range that attacks the owner is attacked by the spirit ward, which sends out a bolt of flesh-rotting energy, doing damage equal to the artifact’s level. Once activated, it functions for a day.	1 in 1d10	angelic-ward	1	1	A tiny figurine of a winged angel.
+\.
+
+
+--
+-- Data for Name: cyphercore_character; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cyphercore_character (id, name, background, notes, tier, effort, cypher_limit, money, xp, might_current, might_pool, might_edge, speed_current, speed_pool, speed_edge, intellect_current, intellect_pool, intellect_edge, armor, recovery_roll, impaired, debilitated, one_action, ten_minutes, one_hour, ten_hours, slug, descriptor_id, focus_id, type_id, genre_id, portrait_link) FROM stdin;
+1	Aldor Donatus			1	1	2	0	0	15	15	0	10	10	0	13	13	1	0	1	f	f	f	f	f	f	aldor-donatus	42	11	4	1	
+\.
+
+
+--
+-- Data for Name: cyphercore_character_abilities; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cyphercore_character_abilities (id, character_id, ability_id) FROM stdin;
+1	1	243
+2	1	244
+3	1	149
+4	1	151
+5	1	154
+6	1	156
+\.
+
+
+--
+-- Data for Name: cyphercore_characterartifact; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cyphercore_characterartifact (id, level, artifact_id, character_id) FROM stdin;
+1	6	1	1
+\.
+
+
+--
+-- Data for Name: cyphercore_charactercypher; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cyphercore_charactercypher (id, level, appearance, character_id, cypher_id) FROM stdin;
+1	5	This is a test.	1	1
+\.
+
+
+--
+-- Data for Name: cyphercore_characterequipment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cyphercore_characterequipment (id, quantity, character_id, equipment_id) FROM stdin;
+1	1	1	15
+2	1	1	29
+3	1	1	21
+\.
+
+
+--
+-- Data for Name: cyphercore_characterskill; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cyphercore_characterskill (id, skill_level, character_id, skill_id) FROM stdin;
+6	T	1	8
+7	T	1	9
 \.
 
 
@@ -1389,29 +1959,23 @@ COPY public.cyphercore_focus (id, name, description, other_details, connections,
 2	Abides In Stone	You are a golem: a being of stone rather than flesh. Your stone body resembles that of a hulking humanoid, and you can move, speak, and feel pain. Your rock body means that it takes a lot to damage you, but once damaged, your wounds are not quite as easy to recover from.\r\nAs someone made of animate stone, you typically do not wear clothing, although your stone skin is usually carved to appear as if you’re wearing it. Such carved clothing could be elaborate armor, robes, or stylistic ridges and ripples.	Minor Effect Suggestion: You step on the target, and your immense weight prevents it from moving on its next turn.\r\nMajor Effect Suggestion: You break a weapon, shield, or piece of armor the target is using.	1. Pick one other PC. She roused you from a long period of inactivity, and you feel indebted to her for returning you (perhaps accidentally) to mobility.\r\n2. Pick one other PC. You were once convinced that he wanted to reduce you to rubble, but you have since grown to think that what you believed wasn’t true, or at least no longer is so.\r\n3. Pick one other PC. She knows the secret of your origin, but whenever she speaks of it, you forget it. Perhaps you suffer from a curse?\r\n4. Pick one other PC. If you go berserk, you’ll never attack that character.	abides_in_stone	1
 4	Battles Robots	Life is for the living—the biological. Automatons, robots, animate machines, thinking machines, and anything similar are abominations. You excel at battling these anathemas, cleansing the world of their contaminating presence.\r\nMaybe your desire to battle automatons comes from religious zealotry. Maybe it’s steeped in revenge for some past crime committed by a machine. Maybe you don’t know why you’re driven to destroy animate machines. Maybe you’re just good at it.\r\nYou probably bear the trophies of former “kills” on you, wearing bits of circuitry or servos on your belt or around your neck. You also likely use heavy weaponry, ideal for penetrating armor. While sometimes a big, heavy weapon is useful against these foes, those who are quick and nimble, able to leap in and cut a few vital wires here or slice through a component panel there, also excel as robot hunters.	Additional Equipment: You have bits and pieces that you tore from the husks of automatons you have destroyed in the past.\r\nAnti-Machine Abilities: If you wield special abilities (like spells, psionics, and so on) that inflict damage, they inflict 1 additional point of damage to robots and similar beings, and 1 less point of damage to biological, living targets. If you have abilities that normally would not work against robots (like mind control), they will now.\r\nMinor Effect Suggestion: Your robot foe experiences an error for one round, during which time the difficulty of all its tasks is modified by one step to its detriment.\r\nMajor Effect Suggestion: Your robot foe experiences a major error and loses its next turn.	1. Pick one other PC. You suspect that this character is put off by your hatred of animate machines. You can choose whether or not she knows of your suspicions.\r\n2. Pick one other PC. You know that this character has suffered at the hands of automatons in the past, and perhaps you can convince him to help you in your calling. Regardless, you feel protective of him.\r\n3. Pick one other PC. This character does not appear to share your feelings about automatons. In fact, you believe that she might secretly have machine parts herself.\r\n4. Pick one other PC. This character comes from the same place you do, and you knew each other as children.	battles_robots	1
 5	Bears a Halo of Fire	You can create a sheath of flames around your body. You leave scorch marks wherever you go, and you can’t handle combustible objects without first dousing your inherent flames. If you have other extraordinary abilities, all your effects are tainted with flame. Fiery visuals accompany your powers, and in some cases, your predilection for flame actually reshapes your abilities to take on a fiery nature where none existed before.\r\nYou probably wear red and yellow, or perhaps black.	Occasionally when you use Hurl Flame to harm a foe, his vulnerable body part bursts into flame. The flame doesn’t harm him or his equipment, but it can be an impediment during combat due to surprise.\r\nAdditional Equipment: You have an artifact—a device that sprays inanimate objects to make them fire-resistant. All your starting gear has already been treated unless you don’t want it to be.\r\nFire Abilities: If you perform special abilities, those that would normally use force or other energy (such as electricity) instead use fire. For example, force blasts are blasts of flame. These alterations change nothing except the type of damage and the fact that it might start fires. As another example, a wall of energy instead creates a wall of roaring flames. In this case, the alteration changes the ability so that\r\nthe barrier is not solid but instead inflicts 1 point of damage to anything that touches\r\nit and 4 points of damage to anyone who passes through it.\r\nMinor Effect Suggestion: The target or something near the target catches fire.\r\nMajor Effect Suggestion: An important item on the target’s person is destroyed.	1. Pick one other PC. Through a quirk of fate, your fire cannot harm that character.\r\n2. Pick one other PC. You recently discovered that if she stands near you when you use your Shroud of Flame ability, she too becomes covered in flames. This doesn’t harm her, and anyone who tries to touch her or strike her with a melee attack suffers 1 point of damage. She must remain within short range of you.\r\n3. Pick one other PC. He had a devastating experience with fire in his past and must decide how to react to your constant use of flame around him.\r\n4. Pick one other PC. For some reason, one of his limbs is especially vulnerable to your flames.	bears_a_halo_of_fire	1
-8	Calculates the Incalculable	Other people are a little in awe of your mind, though you feel normal enough. Admittedly, you are sometimes surprised when others fail to grasp easy concepts, or how they don’t share your appreciation of the beauty in dynamical systems theory, elliptic curve geometry, Riemann meromorphic functions, and all the other wondrous things.\r\nYou live a little too much in your head to concern yourself with how you look. Your hair is probably slightly too long and tousled, your clothing is casual and stained with coffee, and your socks don’t match.	Minor Effect Suggestion: You don’t have to spend an action observing to make your next predictive equation or predictive model.\r\nMajor Effect Suggestion: Intuition flares, and you can ask the GM one question about what you’re looking at.	1. Pick one other PC. If it wasn’t for you, this character never would have passed his college math requirements.\r\n2. Pick one other PC. She seems strangely interested in your mathematical skills.\r\nIt’s up to her whether she is fascinated or disturbed by them.\r\n3. Pick one other PC. Based on a couple of comments you’ve overheard, you suspect that this character doesn’t hold math in the highest regard.\r\n4. Pick one other PC. The character seems to be a variable that never quite solves the same way twice when you include him in an equation, but you haven’t the slightest idea why.	calculates_the_incalculable	1
-9	Carries A Quiver	The archer is a skilled combatant, deadly in any fight. With a keen eye and quick reflexes, you can eliminate foes at range before they reach you. A good archer also learns to make his own arrows and bows.\r\nYou probably wear no more than light armor so you can move quickly when needed.\r\nYou can use this focus with crossbows instead of bows if you wish.	Additional Equipment: You start with a well-made bow and two dozen arrows.\r\nMinor Effect Suggestion: Hit in a tendon or muscle, the target takes 2 points of Speed damage as well as normal damage.\r\nMajor Effect Suggestion: The target is pinned in place with an arrow.	1. Pick one other PC to be the true friend who gave you the excellent bow that you currently use. Secretly pick a second PC (preferably one who is likely to get in the way of your attacks). When you miss with\r\na bow and the GM rules that you struck someone other than your target, you hit the second character, if possible.\r\n2. Pick one other PC that you’ve known for a while. The two of you used to do an act where you shot an apple out of her mouth, either for money or just the enjoyment\r\nof friends. One time you missed and hit\r\nher in the cheek. She may or may not still bear a physical or mental scar from this experience. Either way, you never did your act again.\r\n3. Pick one other PC who is interested in studying archery. He is a quick learner, and\r\nif you spend one hour teaching him a few of your secrets, you both gain +1 to any die rolls when you fight the same foe using your bows.\r\n4. Pick one other PC. That person brings up strong emotions in you, whether of anger, desire, or something else. If she is within short range while you’re using your bow, you find it difficult to concentrate and shoot straight.	carries_a_quiver	1
-10	Casts Spells	You can cast spells of arcing lightning, rolling fire, creeping shadow, and summoning. As a spellcaster, you understand that the world is a construct built on hidden formulas, flows of energy, and encrypted arcane secrets. Spells are specific flaws in reality that have been identified, studied, and codified into a spellbook for ease of reference and use. Though you likely apprenticed under a more accomplished spellcaster, sorcerer, or wizard, you quickly learned that the most powerful spells—those that can alter a creature’s form, open pathways to other worlds, or kill with a single word—are jealously guarded secrets even among friendly spellcasters, including between master and apprentice.\r\nYou probably wear sturdy robes stitched with esoteric symbols, carry a staff etched with indecipherable glyphs, and, last but certainly not least, carry a tome of magic spells wherever you go.	Additional Equipment: Spellbook, notes taken from another caster’s spellbook you’ve yet to decipher.\r\nSpellcasting Special Abilities: If you have other dramatic abilities, they are spells you cast, which involve an arcane gesture or two, a few mystical words, and possibly a pinch of dust or other material to invoke the effect. (These abilities appear as spells codified in your spellbook.) This alteration changes nothing other than how you trigger the effects. For example, when a character who Casts Spells uses Enthrall, she does so by first making a particular hand gesture and uttering the syllables of the spell, after which her eyes glow with a captivating, enthralling light.\r\nMinor Effect Suggestion: Your spell hazes the target’s vision with a magical glow so that the difficulty of all tasks it attempts on its next action is modified by one step to its detriment.\r\nMajor Effect Suggestion: A pulse of arcane energy removes the target from reality for a brief period. When the target reappears a couple of rounds later, no time has passed for it.	1. Pick one other PC. You worry that she is trying to get a look at your spellbook, but you don’t know why.\r\n2. Pick one other PC. You once accidentally turned him into a tiny, insignificant creature. Though you were unable to revert him, he eventually returned to his normal form.\r\n3. Pick one other PC. That character is related to the spellcaster you apprenticed under.\r\n4. Pick one other PC. Every so often when you cast a spell, that character later reacts as if she had an allergic reaction. She doesn’t yet know the cause of her affliction, but you do. You’re still debating whether to tell her or let her suffer in ignorance while you work on a spell to assuage her condition.	casts_spells	1
-11	Channels Divine Blessings	You are a devout follower of a divine being and serve as its representative among mortals. In other words, you are a priest. The power of your god or gods flows through you and allows you to perform miracles on their behalf.\r\nYou wear simple clothes, though you also display the symbols and insignia of your deity. Normally humble, you are strident when speaking with the authority of the divine.	Additional Equipment: A symbol of your faith carved in iron.\r\nMinor Effect Suggestion: The power of faith knocks the target back several paces. Major Effect Suggestion: The power of faith knocks the target prone.	1. Pick one other PC. You were a drunk or otherwise lost to questionable practices until this character plucked you out of the gutter and cleaned you up. You found your calling after that.\r\n2. Pick one other PC. You’re concerned that her spirit is bound for darkness.\r\n3. Pick one or more other PCs. You say a prayer for each of them, each day. They may or may not know or care that you are doing so.\r\n4. Pick one other PC. That character has confided in you that he doesn’t think the gods are real. You’re not sure how to deal with that.	channels_divine_blessings	1
 7	Builds Robots	Your brilliance is mechanically focused, and it allows you to create artificial entities who accept you for who you are. As an added bonus, they do what you command without complaint. You’re not entirely sure you’ve arrived at nirvana by surrounding yourself with artificial beings, but it’ll do for now.\r\nBecause your robots don’t have an opinion, you’re not too concerned with your appearance. You tend to throw the same shop coat over whatever you happen to be wearing beneath.	Additional Equipment: Robot spare parts, robot tool kit.\r\nMinor Effect Suggestion: The robot jolts your foe, which modifies any action taken by the foe on its next turn by one step to its detriment.\r\nMajor Effect Suggestion: Your robot takes an immediate extra action that you choose.	1. Pick one other PC. Your robotic artificial assistant will take commands from that character as well as from you.\r\n2. Pick one other PC. You created a robot companion for that character, but it promptly tried to kill her, so it had to be destroyed. You’re not sure what went wrong.\r\n3. Pick one other PC. You are certain that character is secretly an artificial entity, even if he denies it.\r\n4. Pick one other PC. You created a robotic catlike entity (a level 1 creature) for that character that sometimes shows up but is usually absent pursuing vermin.	builds_robots	1
-14	Consorts With The Dead	Through the study of science or magic to which most people give a wide berth, you have mastered the ability to speak with and reanimate the dead. Necromancy, however, is shunned as a taboo. It is gruesome, morbid, and in the eyes of most, forbidden.\r\nYou probably wear black clothing, which might be adorned with skulls, bones, teeth, or other symbols of death. Some who consort with the dead paint their skin and dye their hair black, red, and white to bring them visually closer to the bodies they interact with.	Additional Equipment: You carry an innocuous memento of someone close to you who died. It might be a locket, a ring, a letter, a coin, or something similar.\r\nNecromantic Abilities: If you perform abilities that would normally use force\r\nor other energy (such as electricity), they instead use deathly energies. For example, a force blast is a blast of cold, life-draining energy. This alteration changes nothing except that the type of damage is different, and it harms only living creatures.\r\nMinor Effect Suggestion: The animated creature adds 1 to all rolls, or the target is dazed for one round, during which time the difficulty of all its tasks is modified by one step to its detriment.\r\nMajor Effect Suggestion: The animated creature adds 2 to all rolls, or the target is stunned and loses his next turn.	1. Pick one other PC. You suspect that this character finds your predilections abhorrent. You can choose whether or not she knows of your suspicions.\r\n2. Pick one other PC. This character recently lost a loved one and wants you to contact that person in the afterlife. Whether you try to explain that this isn’t how it works is up to you.\r\n3. Pick one other PC. This character looks upon you as some kind of religious figure (whether you encourage this behavior is up to you).\r\n4. Pick one other PC. This character comes from the same place you do, and you knew each other as children.	consorts_with_the_dead	1
-12	Commands Mental Powers	You have always had special abilities that others didn’t seem to share. Through practice and devotion, you have honed this unique talent so that you can harness the power of your mind to perform deeds.\r\nNo one can tell that you have this ability just by looking at you, although you wear a crystal or jewel somewhere on your head to help focus your power. Either this focusing object was given to you by someone who recognized your ability, or you came upon it by accident and it triggered your abilities. Some people with mental powers—often called psychics or psionics by ordinary folks—are secretive and a little paranoid.	Additional Equipment: You have a crystal or jewel artifact that, when worn against your forehead or temple, adds 1 point to your Intellect Pool. If you’re ever without the artifact, subtract 5 points from your Intellect Pool; the points are restored if you regain the item.\r\nMental Abilities: If you have abilities like Mind Control or Mind Reading from your type (or elsewhere), you’re automatically trained in them. Enabler.\r\nMinor Effect Suggestion: The range or duration of the mental power is doubled.\r\nMajor Effect Suggestion: You can take another action on that same turn.	1. Pick one other PC. You have found that this character is particularly tuned into your mental powers. While you’re within short range of him, the two of you are always in telepathic contact, and he is never harmed by your Psychic Burst.\r\n2. Pick one other PC. She is what you might call a “loud thinker,” and her thoughts sometimes come through to you when you are within short range, even when you’re not using your Mind Reading ability. You can’t seem to turn this off. Whether you tell her or not is up to you.\r\n3. Pick one other PC. For some reason, he seems to act as an antenna for your mental powers. If the two of you are touching,\r\nyour Telepathic and Mind Reading abilities sometimes extend to long range.\r\n4. Pick one other PC. Your close mentor or teacher once used Mind Control on her and forced her to do something against her will. To this day, you haven’t talked about it, but you are both intensely aware of the connection.	commands_mental_powers	1
+10	Casts Spells	You can cast spells of arcing lightning, rolling fire, creeping shadow, and summoning. As a spellcaster, you understand that the world is a construct built on hidden formulas, flows of energy, and encrypted arcane secrets. Spells are specific flaws in reality that have been identified, studied, and codified into a spellbook for ease of reference and use. Though you likely apprenticed under a more accomplished spellcaster, sorcerer, or wizard, you quickly learned that the most powerful spells—those that can alter a creature’s form, open pathways to other worlds, or kill with a single word—are jealously guarded secrets even among friendly spellcasters, including between master and apprentice.\r\nYou probably wear sturdy robes stitched with esoteric symbols, carry a staff etched with indecipherable glyphs, and, last but certainly not least, carry a tome of magic spells wherever you go.	Additional Equipment: Spellbook, notes taken from another caster’s spellbook you’ve yet to decipher.\r\nSpellcasting Special Abilities: If you have other dramatic abilities, they are spells you cast, which involve an arcane gesture or two, a few mystical words, and possibly a pinch of dust or other material to invoke the effect. (These abilities appear as spells codified in your spellbook.) This alteration changes nothing other than how you trigger the effects. For example, when a character who Casts Spells uses Enthrall, she does so by first making a particular hand gesture and uttering the syllables of the spell, after which her eyes glow with a captivating, enthralling light.\r\nMinor Effect Suggestion: Your spell hazes the target’s vision with a magical glow so that the difficulty of all tasks it attempts on its next action is modified by one step to its detriment.\r\nMajor Effect Suggestion: A pulse of arcane energy removes the target from reality for a brief period. When the target reappears a couple of rounds later, no time has passed for it.	1. Pick one other PC. You worry that she is trying to get a look at your spellbook, but you don’t know why.\r\n2. Pick one other PC. You once accidentally turned him into a tiny, insignificant creature. Though you were unable to revert him, he eventually returned to his normal form.\r\n3. Pick one other PC. That character is related to the spellcaster you apprenticed under.\r\n4. Pick one other PC. Every so often when you cast a spell, that character later reacts as if she had an allergic reaction. She doesn’t yet know the cause of her affliction, but you do. You’re still debating whether to tell her or let her suffer in ignorance while you work on a spell to assuage her condition.	casts_spells	1
+9	Carries a Quiver	The archer is a skilled combatant, deadly in any fight. With a keen eye and quick reflexes, you can eliminate foes at range before they reach you. A good archer also learns to make his own arrows and bows.\r\nYou probably wear no more than light armor so you can move quickly when needed.\r\nYou can use this focus with crossbows instead of bows if you wish.	Additional Equipment: You start with a well-made bow and two dozen arrows.\r\nMinor Effect Suggestion: Hit in a tendon or muscle, the target takes 2 points of Speed damage as well as normal damage.\r\nMajor Effect Suggestion: The target is pinned in place with an arrow.	1. Pick one other PC to be the true friend who gave you the excellent bow that you currently use. Secretly pick a second PC (preferably one who is likely to get in the way of your attacks). When you miss with\r\na bow and the GM rules that you struck someone other than your target, you hit the second character, if possible.\r\n2. Pick one other PC that you’ve known for a while. The two of you used to do an act where you shot an apple out of her mouth, either for money or just the enjoyment\r\nof friends. One time you missed and hit\r\nher in the cheek. She may or may not still bear a physical or mental scar from this experience. Either way, you never did your act again.\r\n3. Pick one other PC who is interested in studying archery. He is a quick learner, and\r\nif you spend one hour teaching him a few of your secrets, you both gain +1 to any die rolls when you fight the same foe using your bows.\r\n4. Pick one other PC. That person brings up strong emotions in you, whether of anger, desire, or something else. If she is within short range while you’re using your bow, you find it difficult to concentrate and shoot straight.	carries_a_quiver	1
+11	Channels Divine Blessings	You are a devout follower of a divine being and serve as its representative among mortals. In other words, you are a priest. The power of your god or gods flows through you and allows you to perform miracles on their behalf.\r\nYou wear simple clothes, though you also display the symbols and insignia of your deity. Normally humble, you are strident when speaking with the authority of the divine.	Additional Equipment: A symbol of your faith carved in iron.\r\nMinor Effect Suggestion: The power of faith knocks the target back several paces.\r\nMajor Effect Suggestion: The power of faith knocks the target prone.	1. Pick one other PC. You were a drunk or otherwise lost to questionable practices until this character plucked you out of the gutter and cleaned you up. You found your calling after that.\r\n2. Pick one other PC. You’re concerned that her spirit is bound for darkness.\r\n3. Pick one or more other PCs. You say a prayer for each of them, each day. They may or may not know or care that you are doing so.\r\n4. Pick one other PC. That character has confided in you that he doesn’t think the gods are real. You’re not sure how to deal with that.	channels_divine_blessings	1
 17	Crafts Illusions	You create holographic images that appear real. You are, in effect, an artist—a crafter of light and sound. Holographic images can never inflict direct harm or exert real force, but they can fool creatures, changing opinions and even behaviors if you craft them cleverly.\r\nYou likely dress with flair and color. The appearance of things is important to you, both their beauty and their ugliness. You are a visual performer who can entertain, terrify, or fool everyone you encounter.	Psychedelic Abilities: If you have other overt abilities, they take on flamboyant visual and auditory qualities of your choosing. This alteration changes nothing other than the appearance of the effects. For example, your attack might look like a monster made of energy that assails your foes. If you have the Stasis ability, it might look like a tentacled beast holds the victim in place. If you have Teleportation, it might seem like a hole in space opens up and swallows you.\r\nMinor Effect Suggestion: Your illusion has a special quality to it—perhaps an observer sees an image of something from his past.\r\nMajor Effect Suggestion: The illusion lasts for one hour, or if it already lasts that long, it lasts for twenty-four hours.	1. Pick one other PC. This character is never fooled by your illusions and is never affected by the trickery of your special abilities. You can choose whether or not you know this fact.\r\n2. Pick one other PC. He has a special angle on your illusions and can sometimes point out potential places of weakness.\r\n3. Pick two other PCs who are willing to be trained as your assistants. When you use your Minor Illusion ability, if both of these characters are in immediate range, they can assist you, together decreasing the difficulty of your action by one step.\r\n4. Pick one other PC. That character’s face is so intriguing to you in a way you don’t understand that your minor illusions sometimes look like him, even when you don’t intend them to.	crafts_illusions	1
 18	Crafts Unique Objects	The raw materials for a crafter offer themselves to those who know where to look. You are a maker, a crafter, an inventor, and a builder. You might start out working with wood or metal, but eventually you will master far greater creations. Whether magic or technology is your field, you know that you can master it and use it for your own designs.\r\nYou likely carry a wide array of tools and spare parts wherever you go. Your work apron is probably a mainstay of your wardrobe, its pockets and loops brimming with the instruments of your trade. Your calloused fingers might be stained with grease that will never come completely clean, but these marks are badges of honor.	Additional Equipment: You begin the game with a bag of light tools, the tools needed to make your first-tier crafts, and any normal item (of level 1 or 2) that you can make with your skills.\r\nMinor Effect Suggestion: Any rolls you make regarding that artifact gain a +1 bonus for twenty-four hours.\r\nMajor Effect Suggestion: Any rolls you make regarding that artifact gain a +2 bonus for twenty-four hours.	1. Pick one other PC. The character has an extra item of regular equipment that you fashioned for her. (She chooses the item.)\r\n2. Pick one other PC. She seems to have in her possession an object that you made for someone else a long time ago.\r\n3. Pick one other PC. He has commissioned you to create something for him. You’ve already been paid but haven’t yet completed the item.\r\n4. Pick one other PC. You’ve seen that character admiring your crafting skills many times. Perhaps he would like a lesson. (You won’t know until you ask.)	crafts_unique_objects	1
 24	Exists Partially Out Of Phase	You have the ability to change your phase state. In fact, you’re always slightly out of phase, giving you a ghostly translucence. With concentration, you can pass your hand through a solid object, allow a solid object to pass harmlessly through you, or literally walk through walls. However, moving in and out of different phase states requires extreme force of will and can be mentally taxing.\r\nYou might do whatever you can to play up your translucent appearance by wearing diaphanous, billowy clothing, or, depending on your personality, you might do just the opposite.	Minor Effect Suggestion: While out of phase, you also gain +1 to all Speed defense rolls.\r\nMajor Effect Suggestion: While out of phase, you are also invisible.	1. Pick one other PC. You have known that character for a while, and he helped you gain control of your phase states.\r\n2. Pick one other PC. Sometime in his past, he had a devastating experience with going out of phase. Whether he chooses to tell you about it is up to him.\r\n3. Pick one other PC. You once accidentally moved your hand right through her. It was clearly an unnerving experience for you both.\r\n4. Pick two other PCs. They both really want to go out of phase and have been pestering you about it. But you’re not convinced they even know what that phrase means.	exists_partially_out_of_phase	1
-19	Defends The Weak	Someone has to stand up for the helpless, the weak, and the unprotected. You believe this duty, this obligation, falls to you, and thus you have spent much of your life watching out for the people around you. When you see them in trouble, you are the first to come to their aid. You might give up your last dime to help the hungry, take a beating to save a person from the same, or rally your friends to take on injustice wherever you find it.\r\nYou probably bear many scars from previous conflicts, but for each scar, you likely also have a token of gratitude. You may have a dried flower given to you by a lady you saved from brigands, or a bit of metal given to you by a starving man you fed.	Additional Equipment: You have a shield.\r\nMinor Effect Suggestion: You can draw an attack without having to use an action at any point before the end of the next round.\r\nMajor Effect Suggestion: You can take an extra action. You can use this action only to guard.	1. Pick one other PC. You failed to protect this character at some point in the past, and you feel compelled to make up for it.\r\n2. Pick one other PC. That character claimed innocence during a long-ago event, and you protected him. Now that time has passed, you’re not entirely convinced that he was blameless.\r\n3. Pick two other PCs. They seem to think that you are more of an arbitrator than\r\nyou really are, and they keep asking you to choose which one of them is correct.\r\n4. Pick one other PC. She believes that one of the tokens of gratitude you carry came from her father.	defends_the_weak	1
-20	Doesn't Do Much	You’re a slacker. You’ve had a number of jobs in your life, but nothing’s really stuck. No one thing consumes you, compels you, or drives you. You float from event to event. That doesn’t mean you’re unhappy, necessarily. It’s not a bad life. You like to take it easy. Appreciate the little things. Partake in a few relaxing substances now and again. Enjoy the rug that ties the whole room together. Not a lot of stress, and you know a little about a lot of different things.\r\nYou dress casually. You might be in decent physical shape—if, you know, that’s your thing—or maybe you’re more cerebral (a pseudo-intellectual). It’s all good.	Minor Effect Suggestion: You draw on your experiences and reduce the difficulty of your next action by one step.\r\nMajor Effect Suggestion: You get a free, no-action recovery roll.	1. Pick one other PC. She’s always been there for you. Got you out of jams from time to time. She’s cool.\r\n2. Pick one other PC. This character is too uptight for your tastes. He’s got to learn to chill.\r\n3. Pick one other PC. You’re a little jealous of this character because she’s better\r\nthan you at your favorite hobby (bowling, karaoke, or whatever it is).\r\n4. Pick one other PC. You owe him money, but you’re hoping he’ll forget that.	doesnt_do_much	1
-23	Exists In Two Places At Once	One day, you looked into a mirror or another reflective surface and noticed that the reflection didn’t quite match your movements. After some time, the image stepped free from the surface and where there was one, there were now two.\r\nYou have a doppelganger, a duplicate you can call into existence when you wish. This duplicate may be a quirk of your nature, brought on by exposure to weird energy or a piece of scarcely understood technology. Then again, this other might hail from another reality, a branching timeline that may be similar to or quite different from your own. Of course, the copy could simply be a manifestation of your will on a cloud of nanites that assume your shape when you command them. Whatever the reason for your ability, you can call forth the copy and be in two places at once.\r\nYour duplicate is your twin. It shares more than your appearance. It duplicates your mannerisms, manner of speech, expressions, and habits. In effect, you have another you.	Four Hands Are Better Than Two: When you and your duplicate work together to complete a task, the difficulty of that task is decreased by one step (if cooperation would be helpful).\r\nMinor Effect Suggestion: For your target, the difficulty of the next task it attempts involving you or your duplicate before the end of the next round is increased by one step.\r\nMajor Effect Suggestion: You have an asset on the next roll you make within the next hour.	1. Pick one other PC. This character finds your talent unnerving and unsettling. For her, the difficulty of any task made to help your duplicate is increased by one step.\r\n2. Pick one other PC. This character seems convinced that you are really a pair of identical twins with no actual powers.\r\n3. Pick one other PC with a companion. This PC’s companion seems to have an unusual relationship with your duplicate.\r\n4. Pick one other PC. You used to move in the same social circles and knew of each other, but you had never been introduced.	exists_in_two_places_at_once	1
-21	Employs Magnetism	Electromagnetism is a fundamental force in the universe, and it is yours to command. You are a master of metal.\r\nYou probably wear a lot of metal, perhaps as part of your clothing or armor, as part of your accessories (such as jewelry or piercings), embedded into your body surgically, or in some combination of these options.	Minor Effect Suggestion: The duration of the effect is doubled.\r\nMajor Effect Suggestion: An important item on the target’s person is destroyed.	1. Pick one other PC. Whenever you use your powers, the metallic items on that character’s body shudder, rattle, clink, and shake if he is within short range.\r\n2. Pick one other PC. You worked together in the past, and the job ended badly.\r\n3. Pick two other PCs. While practicing your Diamagnetism ability, you once accidentally sent them careening into each other. You’ve never been able to repeat it. Whether you tell them that you’ve been trying to replicate the strange effect is up to you.\r\n4. Pick one other PC who has metallic elements in his body. You’re afraid to use your magnetism abilities near him because you once had a bad experience involving Move Metal and a (probably former) friend’s mechanical eyes.	employs_magnetism	1
 45	Masters Defense	Protecting yourself is obviously important in dangerous situations, and you are particularly good at it. Cautious and prudent, you learn techniques to defend against all kinds of attacks, both physical and mental. The winner is often the last person standing, and you’ve done all you can to ensure that person will be you.\r\nYou carry a shield and probably wear the best armor you can find.	Additional Equipment: You have a shield.\r\nMinor Effect Suggestion: You gain a +1 bonus to Speed defense rolls for one round.\r\nMajor Effect Suggestion: You gain a +2 bonus to Speed defense rolls for one round.	1. Pick one other PC. This character protected you from harm recently, and you feel indebted to him for saving your life.\r\n2. Pick one other PC. She thinks you are an incredibly selfish person, perhaps based on her belief that you always save yourself first.\r\n3. Pick one other PC. You once fought on opposite sides of a combat.\r\n4. Pick one other PC. This character seems to be a jinx for you. Whenever she is next to you, the difficulty of your defense tasks is increased by one step. However, you’re the opposite for her—when you’re next to her, the difficulty of her defense tasks is decreased by one step.	masters_defense	1
 46	Masters The Swarm	Insects. Rats. Bats. Even birds. You master one type of small creature, and they respond to you in number. It’s a weird skill—as you’ve been told far too many times—but you’ve seen the benefits both in and out of battle, and you’ve fully embraced it.\r\nYour dress likely bears some mark of your predilections. Random creatures of your chosen kind sometimes alight on your person even when you don’t purposefully call them.	Minor Effect Suggestion: The swarm is particularly thick and angry, and everyone\r\nwithin it suffers 1 point of damage this round.\r\nMajor Effect Suggestion: Everyone within the swarm suffers 3 points of damage this round.	1. Pick one other PC. This person seems deathly afraid of your creatures and has a watchful eye on you.\r\n2. Pick one other PC. Your creatures are attracted to this person for reasons you cannot understand.\r\n3. Pick one other PC. You are indebted to this character for an act of kindness in the past.\r\n4. Pick one other PC. This character has an oddly shaped birthmark, mole, or other feature that reminds you of your creatures. Does it mean something?	masters_the_swarm	1
-26	Explores Deep Waters	You have nothing to fear from the depths. You have always been a good swimmer,\r\nable to hold your breath longer than anyone else, tread water for as long as you wanted, and delve deeper into the swirling darkness than your friends, all without stretching your resources. The depths you so freely explore harbor many secrets, and the waters that shelter you become part of who you are, an extension of your identity.\r\nWhen you bother to wear clothes, you favor snug, tight-fitting garments that stay close to your skin and do not hamper your mobility.\r\nThe abilities granted by this focus might result from special equipment you make along the way, weird transformations that began when you first swam into the deepest, darkest places, or simply an expression of an unusual gift or heritage.	Additional Equipment: You have a special device that, when fitted in your mouth, allows you to breathe underwater. The device functions for up to four hours at a time, after which you must wait four hours before you can use it again.\r\nWater Abilities: If you wield powers that would normally use force or other energy, they instead use water or ice. For example, a blast of energy might create a wave of water that crashes down on your target.\r\nIn addition, if you wish, you can swap an ability gained from your type for the following.\r\nCreate Water (2 Intellect points). You cause water to bubble up from a spot on the ground you can see. The water flows from that spot for one minute, creating about 1 gallon (4 liters) by the time it stops.\r\nMinor Effect Suggestion: You can take an extra action. You may use this action only to move or perform a movement-related activity.\r\nMajor Effect Suggestion: The difficulty of any Speed defense actions you take before the end of the next round is reduced by one step.	1. Pick one other PC. That character nearly drowned while following you on one of your expeditions underwater. It’s up to him whether he trusts you in such an environment again.\r\n2. Pick one other PC. She knows something about your past that you wish she didn’t.\r\n3. Pick one other PC. You think he suspects that you were involved with pirates or other criminals. Whether you were or not is up to you.\r\n4. Pick one other PC. She can’t swim very well and fears open water. You believe that you can help her overcome these issues, if she is willing to let you.	explores_deep_waters	1
+20	Doesn't Do Much	You’re a slacker. You’ve had a number of jobs in your life, but nothing’s really stuck. No one thing consumes you, compels you, or drives you. You float from event to event. That doesn’t mean you’re unhappy, necessarily. It’s not a bad life. You like to take it easy. Appreciate the little things. Partake in a few relaxing substances now and again. Enjoy the rug that ties the whole room together. Not a lot of stress, and you know a little about a lot of different things.\r\nYou dress casually. You might be in decent physical shape—if, you know, that’s your thing—or maybe you’re more cerebral (a pseudo-intellectual). It’s all good.	Minor Effect Suggestion: You draw on your experiences and reduce the difficulty of your next action by one step.\r\nMajor Effect Suggestion: You get a free, no-action recovery roll.	1. Pick one other PC. She’s always been there for you. Got you out of jams from time to time. She’s cool.\r\n2. Pick one other PC. This character is too uptight for your tastes. He’s got to learn to chill.\r\n3. Pick one other PC. You’re a little jealous of this character because she’s better\r\nthan you at your favorite hobby (bowling, karaoke, or whatever it is).\r\n4. Pick one other PC. You owe him money, but you’re hoping he’ll forget that.	doesnt_do_much	1
+21	Employs Magnetism	Electromagnetism is a fundamental force in the universe, and it is yours to command. You are a master of metal.\r\nYou probably wear a lot of metal, perhaps as part of your clothing or armor, as part of your accessories (such as jewelry or piercings), embedded into your body surgically, or in some combination of these options.	Minor Effect Suggestion: The duration of the effect is doubled.\r\nMajor Effect Suggestion: An important item on the target’s person is destroyed.	1. Pick one other PC. Whenever you use your powers, the metallic items on that character’s body shudder, rattle, clink, and shake if he is within short range.\r\n2. Pick one other PC. You worked together in the past, and the job ended badly.\r\n3. Pick two other PCs. While practicing your Diamagnetism ability, you once accidentally sent them careening into each other. You’ve never been able to repeat it. Whether you tell them that you’ve been trying to replicate the strange effect is up to you.\r\n4. Pick one other PC who has metallic elements in his body. You’re afraid to use your magnetism abilities near him because you once had a bad experience involving Move Metal and a (probably former) friend’s mechanical eyes.	employs_magnetism	1
+23	Exists In Two Places At Once	One day, you looked into a mirror or another reflective surface and noticed that the reflection didn’t quite match your movements. After some time, the image stepped free from the surface and where there was one, there were now two.\r\nYou have a doppelganger, a duplicate you can call into existence when you wish. This duplicate may be a quirk of your nature, brought on by exposure to weird energy or a piece of scarcely understood technology. Then again, this other might hail from another reality, a branching timeline that may be similar to or quite different from your own. Of course, the copy could simply be a manifestation of your will on a cloud of nanites that assume your shape when you command them. Whatever the reason for your ability, you can call forth the copy and be in two places at once.\r\nYour duplicate is your twin. It shares more than your appearance. It duplicates your mannerisms, manner of speech, expressions, and habits. In effect, you have another you.	Four Hands Are Better Than Two: When you and your duplicate work together to complete a task, the difficulty of that task is decreased by one step (if cooperation would be helpful).\r\nMinor Effect Suggestion: For your target, the difficulty of the next task it attempts involving you or your duplicate before the end of the next round is increased by one step.\r\nMajor Effect Suggestion: You have an asset on the next roll you make within the next hour.	1. Pick one other PC. This character finds your talent unnerving and unsettling. For her, the difficulty of any task made to help your duplicate is increased by one step.\r\n2. Pick one other PC. This character seems convinced that you are really a pair of identical twins with no actual powers.\r\n3. Pick one other PC with a companion. This PC’s companion seems to have an unusual relationship with your duplicate.\r\n4. Pick one other PC. You used to move in the same social circles and knew of each other, but you had never been introduced.	exists_in_two_places_at_once	1
 28	Fights With Panache	You know that style is at least as important as substance. Defeating foes is secondary to looking good while doing it. Some might call you a swashbuckler or daredevil. You leap through the air, make a flourish with your weapon, and attack, usually with a clever, biting show of wit. Your enemies hate you, but your allies adore you. Just watching you fight is entertaining.\r\nYou very likely wear no armor, instead preferring stylish clothing—perhaps even a hat with a feather.	Additional Equipment: You begin with a set of extremely stylish clothes and a jeweled weapon.\r\nMinor Effect Suggestion: The target is so dazzled by your style that it is dazed for one round, during which time the difficulty of its tasks is modified by one step to its detriment.\r\nMajor Effect Suggestion: Make an additional attack with your weapon on your turn.	1. Pick one other PC. You’re always trying to impress this character with your skill, wit, appearance, or bravado. Perhaps she is a rival, perhaps you need her respect, or perhaps you’re romantically interested in her.\r\n2. Pick one other PC. This character seems to anticipate your next move almost before you even begin it. When he collaborates with you on the same task or fights the same foe, you gain +1 to any die rolls.\r\n3. Pick one other PC. You fear that she is jealous of your abilities and worry that it might lead to problems.\r\n4. Pick one other PC. This character is so enamored of your swashbuckling, entertaining ways during combat that he sometimes forgets to take action himself.	fights_with_panache	1
 31	Fuses Mind And Machine	You believe that the finest machine ever created is the human brain (although some scientists would disagree). Experience and training have taught you that any machine can be improved. Through the use of implants and mechanical enhancements, your brain processes input faster, stores more information, and eventually can tap right into the Internet (or similar data network). Mentally, you function on an entirely different level than your fellows.\r\nDid you make these improvements yourself? Did someone else? Was it with your blessing or against your will? Regardless, you are now more than just a person. You are both living creature and machine. But unlike what others might assume, all of your refinements and upgrades are on the inside. You don’t need mech eyes or metal arms to be enhanced. It’s all about what’s inside your skull.	Additional Equipment: You have an artifact that protects your implants and enhancements from disruption or intrusion. The difficulty of resisting such attacks is decreased by one step.\r\nMinor Effect Suggestion: You foresee your foes’ moves so well that the difficulty of your Speed defense rolls for the next round is decreased by one step.\r\nMajor Effect Suggestion: Processing surge! On your next action, you can use points from your Intellect Pool rather than your Might or Speed Pools.	1. Pick one other PC. This character knows a few things that can help when your implants and enhancements malfunction.\r\n2. Pick one other PC. He seems to find you off-putting. You wonder if it’s because you’re clearly smarter than he is or if it’s for some other reason.\r\n3. Pick one other PC. This character has a small device that can shut down your brain with a single switch. However, you don’t think he has any idea of what it is or what it can do.\r\n4. Pick one other PC. Within your memory circuits, you have data of someone who looks just like that character committing terrible crimes—hundreds of years ago. You have no explanation.	fuses_mind_and_machine	1
 33	Grows To Towering Heights	You have the ability to become a towering giant for short periods. When you do, everything and everyone seems to shrink around you, until it’s like you’re walking through a children’s play area, where everything is sized for toddlers. As you grow ever larger, your sense of scale shifts further. At your maximum height, most other creatures are as insects, and unless you take care, you easily crush them beneath your colossal feet.\r\nWhen you’re not growing, you look normal. Only the clothing in direct contact with your skin grows with you, so you wear expensive outerwear only when you’re fairly certain you won’t have to trigger your Enlarge ability.	Minor Effect Suggestion: Your opponent is so startled by your size that it is dazed, during which time the difficulty of all tasks it performs is modified by one step to its detriment.\r\nMajor Effect Suggestion: All opponents within short range are so startled by your sudden growth that they are dazed, during which time the difficulty of all tasks they perform is modified by one step to their detriment.	1. Pick one other PC. When you grow, if that character is next to you, she also grows, but only about a foot in height.\r\n2. Pick one other PC. That character helped you find a way to mentally control your ability to grow; at first, it triggered only when you were emotionally distressed.\r\n3. Pick two other PCs. At great risk to themselves, they pulled your oversized, unconscious body from a bad situation and saved your life.\r\n4. Pick one other PC. This character inadvertently hinders your actions. If he is within immediate range, the difficulty of any action that you take related to this focus is increased by one step.	grows_to_towering_heights	1
 34	Howls At The Moon	You are a lycanthrope—a werewolf, werebear, wererat, weretiger, or something similar. You are cursed and blessed to be able to transform into a powerful creature, drawing additional mass from a transdimensional source. You and the GM should work out the exact nature of the creature, including its appearance, but it’s a wild beast of rage and blood—at least until you learn to control it.\r\nStyle and appearance are probably low on your list of concerns. Your clothes might be ragged because your transformation is hard on them (or they’re cheap because you know they’ll be destroyed the next time you transform).	Additional Equipment: You have an accurate timepiece that always lets you know when the next transformation is coming.\r\nMinor Effect Suggestion: The target is so intimidated by your bestial attack that it is dazed for one round, during which time the difficulty of all tasks it performs is modified by one step to its detriment.\r\nMajor Effect Suggestion: Your attack conveys a small bit of your lycanthropy.\r\nIf your foe survives, one month later, he transforms into an uncontrolled beast. The GM decides what happens from there.	1. Pick one other PC. That character is able to soothe you when you’re in beast form. You’ll never attack him while transformed, and if he spends three consecutive turns using his action to calm you down, you can revert to your normal form without having to make a roll.\r\n2. Pick one other PC. You believe that he intends to convince you (or capture you) to join the circus or some other entertainment venue. He chooses whether or not this is true.\r\n3. Pick two other PCs. They know that it’s beneficial for you to kill and eat a creature while you’re in beast form, and they often work together to make sure that happens.\r\n4. Pick one other PC. Since she saw you in beast form, she has clearly been terrified of you. You are determined to show her that you’re not as dangerous as she thinks.	howls_at_the_moon	1
 35	Hunts Nonhumans	You see orcs, lizard people, aliens from Rigel, elves, undead, or some other sort\r\nof inhuman group as a threat to humanity. The threat is obvious to you—they attack, abduct, enslave, prey upon, or murder humans. But the threat can also be far more subtle. They infiltrate, control, subvert, undermine, and terrorize. These threats must be eradicated for the good of all.\r\nNonhuman hunters choose their dedicated foe and focus all their attention on that one opponent whenever possible. In this context, a nonhuman is something that isn’t human and often comes in great numbers. In a fantasy setting, it might be goblins. In a science fiction setting, it might be insectlike alien hordes. Zombies and in some cases mutants might also fit the bill, but keep in mind the similar focus Hunts Outcasts for those who specialize in fighting foes with supernatural abilities.\r\nWhatever the foe, hunters of nonhumans know their enemy’s tactics, methods, weapons, defenses, and abilities.	Minor Effect Suggestion: Your foe is so intimidated by your prowess that it backs away, unwilling to attack. It can still defend itself.\r\nMajor Effect Suggestion: Your foe is terrified by your skill and flees.	1. Pick one other PC. This character has had experiences with the foe in the past, and you’d like to know more about them.\r\n2. Pick one other PC. You are friends, and you’d hate to see this character harmed.\r\n3. Pick one other PC. This character doesn’t understand just how dangerous and horrible the foe can be.\r\n4. Pick one other PC. The inhuman foes are sometimes drawn to certain people. They always seem to attack those people first and with more fervor. This character appears to be one such person.	hunts_nonhumans	1
-27	Fights Dirty	You know one thing for certain: the only important element of a fight is who wins. How? Why? These questions are inconsequential. Thus, you’ll do anything to win a fight. Some might say you have\r\nno honor, no class, or some other foolish statement, but they’re missing the point. You come out on top in a battle—and that’s all that matters.\r\nYou bite, scratch, kick, and trip. You tangle foes in draperies, push them down stairs, and throw dirt in their eyes. You trick them into looking the wrong way, call them names, and say terrible things about their mothers.\r\nMaybe you learned your methods while living on the streets, or maybe you barely survived a particularly horrific battle in a military campaign. Perhaps you simply have never bought into the idea of rules or honor when your life is on the line.\r\nYou’re likely to carry a few hidden tricks, sometimes literally up your sleeve. You might have a knife in your boot, a poisoned needle in your ring, a razor in the hem of your cloak, or a handful of stinging and itching powder in a hidden pocket. Your clothing probably has a lot of pockets, actually—more than a few of them well hidden.	Additional Equipment: You have a weapon that is easily hidden and a dose of level 3 poison that inflicts 6 points of damage.\r\nMinor Effect Suggestion: You manage to make your foe trip and fall prone.\r\nMajor Effect Suggestion: You tangle something around your foe’s legs, and he not only falls down but also loses his next turn.	1. Pick one other PC. He’s a good fighter, but if you could teach him a few of your tricks, he’d really excel.\r\n2. Pick one other PC. In the past, she taught you a few tricks to use in a fight.\r\n3. Pick one other PC. This character doesn’t seem to approve of your methods.\r\n4. Pick one other PC. Long ago, the two of you were on opposite sides of a fight. You won, using your particular tactics. Now she’s interested in a (friendly) rematch at some point and claims to be ready for you.	fights_dirty	1
 39	Interprets The Law	You know the law as well as the back of your hand. Broad mandates, narrow rulings, well-meaning overreaches, regulatory considerations, and outright loopholes in the law are all the tools you need to twist outcomes to suit your desire. Knowledge is power, which is why many people who have crossed you now fear you. It’s your decision whether you put your prowess toward noble causes or use it for your own aggrandizement.\r\nYou wear nice suits and designer sunglasses, carry a briefcase, and walk around in shoes that cost more than many people earn in a month.	Additional Equipment: Suit and briefcase.\r\nMinor Effect Suggestion: The target is confused, causing it to stumble and drop whatever it’s holding.\r\nMajor Effect Suggestion: The target can’t believe what you just said and is dazed and unable to take actions for a round as it tries to reconcile your statement with reality.	1. Pick one other PC. That character seriously hurt someone in an altercation, but you got her off with no charges. She may feel grateful or ashamed.\r\n2. Pick one other PC. He borrowed your copy of The Prince by Niccolò Machiavelli and still hasn’t returned it.\r\n3. Pick one other PC. You once defended him in a court of law but suffered one of your very few defeats because of the case or perhaps your own failing—you’re not sure which.\r\n4. Pick one other PC. That character has confided in you that she hates “bloodsucking lawyers” and is glad you’re not one. You haven’t decided yet if you’re going to reveal your profession to her.	interprets_the_law	1
 37	Hunts With Great Skill	You are a tracker. Perhaps you hunt animals or more deadly creatures. Perhaps you go after people as a bounty hunter, law enforcer, or killer for hire. Whatever form your hunting takes, you are trained in\r\nstalking your quarry and bringing it down. You are a dangerous individual.\r\nIf you hunt animals or creatures, you might carry the trophies of past kills, such as teeth or skins. If you’re a bounty hunter, you probably wear whatever your quarry would find most intimidating so it feels as though it has no chance of getting away from you.	Minor Effect Suggestion: You can attempt an intimidating task to cause your foe to immediately surrender.\r\nMajor Effect Suggestion: Your foe pauses, terrified by your prowess, and takes no action on his turn.	1. Pick one other PC. That person once saw you show surprising mercy toward your prey, and now you hope she keeps that information quiet—it might harm your reputation.\r\n2. Pick one other PC. You accidentally caught her in one of your traps and she had to free herself.\r\n3. Pick one other PC. Back in your bounty hunter days (which may or may not be over), you were hired to track down someone close to him.\r\n4. Pick one other PC. You’ve noticed that it’s almost impossible to track him, but you’re determined to figure out a way.	hunts_with_great_skill	1
 40	Is Idolized By Millions	Some celebrities are known for their talent, while others are simply known for being known. However the spotlight found you, you’re a celebrity now, and people love you—often a little too much. You can’t\r\ngo anywhere publicly without people recognizing you, approaching you for a shared selfie, or pointing at you from afar. Whenever you do anything, whether it’s going to the beach, adopting a new pet,\r\nor going out clubbing, the event becomes pablum for celebrity TV shows and websites, which often twist the facts into a caricature of reality. But hey, like your publicists say, no PR is bad PR.\r\nYou wear oversized sunglasses, designer clothing, and expensive shoes that are also comfortable.	Additional Equipment: Designer clothing and sunglasses.\r\nMinor Effect Suggestion: Your foe realizes who you are and leaves himself open; the difficulty of your next attack is reduced by one step.\r\nMajor Effect Suggestion: Nearby strangers recognize you, scream your name, and run to get your autograph, shielding you from enemy attacks for a couple of rounds.	1. Pick one other PC. You were childhood friends. As you got famous, she continued to live a normal life, and you worry that she resents you.\r\n2. Pick one other PC. That character knows that though you’re quick with a smile, as if having the time of your life, on the inside you feel empty and alone.\r\n3. Pick one other PC. That character once called you a “narcissistic douchecopter” on social media. You’re not sure if it was a joke.\r\n4. Pick one other PC. The media thinks that you and that character have a secret relationship and uses any pretext to revisit the story and give it new life.	is_idolized_by_millions	1
@@ -1435,11 +1999,11 @@ COPY public.cyphercore_focus (id, name, description, other_details, connections,
 62	Siphons Power	You are an energy vampire, draining power from machines or living creatures. You use this power to restore your own physical energy reserves. Perhaps you take great joy in this ability, or perhaps you grudgingly accept it as a boon to yourself and your companions and use it only when you must. Either way, you are likely feared and unwelcome in many communities for your dangerous powers. You might try to conceal your true nature, dressing so that you don’t attract attention and give yourself away, or perhaps you flaunt it, using the rumors to your advantage, wearing black clothing and embodying a sinister countenance.	Minor Effect Suggestion: When draining, you gain 2 additional points to divide between your Speed Pool and Might Pool.\r\nMajor Effect Suggestion: When draining, you gain 5 additional points to divide between your Speed Pool and Might Pool.	1. Pick one other PC. This character is immune to your powers for some inexplicable reason.\r\n2. Pick one other PC. This character appears to think of you as some kind of monster.\r\n3. Pick one other PC with a living or machine companion. This character seems convinced that you’re going to use his companion for your own ill-gotten purposes.\r\n4. Pick one other PC. You believe she can help you control and understand your abilities, if you can get her to talk about it.	siphons_power	1
 63	Slays Monsters	You live in a world populated not just by normal folk, but by creatures that should belong only to tall tales or nightmares. Dragons. Gorgons. Many-headed hydras. Werewolves. Worse.\r\nYou decided to stand up to this menace, even though it means putting yourself in more peril. And if you give your life, others will tell stories of your bravery. Usually heavily armed and armored knights, monster slayers are often afforded great respect.	Minor Effect Suggestion: You can immediately move up to a short distance after this action.\r\nMajor Effect Suggestion: You can immediately take a second action during this turn.	1. Pick one other PC. You saved him from a monster (though not by defeating the creature, which is still out there).\r\n2. Pick one other PC. You tried but failed to save her loved one from a monster. You still bear the scars.\r\n3. Pick one other PC. He knows the name and lair of a monster, but for some reason he won’t share that information with you.\r\n4. Pick one other PC. That character shows potential in the art and philosophy of monster slaying. You would like to train her but aren’t sure she’s interested.	slays_monsters	1
 66	Stands Like A Bastion	You are a wall. A stone. An island against a storm of weapons and words. Nothing moves you. Nothing even really dents you. Perhaps it’s your physical size that lends you such stopping power, perhaps you’ve enhanced your physique with mechanisms and machinery, or perhaps it’s merely your incredible strength of will that forces foes to stay their swings.\r\nYour armor is probably just like you: solid, strong, and utterly impenetrable. Every flourish and bit of flair—if you have any— does double duty as protection.	Additional Equipment: You have armor of your choice and a shield.\r\nMinor Effect Suggestion: You add +2 to Armor.\r\nMajor Effect Suggestion: You regain 2 points to your Might Pool.	1. Pick one other PC. You feel indebted to this character and go out of your way to protect her from harm.\r\n2. Pick one other PC. You once saved this character from a dangerous situation.\r\n3. Pick one other PC. This character once ran full bore into you while running away from . . . something. You stopped him just by being in the wrong place at the wrong time, but he seems to hold it against you.\r\n4. Pick two other PCs. You would like to ask them to help you train by attacking you at the same time, but you’re uncertain how to approach them with this request.	stands_like_a_bastion	1
+13	Conducts Weird Science	You could be a respected scientist, having been published in several peer-reviewed journals. Or you might be considered a crank by your contemporaries, pursuing fringe theories on what others consider to be scant evidence. Truth is, you have\r\na particular gift for sifting the edges of what’s possible. You can find new insights and unlock odd phenomena with your experiments. Where others see a crackpot cornucopia, you sift the conspiracy theories for revelation. Whether you conduct your enquiries as a government contractor, a university researcher, a corporate scientist, or an indulger of curiosity in your own garage lab following your muse, you push the boundaries of what’s possible.\r\nYou probably care more about your work than trivialities such as your appearance, polite or proper behavior, or social norms, but then again, an eccentric like you might turn the tables on that stereotype too.	Minor Effect Suggestion: You learn one additional piece of information in your analysis.\r\nMajor Effect Suggestion: Foes within sight are dazed for one round upon seeing your strange creation or its results. During this time, the difficulty of all tasks they perform is modified by one step to their detriment.	1. Pick one other PC. The character believes your experiments once cured someone close to her of a fatal condition. You’re not sure if they did, or if the condition just went into remission.\r\n2. Pick one other PC. You created a scientific instrument designed to give this character a restful night’s sleep, but you now fear unanticipated long-term side effects.\r\n3. Pick one other PC. You’re pretty sure that one of your experiments from when you were younger and brasher is responsible for giving him some special gifts or drawbacks. The PC might know this, or he might just vaguely remember you from long ago.\r\n4. Pick one other PC. She asked you to design a gun that could shoot through walls. You took the cash, but you are still working on the prototype.	conducts_weird_science	1
 68	Throws With Deadly Accuracy	Sometimes you wonder if your hand and your mind’s eye are connected in an intricate perfection of timing and aim. Everything that leaves your hand goes exactly where you’d like it to and at the range and speed to make the perfect impact. Your expertise might be in carefully crafted throwing daggers and shuriken, or perhaps you use whatever’s nearby.\r\nWhat you wear doesn’t matter, as long as it doesn’t come between you and your throwing implements. Lots of pockets, equipment belts, and pouches make it easy to keep your preferred weapons close at hand. You might even have a hat with a variety of throwing items tucked into its brim, ready to meet their target with your perfect aim.	Additional Equipment: You have three throwing weapons of your choice.\r\nMinor Effect Suggestion: You hit your target in the eye and blind him for one round.\r\nMajor Effect Suggestion: You strike your target in a limb, making that limb useless for the next minute.	1. Pick one other PC. You believe that this character shows potential for being an excellent ranged attacker, but you don’t know if she would be interested in the rigorous training and practice required.\r\n2. Pick one other PC. This character once saved you from a dangerous situation.\r\n3. Pick one other PC. You owe this character a significant amount of money.\r\n4. Pick one other PC. He is always getting in the way. If the GM determines that your attack strikes the wrong target, it almost always hits this character.	throws_with_deadly_accuracy	1
 69	Travels Through Time	You have the unusual ability to travel through time in a way others can never dream of.\r\nYou have likely experienced jumps where time seems to have passed but you have no memory of what happened. You probably also suffer from déjà vu, sensing that you have been in a situation or witnessed an event before and are now experiencing it all over again. You have begun to realize the extent of your powers and work to master them so that perhaps one day you can travel farther into the future or deeper into the past.\r\nTime travel poses many risks. Often, you have no clear sense about what the future might hold or what might have been happening in the spot where you appear when you travel to the past. Death waits for the bold and the incautious.\r\nWorse than mishap, you must guard against paradox. When you change an event in the past, you could inadvertently cause the future to be rewritten. On the other hand, cosmic forces may move in to correct paradoxes by changing circumstances to accommodate the ability, causing your memories to become false ones when the world you know changes to adapt to your meddling. Of course, if you attempt anything too radical, the universe might write you out of existence so that your efforts to change the past never occur.\r\nYou likely wear clothing and have personal effects in a range of styles, choosing items from many different periods. This eclectic approach to your possessions may give\r\nyou a shabby appearance or make you look strange and alien to others in the present.\r\nAny type of character can have this focus, though its power is extraordinarily rare.	Temporal Abilities: If you have other overt powers, time appears to slow down when you use them. You and everything around you moves in slow motion for a moment, and then time snaps back into place. The temporal distortion changes nothing about the effects of your abilities except for the appearance of the world around you.\r\nMinor Effect Suggestion: One creature you choose within short range either acts first or acts last during the next round.\r\nMajor Effect Suggestion: You step a few moments into the future. To other characters, it looks as if you disappear. At the start of the next round, you reappear and you have an asset for any task you perform during that round.	1. Pick one other PC. You are either a distant ancestor or a descendant of that character. He served as a focal point for your travel and anchors you to the present.\r\n2. Pick one other PC. For some reason, when you use your Anticipation power to look ahead, you specifically see how her future might unfold. You can choose whether or not to tell her what you see.\r\n3. Pick one other PC. You secretly believe that he can also travel through time, since you once fought a person who looked exactly like him.\r\n4. Pick one other PC. You once stepped forward in time to save her from death, but she doesn’t know it. You may choose whether or not to tell her.	travels_through_time	1
 67	Talks To Machines	Since you were young, you had an affinity for machines. It seemed almost like you were speaking to them.\r\nYou were. You have the ability to use your organic brain like a computer, interfacing “wirelessly” with any electronic device. You can control and influence them in ways that others can’t. Computers are your friends and companions. You have also learned to repair machines of all kinds because the better they work, the better off you are as well.\r\nYou likely wear a tool belt full of various implements, and machine oils stain your clothes and fingertips.	Additional Equipment: A bag of small tools.\r\nMinor Effect Suggestion: The duration of influence or control is doubled.\r\nMajor Effect Suggestion: The duration of influence or control becomes twenty-four hours.	1. Pick one other PC. That character seems to have a terrible relationship with machines—or at least the machines that you communicate with. If she is next to a machine that you interact with in a friendly manner, that machine is treated in all ways as being one level lower than normal (unless doing so benefits you or her, in which case the level does not change).\r\n2. Pick one other PC. He seems especially leery of you, though this could just be your perception.\r\n3. Pick one other PC. She has a small machine among her equipment but won’t tell you any details about it or let you see it.\r\n4. Pick one other PC. You know that this character knows an incriminating or\r\nembarrassing secret about you, and you hope that he doesn’t reveal it.	talks_to_machines	1
 70	Wears A Sheen Of Ice	Through your studies, you have learned to focus your natural talents to command the powers of ice and cold. People might refer to you as an ice mage. Sometimes ice mages are thought to come into conflict with those known as fire mages, but this is a fallacy believed by ordinary folks more than anything based in truth.\r\nYou likely wear white or blue garments that are heavier than they need to be— unless you live in a cold region or wintry clime, in which case you probably wear less clothing than other people do because the cold doesn’t bother you.	Ice Abilities: If you possess abilities that would normally use force or other energy, they instead use cold and ice. For example, a force blast is a ray of frost. This alteration changes nothing other than the type of damage. As another example, Barrier creates a wall of ice. This alteration changes nothing except the wall’s appearance and the fact that it takes 2 additional points of damage from fire.\r\nMinor Effect Suggestion: The surface around the target becomes slick and difficult to stand on.\r\nMajor Effect Suggestion: The target is covered in ice that hinders its movement for one minute, during which time the difficulty of all tasks it performs is modified by one step to its detriment.	1. Pick one other PC. Due to a quirk of fate, if that character is standing next to you when you use your Ice Armor ability, he is also protected by a sheen of ice. (He does not get the added protection of your Resilient Ice Armor ability.)\r\n2. Pick one other PC. For a reason unknown to you, her very presence seems to heat the air around you, making it more difficult to command the powers of ice and cold. If she is within immediate range, her presence occasionally makes it one step more difficult to hit a target with a focus ability.\r\n3. Pick one other PC. That person is especially susceptible to the cold that radiates from you. How he handles that vulnerability is up to him.\r\n4. Pick one other PC. The two of you have a long history and almost always disagree about the best way to handle situations.	wears_a_sheen_of_ice	1
-13	Conducts Weird Science	You could be a respected scientist, having been published in several peer-reviewed journals. Or you might be considered a crank by your contemporaries, pursuing fringe theories on what others consider to be scant evidence. Truth is, you have\r\na particular gift for sifting the edges of what’s possible. You can find new insights and unlock odd phenomena with your experiments. Where others see a crackpot cornucopia, you sift the conspiracy theories for revelation. Whether you conduct your enquiries as a government contractor, a university researcher, a corporate scientist, or an indulger of curiosity in your own garage lab following your muse, you push the boundaries of what’s possible.\r\nYou probably care more about your work than trivialities such as your appearance, polite or proper behavior, or social norms, but then again, an eccentric like you might turn the tables on that stereotype too.	Minor Effect Suggestion: You learn one additional piece of information in your analysis.\r\nMajor Effect Suggestion: Foes within sight are dazed for one round upon seeing your strange creation or its results. During this time, the difficulty of all tasks they perform is modified by one step to their detriment.	1. Pick one other PC. The character believes your experiments once cured someone close to her of a fatal condition. You’re not sure if they did, or if the condition just went into remission.\r\n2. Pick one other PC. You created a scientific instrument designed to give this character a restful night’s sleep, but you now fear unanticipated long-term side effects.\r\n3. Pick one other PC. You’re pretty sure that one of your experiments from when you were younger and brasher is responsible for giving him some special gifts or drawbacks. The PC might know this, or he might just vaguely remember you from long ago.\r\n4. Pick one other PC. She asked you to design a gun that could shoot through walls. You took the cash, but you are still working on the prototype.	conducts_weird_science	1
 71	Wields Two Weapons At Once	You bear steel with both hands, ready to take on any foe. You fight with two weapons in melee, sometimes called dual wielding. A fearsome warrior, quick and strong, you believe that the best defense is a strong offense.\r\nYou probably sheathe one weapon on each side or both crossed behind your back. They are likely your most prized possessions, and you might have names for them.	Additional Equipment: You start with an additional light melee weapon.\r\nMinor Effect Suggestion: The target is intimidated and flees as its next action.\r\nMajor Effect Suggestion: You can make an immediate additional attack with one of your weapons.	1. Pick one other PC. You have trained with this character so much that if the two of you stand back to back in a fight, you both gain a +1 bonus to Speed defense rolls.\r\n2. Pick one other PC. This character always seems to inadvertently foil your actions, or at least make them more difficult. If she is within immediate range, the difficulty of any action related to this focus is increased by one step.\r\n3. Pick one other PC. You recently had a weapon go missing, and you’re becoming convinced that he took it. Whether or not he did is up to him.\r\n4. Pick one other PC. You used to dislike him immensely, but as you get to know him, you’re growing fond of him against your better judgment.	wields_two_weapons_at_once	1
 73	Works The Back Alleys	The thief, the burglar, the pickpocket: these are the dangerous individuals who haunt the back alleys of every community. You are a thief in a city or town, making your livelihood at the expense of the wealthy. Your talents, however, prepare you for all kinds of pursuits, even when you’re not crouching in an alley or climbing into a window.\r\nUsually, you dress to blend in with the crowd. When you’re on a mission, black, form-fitting clothing allows you to swim in the shadows.	Additional Equipment: You start with a bag of light tools.\r\nMinor Effect Suggestion: You can immediately attempt to hide after this action.\r\nMajor Effect Suggestion: You can immediately take a second action during this turn.	1. Pick one other PC. The character knew you beforehand and convinced you to leave your life of crime for other pursuits—at least temporarily.\r\n2. Pick one other PC. A while back, you attempted to “borrow” something from her, but she busted you in the process. You managed to convince her that it was a simple misunderstanding, but she may not entirely trust you.\r\n3. Pick one other PC. You never seem to be able to hide so that he can’t see you.\r\n4. Pick one other PC. She knows your real identity (if it’s a secret) or that you work undercover (if it’s a secret) and has kept the knowledge to herself so far. It’s up to her whether she continues to do so.	works_the_back_alleys	1
 54	Operates Undercover	Espionage is not something you know anything about. At least, that’s what you want everyone to believe, because in truth, you’ve been trained as a spy or covert agent. You might work for a government or for yourself. You might be a police detective or a criminal. You could even be an investigative reporter.\r\nRegardless, you learn information that others attempt to keep secret. You collect rumors and whispers, stories and hard-won evidence, and you use that knowledge to aid your own endeavors and, if appropriate, provide your employers with the information they desire. Alternatively, you might sell what you have learned to those willing to pay a premium.\r\nYou probably wear dark colors—black, charcoal grey, or midnight blue—to help blend into the shadows, unless the cover you’ve chosen requires you to look like someone else.	Additional Equipment: A disguise kit.\r\nMinor Effect Suggestion: You can immediately attempt to hide after this action.\r\nMajor Effect Suggestion: You get a +2 bonus to Speed defense rolls for one round.	1. Pick one other PC. The character knows your real identity (if that’s a secret) or that you work undercover (if that’s a secret), and has kept that information private until now.\r\n2. Pick one other PC. You know an important secret about her, but she is unaware that you know.\r\n3. Pick two other PCs. You know about an important connection between these two that even they don’t know about.\r\n4. Pick one other PC. No matter how you hide or disguise yourself, this character always seems to know where and who you really are.	operates_undercover	1
@@ -1448,9 +2012,7 @@ COPY public.cyphercore_focus (id, name, description, other_details, connections,
 72	Works Miracles	You manipulate matter and time to help others and are beloved by everyone you encounter. Some people consider you a representative of the gods or a power from beyond this world. Perhaps they’re right. Your abilities might be a gift of the angels or a powerful and benevolent god.\r\nYou probably wear simple clothes—nothing too flashy or stylish. There’s no need to call more attention to yourself.	Minor Effect Suggestion: The target is healed for 1 additional point.\r\nMajor Effect Suggestion: The target is healed for 2 additional points.	1. Pick one other PC. This character quietly suspects that you’re a messiah or supernatural being. You can choose whether or not you’re aware of his suspicion.\r\n2. Pick one other PC. He knows a secret of yours, and you desperately hope that he doesn’t tell anyone.\r\n3. Pick one other PC. She believes that you cured someone close to her of a deadly disease, and she is grateful. You aren’t sure whether you actually helped or if that person wasn’t as sick as she thought.\r\n4. Pick one other PC. You secretly believe that she might be a hypochondriac, and you’re never sure whether she actually needs your help.	works_miracles	1
 38	Infiltrates	You focus on subtlety, guile, and stealth. Your body has been trained (or perhaps even genetically or magically altered) to make you the perfect infiltrator. You use a wide variety of disguises and tools to perform your duties, but your greatest tools are your own skills and training.\r\nInfiltrators are spies, agents, thieves, assassins, or information gatherers. They often wear slick bodysuits and face-concealing masks when not wearing a disguise.	Minor Effect Suggestion: Your opponent is so startled by your moves that it is dazed, during which time the difficulty of all tasks it performs is increased by one step.\r\nMajor Effect Suggestion: All opponents within short range are so startled by your moves that they are dazed, during which time the difficulty of all tasks they perform is increased by one step.	1. Pick one other PC. This character inadvertently foils your actions, or at least makes them more difficult. If this PC is within immediate range, the difficulty of any action that you take related to this focus is increased by one step.\r\n2. Pick one other PC. No matter how hard you try, you cannot seem to hide from him.\r\n3. Pick two other PCs. The three of you worked as a team on a mission long ago, but you had a falling out.\r\n4. Pick one other PC. That character is your sibling, and thus you look very much alike.	infiltrates	1
 80	Artificially Intelligent	You are a machine—not just a sentient machine, but a sapient one. Your awareness might make you an exception, or there may be many like you, depending on the setting.\r\nArtificially intelligent characters have machine minds of one type or another. This can involve an advanced computer brain, but it could also be a liquid computer, a quantum computer, or a network of smart dust particles creating an ambient intelligence. You might even have been an organic creature whose mind was uploaded into a machine.\r\nYour body, of course, is also a machine. Most people refer to you as a robot or an android, although you know neither term describes you very well, as you are as free- willed and free-thinking as they are.	Superintelligent: +4 to your Intellect Pool. Artificial Body: +3 to your Might Pool and your Speed Pool.\r\nShell: +1 to Armor.\r\nLimited Recovery: Resting restores points only to your Intellect Pool, not to your Might Pool or your Speed Pool.\r\nMechanics, Not Medicines: Conventional healing methods, including the vast majority of restorative devices and medicines, do not restore points to any of your Pools. You can recover points to your Intellect Pool only by resting, and you can recover points to your Speed and Might Pools only through repair. The difficulty of the repair task is equal to the number of points of damage sustained, to a maximum of 10. Repairing your Might and Speed Pools are always two different tasks.\r\nMachine Vulnerabilities and Invulnerabilities: Damaging effects and other threats that rely on an organic system—poison, disease, cell disruption, and so on—have no effect on you. Neither do beneficial drugs or other effects. Conversely, things that normally affect only inorganic or inanimate objects can affect you, as can effects that disrupt machines.\r\nUncanny Valley: You have a hard time relating to organic beings, and they don’t react well to you. The difficulty of all positive interaction tasks with such beings is increased by two steps.		artificially_intelligent	1
-15	Controls Beasts	To say that you have a way with animals and nonhuman creatures doesn’t begin to cover it. Your mastery and communication with beasts is positively uncanny. They come to you fearlessly, and it’s not uncommon for birds to alight on your shoulder or for small animals to climb up your arms or legs.\r\nYou probably wear tough clothing and have a disheveled or grizzled appearance that suggests a rugged, outdoor life. Perhaps you even smell like an animal.	Additional Equipment: You have three days’ worth of food for your beast companion, plus a harness, collar, or similar accoutrements.\r\nMinor Effect Suggestion: The duration of calmness or control is doubled.\r\nMajor Effect Suggestion: The duration of calmness or control extends to twenty-four hours.	1. Pick one other PC. That character seems to disturb your creatures in a way that you can’t explain. You know that you must keep your animals away from him if possible, or you might lose control of them.\r\n2. Pick one other PC. The creature that you’re bonded with seems to have a special bond with this other person as well. You must decide whether it brings up feelings of jealousy or camaraderie within you and whether to thwart the connection or help it blossom.\r\n3. Pick one other PC. Recently, he accidentally (or perhaps intentionally) put your beast companion in a position of danger. Your companion is now nervous around him, and you are struggling with your own emotional response to the incident.\r\n4. Pick one other PC. She dislikes beasts of all kinds, seeing them as little more\r\nthan food or prey. You hope that exposing her to your beast companion will change her mind. It’s up to that player how her character responds to the experience.	controls_beasts	1
 16	Controls Gravity	Gravity is a force so basic and primal that we take it for granted. Through a quirk of fate, some unique device(s), or supreme devotion (or a combination of all three), you have learned to tap into the power of gravity.\r\nYou might prefer billowy garments that display your mastery of gravity’s pull and conceal your identity and intentions.	Additional Equipment: You have a pen-sized device that tells the weight of whatever you point it at (within short range). The weight is displayed on a small glass plate in letters that only you can decipher.\r\nMinor Effect Suggestion: The duration of the effect is doubled.\r\nMajor Effect Suggestion: An important item on the target’s person is destroyed.	1. Pick one other PC. In the recent past, while using your gravitational powers, you accidentally sent that character hurtling into the air or plummeting toward the ground. Either way, she barely survived. It is up\r\nto the player of that character to decide whether she resents, fears, or forgives you.\r\n2. Pick one other PC whose focus intertwines with yours. This odd connection affects her in some way. For example, if the character Carries a Quiver, your ability to manipulate gravity sometimes extends the range of her arrows. If she Entertains, her jumps, dances, and juggling balls seem less bound by the laws of gravity. If she Masters Weaponry, her weapons sometimes feel lighter.\r\n3. Pick one other PC. He is deathly afraid of heights. Through your ability to control gravity, you would like to teach him how to be more comfortable with his feet off the ground. He must decide whether or not to take you up on your offer.\r\n4. Pick one other PC. She is skeptical of your ability to control gravity and thinks it’s just one big illusion. She might even attempt to discredit you or discover the “secret” behind your so-called skills.	controls_gravity	1
-22	Entertains	You are an entertainer: a singer, dancer, poet, storyteller, or something similar. You perform for the benefit of others. Naturally charismatic and talented, you have also studied to master your art. You know all the old poems, songs, jokes, and stories, and you’re skilled at creating new ones, too.\r\nYou probably wear flamboyant or at least fashionable clothes and use cosmetics, tattoos, or hair stylings for dramatic effect.	Additional Equipment: You start with a musical instrument or other tools needed to perform.\r\nMinor Effect Suggestion: You enchant the target, who remains enchanted as long as you focus all your attention on keeping her that way.\r\nMajor Effect Suggestion: The target is forever favorably disposed toward you.	1. Pick one other PC. This character is your worst critic. Your abilities to help or inspire others don’t function for her.\r\n2. Pick one other PC. He seems to really enjoy your attempts to entertain, and this brings out the performer in you. It’s up to that character whether his appreciation is real or if he is just being polite.\r\n3. Pick one other PC. She is so inspired and put at ease by your stories or other forms of entertainment when you use Levity that she gains +2 to her recovery rolls (instead of +1).\r\n4. Pick one other PC. This person knows the secret to one of your favorite forms of entertainment. You worry constantly that he will steal it or reveal it.	entertains	1
 25	Explores Dark Places	You explore foreboding ruins, mysterious locales of ancient times, dungeons deep, dark caverns, and similar places, trained in such activities by those who have gone before you. You’re the archetypal treasure hunter, scavenger, and finder of lost things. You spend so much of your time in the dark that you slowly adapt to it, almost becoming a creature of the gloom yourself. Even in civilized areas, you prefer to keep to the shadows.\r\nMost likely, you wear dark clothing to help you blend into the blackness. On the other hand, you might wear sensible garments and gear because you have serious and dangerous business to attend to in the dark.	Additional Equipment: You carry an explorer’s pack with rope, two days’ rations, a bedroll, and other tools needed for outdoor survival.\r\nShadow Abilities: If you have other overt abilities (spells, psionic powers, or the like), they make almost no sound, and whatever visual displays they produce are dark and shadowy. These alterations change nothing other than the appearance of the effects.\r\nA Flash is a silent burst of shadows, a Barrier is a mass of shadowy wisps, and so on.\r\nMinor Effect Suggestion: The target is also dazed for one round, during which time the difficulty of all tasks it performs is modified by one step to its detriment.\r\nMajor Effect Suggestion: The target is also stunned and loses its next turn.	1. Pick one other PC. This character has been your adventuring partner in previous expeditions, and the two of you work so well together that you both gain +1 to any die rolls when you collaborate on the same task, fight the same foe, and so on.\r\n2. Pick two other PCs. You think you once saw them through a keyhole doing something illegal. You can choose whether or not to share that information. The characters can choose whether it was really them (it could have been neither, one, or both), and they may or may not share that information in return.\r\n3. Pick one other PC. This person always seems to hear you, no matter how stealthy you try to be.\r\n4. Pick one other PC. She is so loud in everything she does that you feel obligated to try to help her learn to move more quietly through the world. Whether or not she’s interested is up to her.	explores_dark_places	1
 29	Focuses Mind Over Matter	Telekinesis. Psychokinesis. Mind over matter. The power has many names, but in the end, it all boils down to one thing— the molecules that make up all matter are yours to command. You likely call yourself a telekinetic or just a TK.\r\nMany telekinetics prefer to wear tight clothing without many accoutrements so there is little another TK could grab hold of psychically. On the other hand, you have the power to create very minor telekinetic effects at will, so your hair might always be in motion, you could have a few tiny objects floating around you, or you might wear a long cape that’s always billowing.	Mental Abilities: If you wield other overt abilities, those that would normally use force or other energy instead use telekinetic force. For example, a force blast is a telekinetic blast from your mind. This alteration changes nothing except that you don’t need a free hand to perform abilities that otherwise require it.\r\nMinor Effect Suggestion: An object moves faster or more efficiently.\r\nMajor Effect Suggestion: You can move or affect twice as much as normal.	1. Pick one other PC. This character can cause your telekinetic powers to act oddly. Every once in a while, if he stands directly next to you, your powers are canceled, but at other times, they seem improved when used near him.\r\n2. Pick one other PC. This person thinks that your powers are completely hypothetical.\r\n3. Pick one other PC. You once joked that you could read her mind. Whether she found that exciting or utterly terrifying is up to her.\r\n4. Pick one other PC. You feel strangely protective of that character and plan to do your best to keep him from harm.	focuses_mind_over_matter	1
 30	Fuses Flesh And Steel	At some point in your past, some of your organic parts were replaced with artificial components. You are a cyborg. Bionic. Alternatively, you belong to a secret race of biomechanical hybrids. Your artificial components might be subdermal, or they might resemble overt metal or synth plating on your skin. They can also take the form of threadlike tendrils of circuitry winding across your flesh. Whatever their appearance, these components give you special abilities. As you advance, you can add to, modify, or discover new functions for them. Unfortunately, your artificial body also has special requirements when it takes damage.\r\nYou probably wear a cloak with a hood or something similar to hide your artificial parts from those who would persecute you. Because your components are tricky to repair, as time goes on, it might become more difficult to conceal your true nature, with exposed circuitry, metal plates, and more in a state of partial disassembly.	Additional Equipment: You have a bag of light tools and a variety of parts to repair yourself.\r\nMinor Effect Suggestion: Your servos learn from your successful actions. You gain a +1 bonus to similar actions involving the same task (such as making attacks against the same foe or operating the same device).\r\nMajor Effect Suggestion: You discharge a small pulse of power into your foe. Make an immediate attack against that foe (using the same stat as the action that caused the major effect). If the attack succeeds, it deals 4 points of electrical damage.	1. Pick one other PC. This character knows your true nature, even if no one else does.\r\nIf your components are not particularly hidden, she knows a different secret of yours, such as a preprogrammed word that will shut you down for ten minutes.\r\n2. Pick one other PC. Being close to this person sometimes makes your mechanical parts vibrate slightly. You can decide whether this sensation is unnerving or pleasant.\r\n3. Pick one other PC. You’re pretty sure that he is just here to mine you for parts. He chooses whether or not this is true.\r\n4. Pick one other PC who also has mechanical parts. The two of you have bonded over conversations about this element you share, and you feel a special connection.	fuses_flesh_and_steel	1
@@ -1460,6 +2022,14 @@ COPY public.cyphercore_focus (id, name, description, other_details, connections,
 75	Would Rather Be Reading	Your whole life, people have been asking you why you read so much. Would you rather read about life than live it, they ask? Yes, you answer, probably inwardly. Books are your friends. You love fiction that gives you escape and nonfiction that enriches your mind. You’re always learning new things. What’s more important than knowledge? Nothing.\r\nYou probably carry a bag of books (or a tablet with ebooks on it, or both) with you at all times.	Minor Effect Suggestion: You draw on your experiences and reduce the difficulty of your next action by one step.\r\nMajor Effect Suggestion: You can make a free, no-action recovery roll.	1. Pick one other PC. She seems to understand you and knows that you need your space and time alone to read now and again.\r\n2. Pick one other PC. This character is ignorant and uneducated, in your opinion.\r\n3. Pick one other PC. He reminds you a lot of the main character of one of your favorite books. You can’t help but like him.\r\n4. Pick one other PC. This character owes you a fair bit of money.	would_rather_be_reading	1
 3	Awakens Dreams	Your dreams are more vivid than other people’s. When you dream, those dreams linger on, and when the time is right, you can loose them into reality to impress, confuse, or scare other creatures. You’ve learned the oneiromancer’s craft, which means that you know the secrets of lucid dreaming, gauging the dream state in others, and mixing herbal elixirs that bring about a restful, dream-filled sleep.\r\nYour clothing probably reflects the eclectic dreamland where you spend so much of your time, including several layers, bright silk ribbons, and odd symbols that made sense when you were dreaming them.	Minor Effect Suggestion: The target gets turned around, and its next attack is modified by one step to its detriment.\r\nMajor Effect Suggestion: You are refreshed by your dream and recover 4 points to one of your Pools.	1. Pick one other PC. That character always recognizes your dreams as illusions free of substance and is not fooled or affected by them.\r\n2. Pick one other PC. You accidentally sent that character into a sleep so deep she didn’t wake for three days. Whether she forgives you or not is up to her.\r\n3. Pick one other PC. You are certain that you created him from one of your dreams, even if he doesn’t believe it.\r\n4. Pick one other PC. You accidentally glimpsed that character’s dreams and learned something that she was trying to keep a secret.	awakens_dreams	1
 6	Blazes With Radiance	You have the ability to create and sculpt light, to bend it away from you or gather it to use as a weapon. You might gain your powers from the sun, or you might wield a mysterious artifact that produces light that you can manipulate. Regardless, you love the light and curse the darkness. People are often drawn to those wielding the light, either because they are heartened by it (as opposed to someone lurking in darkness) or because it is dramatic and impressive. Of course, those who enjoy the darkness or fear the light despise you.\r\nMost people able to command light favor bright colors in their clothing since those colors reflect light rather than absorb it.	Additional Equipment: You have a crystal lens. When you shine light through it, the light extends for double the normal distance.\r\nRadiant Abilities: If you possess powers that would normally use force or other energy, they instead use light and heat. For example, if you use Ward, light dapples your body and flares when you would be attacked, preventing your enemies from landing a solid blow.\r\nMinor Effect Suggestion: A flash of light leaves the creature dazzled. The difficulty of defense actions to resist the creature’s attacks decreases by one step.\r\nMajor Effect Suggestion: An intense flash of light leaves the creature blinded for one minute.	1. Pick one other PC. You have a strong emotional connection to this character, and when in his presence, you can change the color of the light you create.\r\n2. Pick one other PC. She is especially sensitive to your light, and occasionally your flashes leave her dazzled, increasing the difficulty of her defense actions by one step.\r\n3. Pick one other PC. Something about his nature dampens the light. When he stands immediately next to you, your light-based powers cost 1 additional Intellect point.\r\n4. Pick one other PC. This character appears to have a treasured item that was once yours, but that you lost in a game of chance years ago.	blazes_with_radiance	1
+8	Calculates the Incalculable	Other people are a little in awe of your mind, though you feel normal enough. Admittedly, you are sometimes surprised when others fail to grasp easy concepts, or how they don’t share your appreciation of the beauty in dynamical systems theory, elliptic curve geometry, Riemann meromorphic functions, and all the other wondrous things.\r\nYou live a little too much in your head to concern yourself with how you look. Your hair is probably slightly too long and tousled, your clothing is casual and stained with coffee, and your socks don’t match.	Minor Effect Suggestion: You don’t have to spend an action observing to make your next predictive equation or predictive model.\r\nMajor Effect Suggestion: Intuition flares, and you can ask the GM one question about what you’re looking at.	1. Pick one other PC. If it wasn’t for you, this character never would have passed his college math requirements.\r\n2. Pick one other PC. She seems strangely interested in your mathematical skills.\r\nIt’s up to her whether she is fascinated or disturbed by them.\r\n3. Pick one other PC. Based on a couple of comments you’ve overheard, you suspect that this character doesn’t hold math in the highest regard.\r\n4. Pick one other PC. The character seems to be a variable that never quite solves the same way twice when you include him in an equation, but you haven’t the slightest idea why.	calculates_the_incalculable	1
+12	Commands Mental Powers	You have always had special abilities that others didn’t seem to share. Through practice and devotion, you have honed this unique talent so that you can harness the power of your mind to perform deeds.\r\nNo one can tell that you have this ability just by looking at you, although you wear a crystal or jewel somewhere on your head to help focus your power. Either this focusing object was given to you by someone who recognized your ability, or you came upon it by accident and it triggered your abilities. Some people with mental powers—often called psychics or psionics by ordinary folks—are secretive and a little paranoid.	Additional Equipment: You have a crystal or jewel artifact that, when worn against your forehead or temple, adds 1 point to your Intellect Pool. If you’re ever without the artifact, subtract 5 points from your Intellect Pool; the points are restored if you regain the item.\r\nMental Abilities: If you have abilities like Mind Control or Mind Reading from your type (or elsewhere), you’re automatically trained in them. Enabler.\r\nMinor Effect Suggestion: The range or duration of the mental power is doubled.\r\nMajor Effect Suggestion: You can take another action on that same turn.	1. Pick one other PC. You have found that this character is particularly tuned into your mental powers. While you’re within short range of him, the two of you are always in telepathic contact, and he is never harmed by your Psychic Burst.\r\n2. Pick one other PC. She is what you might call a “loud thinker,” and her thoughts sometimes come through to you when you are within short range, even when you’re not using your Mind Reading ability. You can’t seem to turn this off. Whether you tell her or not is up to you.\r\n3. Pick one other PC. For some reason, he seems to act as an antenna for your mental powers. If the two of you are touching,\r\nyour Telepathic and Mind Reading abilities sometimes extend to long range.\r\n4. Pick one other PC. Your close mentor or teacher once used Mind Control on her and forced her to do something against her will. To this day, you haven’t talked about it, but you are both intensely aware of the connection.	commands_mental_powers	1
+14	Consorts With the Dead	Through the study of science or magic to which most people give a wide berth, you have mastered the ability to speak with and reanimate the dead. Necromancy, however, is shunned as a taboo. It is gruesome, morbid, and in the eyes of most, forbidden.\r\nYou probably wear black clothing, which might be adorned with skulls, bones, teeth, or other symbols of death. Some who consort with the dead paint their skin and dye their hair black, red, and white to bring them visually closer to the bodies they interact with.	Additional Equipment: You carry an innocuous memento of someone close to you who died. It might be a locket, a ring, a letter, a coin, or something similar.\r\nNecromantic Abilities: If you perform abilities that would normally use force\r\nor other energy (such as electricity), they instead use deathly energies. For example, a force blast is a blast of cold, life-draining energy. This alteration changes nothing except that the type of damage is different, and it harms only living creatures.\r\nMinor Effect Suggestion: The animated creature adds 1 to all rolls, or the target is dazed for one round, during which time the difficulty of all its tasks is modified by one step to its detriment.\r\nMajor Effect Suggestion: The animated creature adds 2 to all rolls, or the target is stunned and loses his next turn.	1. Pick one other PC. You suspect that this character finds your predilections abhorrent. You can choose whether or not she knows of your suspicions.\r\n2. Pick one other PC. This character recently lost a loved one and wants you to contact that person in the afterlife. Whether you try to explain that this isn’t how it works is up to you.\r\n3. Pick one other PC. This character looks upon you as some kind of religious figure (whether you encourage this behavior is up to you).\r\n4. Pick one other PC. This character comes from the same place you do, and you knew each other as children.	consorts_with_the_dead	1
+15	Controls Beasts	To say that you have a way with animals and nonhuman creatures doesn’t begin to cover it. Your mastery and communication with beasts is positively uncanny. They come to you fearlessly, and it’s not uncommon for birds to alight on your shoulder or for small animals to climb up your arms or legs.\r\nYou probably wear tough clothing and have a disheveled or grizzled appearance that suggests a rugged, outdoor life. Perhaps you even smell like an animal.	Additional Equipment: You have three days’ worth of food for your beast companion, plus a harness, collar, or similar accoutrements.\r\nMinor Effect Suggestion: The duration of calmness or control is doubled.\r\nMajor Effect Suggestion: The duration of calmness or control extends to twenty-four hours.	1. Pick one other PC. That character seems to disturb your creatures in a way that you can’t explain. You know that you must keep your animals away from him if possible, or you might lose control of them.\r\n2. Pick one other PC. The creature that you’re bonded with seems to have a special bond with this other person as well. You must decide whether it brings up feelings of jealousy or camaraderie within you and whether to thwart the connection or help it blossom.\r\n3. Pick one other PC. Recently, he accidentally (or perhaps intentionally) put your beast companion in a position of danger. Your companion is now nervous around him, and you are struggling with your own emotional response to the incident.\r\n4. Pick one other PC. She dislikes beasts of all kinds, seeing them as little more\r\nthan food or prey. You hope that exposing her to your beast companion will change her mind. It’s up to that player how her character responds to the experience.	controls_beasts	1
+19	Defends the Weak	Someone has to stand up for the helpless, the weak, and the unprotected. You believe this duty, this obligation, falls to you, and thus you have spent much of your life watching out for the people around you. When you see them in trouble, you are the first to come to their aid. You might give up your last dime to help the hungry, take a beating to save a person from the same, or rally your friends to take on injustice wherever you find it.\r\nYou probably bear many scars from previous conflicts, but for each scar, you likely also have a token of gratitude. You may have a dried flower given to you by a lady you saved from brigands, or a bit of metal given to you by a starving man you fed.	Additional Equipment: You have a shield.\r\nMinor Effect Suggestion: You can draw an attack without having to use an action at any point before the end of the next round.\r\nMajor Effect Suggestion: You can take an extra action. You can use this action only to guard.	1. Pick one other PC. You failed to protect this character at some point in the past, and you feel compelled to make up for it.\r\n2. Pick one other PC. That character claimed innocence during a long-ago event, and you protected him. Now that time has passed, you’re not entirely convinced that he was blameless.\r\n3. Pick two other PCs. They seem to think that you are more of an arbitrator than\r\nyou really are, and they keep asking you to choose which one of them is correct.\r\n4. Pick one other PC. She believes that one of the tokens of gratitude you carry came from her father.	defends_the_weak	1
+22	Entertains	You are an entertainer: a singer, dancer, poet, storyteller, or something similar. You perform for the benefit of others. Naturally charismatic and talented, you have also studied to master your art. You know all the old poems, songs, jokes, and stories, and you’re skilled at creating new ones, too.\r\nYou probably wear flamboyant or at least fashionable clothes and use cosmetics, tattoos, or hair stylings for dramatic effect.	Additional Equipment: You start with a musical instrument or other tools needed to perform.\r\nMinor Effect Suggestion: You enchant the target, who remains enchanted as long as you focus all your attention on keeping her that way.\r\nMajor Effect Suggestion: The target is forever favorably disposed toward you.	1. Pick one other PC. This character is your worst critic. Your abilities to help or inspire others don’t function for her.\r\n2. Pick one other PC. He seems to really enjoy your attempts to entertain, and this brings out the performer in you. It’s up to that character whether his appreciation is real or if he is just being polite.\r\n3. Pick one other PC. She is so inspired and put at ease by your stories or other forms of entertainment when you use Levity that she gains +2 to her recovery rolls (instead of +1).\r\n4. Pick one other PC. This person knows the secret to one of your favorite forms of entertainment. You worry constantly that he will steal it or reveal it.	entertains	1
+26	Explores Deep Waters	You have nothing to fear from the depths. You have always been a good swimmer,\r\nable to hold your breath longer than anyone else, tread water for as long as you wanted, and delve deeper into the swirling darkness than your friends, all without stretching your resources. The depths you so freely explore harbor many secrets, and the waters that shelter you become part of who you are, an extension of your identity.\r\nWhen you bother to wear clothes, you favor snug, tight-fitting garments that stay close to your skin and do not hamper your mobility.\r\nThe abilities granted by this focus might result from special equipment you make along the way, weird transformations that began when you first swam into the deepest, darkest places, or simply an expression of an unusual gift or heritage.	Additional Equipment: You have a special device that, when fitted in your mouth, allows you to breathe underwater. The device functions for up to four hours at a time, after which you must wait four hours before you can use it again.\r\nWater Abilities: If you wield powers that would normally use force or other energy, they instead use water or ice. For example, a blast of energy might create a wave of water that crashes down on your target.\r\nIn addition, if you wish, you can swap an ability gained from your type for the following.\r\nCreate Water (2 Intellect points). You cause water to bubble up from a spot on the ground you can see. The water flows from that spot for one minute, creating about 1 gallon (4 liters) by the time it stops.\r\nMinor Effect Suggestion: You can take an extra action. You may use this action only to move or perform a movement-related activity.\r\nMajor Effect Suggestion: The difficulty of any Speed defense actions you take before the end of the next round is reduced by one step.	1. Pick one other PC. That character nearly drowned while following you on one of your expeditions underwater. It’s up to him whether he trusts you in such an environment again.\r\n2. Pick one other PC. She knows something about your past that you wish she didn’t.\r\n3. Pick one other PC. You think he suspects that you were involved with pirates or other criminals. Whether you were or not is up to you.\r\n4. Pick one other PC. She can’t swim very well and fears open water. You believe that you can help her overcome these issues, if she is willing to let you.	explores_deep_waters	1
+27	Fights Dirty	You know one thing for certain: the only important element of a fight is who wins. How? Why? These questions are inconsequential. Thus, you’ll do anything to win a fight. Some might say you have\r\nno honor, no class, or some other foolish statement, but they’re missing the point. You come out on top in a battle—and that’s all that matters.\r\nYou bite, scratch, kick, and trip. You tangle foes in draperies, push them down stairs, and throw dirt in their eyes. You trick them into looking the wrong way, call them names, and say terrible things about their mothers.\r\nMaybe you learned your methods while living on the streets, or maybe you barely survived a particularly horrific battle in a military campaign. Perhaps you simply have never bought into the idea of rules or honor when your life is on the line.\r\nYou’re likely to carry a few hidden tricks, sometimes literally up your sleeve. You might have a knife in your boot, a poisoned needle in your ring, a razor in the hem of your cloak, or a handful of stinging and itching powder in a hidden pocket. Your clothing probably has a lot of pockets, actually—more than a few of them well hidden.	Additional Equipment: You have a weapon that is easily hidden and a dose of level 3 poison that inflicts 6 points of damage.\r\nMinor Effect Suggestion: You manage to make your foe trip and fall prone.\r\nMajor Effect Suggestion: You tangle something around your foe’s legs, and he not only falls down but also loses his next turn.	1. Pick one other PC. He’s a good fighter, but if you could teach him a few of your tricks, he’d really excel.\r\n2. Pick one other PC. In the past, she taught you a few tricks to use in a fight.\r\n3. Pick one other PC. This character doesn’t seem to approve of your methods.\r\n4. Pick one other PC. Long ago, the two of you were on opposite sides of a fight. You won, using your particular tactics. Now she’s interested in a (friendly) rematch at some point and claims to be ready for you.	fights_dirty	1
 \.
 
 
@@ -1514,6 +2084,157 @@ COPY public.cyphercore_focusability (id, tier, ability_id, focus_id) FROM stdin;
 44	4	217	7
 45	5	218	7
 46	6	219	7
+47	1	221	8
+48	1	220	8
+49	2	222	8
+50	3	223	8
+51	4	224	8
+52	5	225	8
+53	6	226	8
+54	1	227	9
+55	1	228	9
+56	2	229	9
+57	2	230	9
+58	3	231	9
+59	3	232	9
+60	4	233	9
+61	4	234	9
+62	5	235	9
+63	6	236	9
+64	1	237	10
+65	2	238	10
+66	3	239	10
+67	4	240	10
+68	5	241	10
+69	6	242	10
+70	1	243	11
+71	1	244	11
+72	2	245	11
+73	3	246	11
+74	4	247	11
+75	5	248	11
+76	6	249	11
+77	1	250	12
+78	2	78	12
+79	3	251	12
+80	4	252	12
+81	5	91	12
+82	6	253	12
+83	1	254	13
+84	1	255	13
+85	2	256	13
+86	3	257	13
+87	4	258	13
+88	4	259	13
+89	5	260	13
+90	6	261	13
+91	6	262	13
+92	1	263	14
+93	2	264	14
+94	3	265	14
+95	4	266	14
+96	5	267	14
+97	6	268	14
+98	1	269	15
+99	2	270	15
+100	2	271	15
+101	3	272	15
+102	4	273	15
+103	4	274	15
+104	5	275	15
+105	6	276	15
+106	6	277	15
+107	1	77	16
+108	2	278	16
+109	3	279	16
+110	4	280	16
+111	5	281	16
+112	6	282	16
+113	1	283	17
+114	2	284	17
+115	3	285	17
+116	4	286	17
+117	5	287	17
+118	6	288	17
+119	1	289	18
+120	1	290	18
+121	2	291	18
+122	2	292	18
+123	3	293	18
+124	4	294	18
+125	5	295	18
+126	6	296	18
+127	1	297	19
+128	1	298	19
+129	2	299	19
+130	2	300	19
+131	3	301	19
+132	4	302	19
+133	4	303	19
+134	5	304	19
+135	6	305	19
+136	1	306	20
+137	2	307	20
+138	3	308	20
+139	4	309	20
+140	4	310	20
+141	5	311	20
+142	6	312	20
+143	1	313	21
+144	2	314	21
+145	3	315	21
+146	4	316	21
+147	5	317	21
+148	6	318	21
+149	1	319	22
+150	2	320	22
+151	3	321	22
+152	4	322	22
+153	5	323	22
+154	6	324	22
+155	1	325	23
+156	2	326	23
+157	3	327	23
+158	4	328	23
+159	5	329	23
+160	5	330	23
+161	6	331	23
+162	1	332	24
+163	2	333	24
+164	3	334	24
+165	4	335	24
+166	5	336	24
+167	6	337	24
+168	1	338	25
+169	2	339	25
+170	2	340	25
+171	3	341	25
+172	4	342	25
+173	5	343	25
+174	6	344	25
+175	1	345	26
+176	1	346	26
+177	1	347	26
+178	2	340	26
+179	2	348	26
+180	3	349	26
+181	3	350	26
+182	4	351	26
+183	4	352	26
+184	5	353	26
+185	5	354	26
+186	6	355	26
+187	6	356	26
+188	6	357	26
+189	1	358	27
+190	1	359	27
+191	2	360	27
+192	3	361	27
+193	3	362	27
+194	4	363	27
+195	4	364	27
+196	5	365	27
+197	6	366	27
 \.
 
 
@@ -1534,6 +2255,7 @@ COPY public.cyphercore_genre (id, name, sourcebook_id) FROM stdin;
 10	Historical	2
 11	Crime and Espionage	2
 12	Hard Science Fiction	2
+13	Any	3
 \.
 
 
@@ -1588,6 +2310,7 @@ COPY public.cyphercore_skill (id, name) FROM stdin;
 COPY public.cyphercore_sourcebook (id, name, enabled) FROM stdin;
 1	Cypher System Core	t
 2	Cypher System - Expanded Worlds	t
+3	Other	t
 \.
 
 
@@ -2509,8 +3232,201 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 688	2018-07-15 01:38:36.659692-05	217	Robot Upgrade	1	[{"added": {}}]	10	1
 689	2018-07-15 01:39:27.379119-05	218	Robot Fleet	1	[{"added": {}}]	10	1
 690	2018-07-15 01:40:07.318892-05	219	Robot Evolution	1	[{"added": {}}]	10	1
+849	2018-07-16 13:45:20.958885-05	350	Athletic Conditioning	1	[{"added": {}}]	10	1
+852	2018-07-16 13:48:04.896113-05	353	Communication (Underwater)	1	[{"added": {}}]	10	1
 691	2018-07-15 01:40:14.490807-05	7	Builds Robots	2	[{"added": {"name": "focus ability", "object": "Robot Assistant"}}, {"added": {"name": "focus ability", "object": "Robot Builder"}}, {"added": {"name": "focus ability", "object": "Robot Control"}}, {"added": {"name": "focus ability", "object": "Robot Improvement"}}, {"added": {"name": "focus ability", "object": "Robot Upgrade"}}, {"added": {"name": "focus ability", "object": "Robot Fleet"}}, {"added": {"name": "focus ability", "object": "Robot Evolution"}}]	9	1
 692	2018-07-15 01:40:40.821789-05	8	Calculates the Incalculable	2	[{"changed": {"fields": ["name"]}}]	9	1
+693	2018-07-15 02:19:28.803753-05	220	Predictive Equation	1	[{"added": {}}]	10	1
+694	2018-07-15 02:19:57.531818-05	221	Higher Mathematics	1	[{"added": {}}]	10	1
+695	2018-07-15 02:20:25.936289-05	8	Calculates the Incalculable	2	[{"added": {"name": "focus ability", "object": "Higher Mathematics"}}]	9	1
+696	2018-07-15 02:20:38.13024-05	8	Calculates the Incalculable	2	[{"added": {"name": "focus ability", "object": "Predictive Equation"}}]	9	1
+697	2018-07-15 02:21:07.679164-05	222	Predictive Model	1	[{"added": {}}]	10	1
+698	2018-07-15 02:21:41.252994-05	223	Subconscious Defense	1	[{"added": {}}]	10	1
+699	2018-07-15 02:22:16.831124-05	224	Cognizant Offense	1	[{"added": {}}]	10	1
+700	2018-07-15 02:22:50.230225-05	225	Genius	1	[{"added": {}}]	10	1
+701	2018-07-15 02:23:16.07682-05	226	One Step Ahead of Everyone	1	[{"added": {}}]	10	1
+702	2018-07-15 02:23:21.085781-05	8	Calculates the Incalculable	2	[{"added": {"name": "focus ability", "object": "Predictive Model"}}, {"added": {"name": "focus ability", "object": "Subconscious Defense"}}, {"added": {"name": "focus ability", "object": "Cognizant Offense"}}, {"added": {"name": "focus ability", "object": "Genius"}}, {"added": {"name": "focus ability", "object": "One Step Ahead of Everyone"}}]	9	1
+703	2018-07-15 02:24:38.461331-05	227	Archer	1	[{"added": {}}]	10	1
+704	2018-07-15 02:24:57.597563-05	228	Fletcher	1	[{"added": {}}]	10	1
+705	2018-07-15 02:25:44.382379-05	229	Covering Fire	1	[{"added": {}}]	10	1
+706	2018-07-15 02:26:06.574366-05	230	Bowyer	1	[{"added": {}}]	10	1
+707	2018-07-15 02:26:29.909921-05	231	Trained Archer	1	[{"added": {}}]	10	1
+708	2018-07-15 02:26:56.355468-05	232	Master Fletcher	1	[{"added": {}}]	10	1
+709	2018-07-15 02:27:31.560773-05	233	Quick Shot	1	[{"added": {}}]	10	1
+710	2018-07-15 02:27:55.99901-05	234	Master Bowyer	1	[{"added": {}}]	10	1
+711	2018-07-15 02:28:35.612631-05	235	Phenomenal Archer	1	[{"added": {}}]	10	1
+712	2018-07-15 02:29:17.771912-05	236	Powerful Shot	1	[{"added": {}}]	10	1
+713	2018-07-15 02:29:27.069927-05	9	Carries A Quiver	2	[{"added": {"name": "focus ability", "object": "Archer"}}, {"added": {"name": "focus ability", "object": "Fletcher"}}, {"added": {"name": "focus ability", "object": "Covering Fire"}}, {"added": {"name": "focus ability", "object": "Bowyer"}}, {"added": {"name": "focus ability", "object": "Trained Archer"}}, {"added": {"name": "focus ability", "object": "Master Fletcher"}}, {"added": {"name": "focus ability", "object": "Quick Shot"}}, {"added": {"name": "focus ability", "object": "Master Bowyer"}}, {"added": {"name": "focus ability", "object": "Phenomenal Archer"}}, {"added": {"name": "focus ability", "object": "Powerful Shot"}}]	9	1
+714	2018-07-15 02:30:06.509485-05	9	Carries a Quiver	2	[{"changed": {"fields": ["name"]}}]	9	1
+715	2018-07-15 02:57:14.867512-05	237	Spellbook 1	1	[{"added": {}}]	10	1
+716	2018-07-15 02:58:05.935518-05	238	Spellbook 2	1	[{"added": {}}]	10	1
+717	2018-07-15 02:59:36.772969-05	239	Spellbook 3	1	[{"added": {}}]	10	1
+718	2018-07-15 03:00:20.624419-05	240	Spellbook 4	1	[{"added": {}}]	10	1
+719	2018-07-15 03:00:56.287921-05	241	Spellbook 5	1	[{"added": {}}]	10	1
+720	2018-07-15 03:01:31.459851-05	242	Spellbook 6	1	[{"added": {}}]	10	1
+721	2018-07-15 03:01:36.88361-05	10	Casts Spells	2	[{"added": {"name": "focus ability", "object": "Spellbook 1"}}, {"added": {"name": "focus ability", "object": "Spellbook 2"}}, {"added": {"name": "focus ability", "object": "Spellbook 3"}}, {"added": {"name": "focus ability", "object": "Spellbook 4"}}, {"added": {"name": "focus ability", "object": "Spellbook 5"}}, {"added": {"name": "focus ability", "object": "Spellbook 6"}}]	9	1
+722	2018-07-15 03:02:51.174625-05	243	Divine Knowledge	1	[{"added": {}}]	10	1
+723	2018-07-15 03:04:32.283465-05	244	Blessing of the Gods	1	[{"added": {}}]	10	1
+724	2018-07-15 03:04:55.970847-05	245	Divine Fortitude	1	[{"added": {}}]	10	1
+725	2018-07-15 03:05:22.664855-05	246	Divine Radiance	1	[{"added": {}}]	10	1
+726	2018-07-15 03:05:51.489874-05	247	Overawe	1	[{"added": {}}]	10	1
+727	2018-07-15 03:06:57.528764-05	248	Divine Intervention	1	[{"added": {}}]	10	1
+728	2018-07-15 03:07:46.673075-05	249	Divine Symbol	1	[{"added": {}}]	10	1
+729	2018-07-15 03:07:52.901214-05	11	Channels Divine Blessings	2	[{"added": {"name": "focus ability", "object": "Divine Knowledge"}}, {"added": {"name": "focus ability", "object": "Blessing of the Gods"}}, {"added": {"name": "focus ability", "object": "Divine Fortitude"}}, {"added": {"name": "focus ability", "object": "Divine Radiance"}}, {"added": {"name": "focus ability", "object": "Overawe"}}, {"added": {"name": "focus ability", "object": "Divine Intervention"}}, {"added": {"name": "focus ability", "object": "Divine Symbol"}}]	9	1
+730	2018-07-15 03:09:10.912141-05	11	Channels Divine Blessings	2	[{"changed": {"fields": ["other_details"]}}]	9	1
+731	2018-07-15 03:25:27.113831-05	250	Telepathic	1	[{"added": {}}]	10	1
+732	2018-07-15 03:26:53.34512-05	251	Psychic Burst	1	[{"added": {}}]	10	1
+733	2018-07-15 03:27:22.921935-05	252	Use Senses of Others	1	[{"added": {}}]	10	1
+734	2018-07-15 03:28:26.864141-05	253	Telepathic Network	1	[{"added": {}}]	10	1
+735	2018-07-15 03:28:33.248697-05	12	Commands Mental Powers	2	[{"added": {"name": "focus ability", "object": "Telepathic"}}, {"added": {"name": "focus ability", "object": "Mind Reading"}}, {"added": {"name": "focus ability", "object": "Psychic Burst"}}, {"added": {"name": "focus ability", "object": "Use Senses of Others"}}, {"added": {"name": "focus ability", "object": "Mind Control"}}, {"added": {"name": "focus ability", "object": "Telepathic Network"}}]	9	1
+736	2018-07-15 03:33:38.486931-05	254	Lab Analysis	1	[{"added": {}}]	10	1
+737	2018-07-15 03:34:00.591895-05	255	Scientist	1	[{"added": {}}]	10	1
+738	2018-07-15 03:34:27.286861-05	256	Modify Device	1	[{"added": {}}]	10	1
+739	2018-07-15 03:34:56.068755-05	257	Better Living Through Chemistry	1	[{"added": {}}]	10	1
+740	2018-07-15 03:35:17.386043-05	258	Extensive Training	1	[{"added": {}}]	10	1
+741	2018-07-15 03:35:44.233381-05	259	Just a Bit Mad	1	[{"added": {}}]	10	1
+742	2018-07-15 03:36:28.933334-05	260	Weird Science Breakthrough	1	[{"added": {}}]	10	1
+743	2018-07-15 03:37:25.710411-05	261	Incredible Feat of Science	1	[{"added": {}}]	10	1
+744	2018-07-15 03:38:03.579799-05	262	Improved Weird Science Breakthrough	1	[{"added": {}}]	10	1
+850	2018-07-16 13:45:47.662494-05	351	Nimble Swimmer	1	[{"added": {}}]	10	1
+853	2018-07-16 13:48:33.890355-05	354	Elusive	1	[{"added": {}}]	10	1
+745	2018-07-15 03:38:15.290349-05	13	Conducts Weird Science	2	[{"added": {"name": "focus ability", "object": "Lab Analysis"}}, {"added": {"name": "focus ability", "object": "Scientist"}}, {"added": {"name": "focus ability", "object": "Modify Device"}}, {"added": {"name": "focus ability", "object": "Better Living Through Chemistry"}}, {"added": {"name": "focus ability", "object": "Extensive Training"}}, {"added": {"name": "focus ability", "object": "Just a Bit Mad"}}, {"added": {"name": "focus ability", "object": "Weird Science Breakthrough"}}, {"added": {"name": "focus ability", "object": "Incredible Feat of Science"}}, {"added": {"name": "focus ability", "object": "Improved Weird Science Breakthrough"}}]	9	1
+746	2018-07-15 14:38:46.458782-05	263	Speaker for the Dead	1	[{"added": {}}]	10	1
+747	2018-07-15 14:39:23.420196-05	264	Necromancy	1	[{"added": {}}]	10	1
+748	2018-07-15 14:39:52.5131-05	265	Reading the Room	1	[{"added": {}}]	10	1
+749	2018-07-15 14:40:26.366772-05	266	Greater Necromancy	1	[{"added": {}}]	10	1
+750	2018-07-15 14:40:55.071368-05	267	Death Gaze	1	[{"added": {}}]	10	1
+751	2018-07-15 14:41:38.389283-05	268	True Necromancy	1	[{"added": {}}]	10	1
+752	2018-07-15 14:41:44.118921-05	14	Consorts With the Dead	2	[{"changed": {"fields": ["name"]}}, {"added": {"name": "focus ability", "object": "Speaker for the Dead"}}, {"added": {"name": "focus ability", "object": "Necromancy"}}, {"added": {"name": "focus ability", "object": "Reading the Room"}}, {"added": {"name": "focus ability", "object": "Greater Necromancy"}}, {"added": {"name": "focus ability", "object": "Death Gaze"}}, {"added": {"name": "focus ability", "object": "True Necromancy"}}]	9	1
+753	2018-07-15 14:44:27.071524-05	269	Beast Companion	1	[{"added": {}}]	10	1
+754	2018-07-15 14:45:01.616238-05	270	Soothe the Savage	1	[{"added": {}}]	10	1
+755	2018-07-15 14:45:31.172722-05	271	Communication	1	[{"added": {}}]	10	1
+756	2018-07-15 14:46:00.60694-05	272	Mount	1	[{"added": {}}]	10	1
+757	2018-07-15 14:46:32.061576-05	273	Beast Eyes	1	[{"added": {}}]	10	1
+758	2018-07-15 14:46:58.278381-05	274	Improved Companion	1	[{"added": {}}]	10	1
+759	2018-07-15 14:47:26.27566-05	275	Beast Call	1	[{"added": {}}]	10	1
+760	2018-07-15 14:47:58.310379-05	276	Control the Savage	1	[{"added": {}}]	10	1
+761	2018-07-15 14:48:30.278095-05	277	Improved Companion 2	1	[{"added": {}}]	10	1
+762	2018-07-15 14:48:37.551625-05	15	Controls Beasts	2	[{"added": {"name": "focus ability", "object": "Beast Companion"}}, {"added": {"name": "focus ability", "object": "Soothe the Savage"}}, {"added": {"name": "focus ability", "object": "Communication"}}, {"added": {"name": "focus ability", "object": "Mount"}}, {"added": {"name": "focus ability", "object": "Beast Eyes"}}, {"added": {"name": "focus ability", "object": "Improved Companion"}}, {"added": {"name": "focus ability", "object": "Beast Call"}}, {"added": {"name": "focus ability", "object": "Control the Savage"}}, {"added": {"name": "focus ability", "object": "Improved Companion 2"}}]	9	1
+763	2018-07-15 14:49:00.572428-05	274	Improved Companion 1	2	[{"changed": {"fields": ["name", "slug"]}}]	10	1
+764	2018-07-15 14:50:39.970364-05	278	Lessening Gravity’s Pull	1	[{"added": {}}]	10	1
+765	2018-07-15 14:51:03.085292-05	279	Gravity Cleave	1	[{"added": {}}]	10	1
+766	2018-07-15 14:51:27.192668-05	280	Field of Gravity	1	[{"added": {}}]	10	1
+767	2018-07-15 14:51:50.414366-05	281	Flight	1	[{"added": {}}]	10	1
+768	2018-07-15 14:52:29.462283-05	282	Weight of the World	1	[{"added": {}}]	10	1
+769	2018-07-15 14:52:37.345805-05	16	Controls Gravity	2	[{"added": {"name": "focus ability", "object": "Hover"}}, {"added": {"name": "focus ability", "object": "Lessening Gravity\\u2019s Pull"}}, {"added": {"name": "focus ability", "object": "Gravity Cleave"}}, {"added": {"name": "focus ability", "object": "Field of Gravity"}}, {"added": {"name": "focus ability", "object": "Flight"}}, {"added": {"name": "focus ability", "object": "Weight of the World"}}]	9	1
+770	2018-07-15 17:10:10.848541-05	283	Minor Illusion	1	[{"added": {}}]	10	1
+771	2018-07-15 17:10:47.90667-05	284	Disguise	1	[{"added": {}}]	10	1
+772	2018-07-15 17:11:17.938517-05	285	Major Illusion	1	[{"added": {}}]	10	1
+773	2018-07-15 17:12:18.015788-05	286	Illusory Selves	1	[{"added": {}}]	10	1
+774	2018-07-15 17:12:45.37421-05	287	Terrifying Image	1	[{"added": {}}]	10	1
+775	2018-07-15 17:13:35.222484-05	288	Grandiose Illusion	1	[{"added": {}}]	10	1
+776	2018-07-15 17:13:41.441216-05	17	Crafts Illusions	2	[{"added": {"name": "focus ability", "object": "Minor Illusion"}}, {"added": {"name": "focus ability", "object": "Disguise"}}, {"added": {"name": "focus ability", "object": "Major Illusion"}}, {"added": {"name": "focus ability", "object": "Illusory Selves"}}, {"added": {"name": "focus ability", "object": "Terrifying Image"}}, {"added": {"name": "focus ability", "object": "Grandiose Illusion"}}]	9	1
+777	2018-07-15 17:18:29.917288-05	289	Crafter	1	[{"added": {}}]	10	1
+778	2018-07-15 17:18:48.437266-05	290	Master Identifier	1	[{"added": {}}]	10	1
+779	2018-07-15 17:19:17.488277-05	291	Tinkerer	1	[{"added": {}}]	10	1
+780	2018-07-15 17:19:47.999315-05	292	Quick Work	1	[{"added": {}}]	10	1
+781	2018-07-15 17:20:09.967921-05	293	Master Crafter	1	[{"added": {}}]	10	1
+782	2018-07-15 17:20:30.861825-05	294	Cyphersmith	1	[{"added": {}}]	10	1
+783	2018-07-15 17:20:49.292179-05	295	Innovator	1	[{"added": {}}]	10	1
+784	2018-07-15 17:21:25.79208-05	296	Inventor	1	[{"added": {}}]	10	1
+785	2018-07-15 17:21:39.427685-05	18	Crafts Unique Objects	2	[{"added": {"name": "focus ability", "object": "Crafter"}}, {"added": {"name": "focus ability", "object": "Master Identifier"}}, {"added": {"name": "focus ability", "object": "Tinkerer"}}, {"added": {"name": "focus ability", "object": "Quick Work"}}, {"added": {"name": "focus ability", "object": "Master Crafter"}}, {"added": {"name": "focus ability", "object": "Cyphersmith"}}, {"added": {"name": "focus ability", "object": "Innovator"}}, {"added": {"name": "focus ability", "object": "Inventor"}}]	9	1
+786	2018-07-15 17:28:32.407471-05	297	Courageous	1	[{"added": {}}]	10	1
+787	2018-07-15 17:28:57.975184-05	298	Warding Shield	1	[{"added": {}}]	10	1
+788	2018-07-15 17:29:42.830612-05	299	Devoted Defender	1	[{"added": {}}]	10	1
+789	2018-07-15 17:30:01.530493-05	300	Astute	1	[{"added": {}}]	10	1
+790	2018-07-15 17:30:34.051059-05	301	True Guardian	1	[{"added": {}}]	10	1
+791	2018-07-15 17:31:11.218563-05	302	Combat Challenge	1	[{"added": {}}]	10	1
+792	2018-07-15 17:31:44.357398-05	303	Willing Sacrifice	1	[{"added": {}}]	10	1
+793	2018-07-15 17:32:15.044829-05	304	Drive Back	1	[{"added": {}}]	10	1
+794	2018-07-15 17:32:53.578646-05	305	True Defender	1	[{"added": {}}]	10	1
+846	2018-07-16 13:39:04.25879-05	26	Explores Deep Waters	2	[{"added": {"name": "focus ability", "object": "Diver"}}, {"added": {"name": "focus ability", "object": "Hold Breath"}}, {"added": {"name": "focus ability", "object": "Trained Swimmer"}}]	9	1
+851	2018-07-16 13:46:16.895031-05	352	Swim	1	[{"added": {}}]	10	1
+854	2018-07-16 13:48:58.392948-05	355	Deep Water Guide	1	[{"added": {}}]	10	1
+855	2018-07-16 13:49:30.150862-05	356	Master of the Deep Waters	1	[{"added": {}}]	10	1
+795	2018-07-15 17:33:03.404149-05	19	Defends the Weak	2	[{"changed": {"fields": ["name"]}}, {"added": {"name": "focus ability", "object": "Courageous"}}, {"added": {"name": "focus ability", "object": "Warding Shield"}}, {"added": {"name": "focus ability", "object": "Devoted Defender"}}, {"added": {"name": "focus ability", "object": "Astute"}}, {"added": {"name": "focus ability", "object": "True Guardian"}}, {"added": {"name": "focus ability", "object": "Combat Challenge"}}, {"added": {"name": "focus ability", "object": "Willing Sacrifice"}}, {"added": {"name": "focus ability", "object": "Drive Back"}}, {"added": {"name": "focus ability", "object": "True Defender"}}]	9	1
+796	2018-07-15 17:47:56.86097-05	306	Life Lessons	1	[{"added": {}}]	10	1
+797	2018-07-15 17:48:56.823234-05	307	Totally Chill	1	[{"added": {}}]	10	1
+798	2018-07-15 17:49:27.455272-05	308	Taking Care of Yourself	1	[{"added": {}}]	10	1
+799	2018-07-15 17:50:26.523646-05	306	Life Lessons 1	2	[{"changed": {"fields": ["name"]}}]	10	1
+800	2018-07-15 17:50:33.990972-05	306	Life Lessons 1	2	[{"changed": {"fields": ["slug"]}}]	10	1
+801	2018-07-15 17:50:54.525931-05	309	Life Lessons 2	1	[{"added": {}}]	10	1
+802	2018-07-15 17:52:34.787416-05	310	The Best Offense	1	[{"added": {}}]	10	1
+803	2018-07-15 17:53:01.120513-05	311	Abiding	1	[{"added": {}}]	10	1
+804	2018-07-15 17:53:35.199246-05	312	Drawing on Life’s Experiences	1	[{"added": {}}]	10	1
+805	2018-07-15 17:53:43.403051-05	20	Doesn't Do Much	2	[{"added": {"name": "focus ability", "object": "Life Lessons 1"}}, {"added": {"name": "focus ability", "object": "Totally Chill"}}, {"added": {"name": "focus ability", "object": "Taking Care of Yourself"}}, {"added": {"name": "focus ability", "object": "Life Lessons 2"}}, {"added": {"name": "focus ability", "object": "The Best Offense"}}, {"added": {"name": "focus ability", "object": "Abiding"}}, {"added": {"name": "focus ability", "object": "Drawing on Life\\u2019s Experiences"}}]	9	1
+806	2018-07-15 22:00:21.788689-05	313	Move Metal	1	[{"added": {}}]	10	1
+807	2018-07-15 22:00:41.751925-05	314	Repel Metal	1	[{"added": {}}]	10	1
+808	2018-07-15 22:02:31.29901-05	315	Destroy Metal	1	[{"added": {}}]	10	1
+809	2018-07-15 22:03:00.438467-05	316	Magnetic Field	1	[{"added": {}}]	10	1
+810	2018-07-15 22:03:28.850612-05	317	Command Metal	1	[{"added": {}}]	10	1
+811	2018-07-15 22:04:05.338265-05	318	Diamagnetism	1	[{"added": {}}]	10	1
+812	2018-07-15 22:04:14.487127-05	21	Employs Magnetism	2	[{"added": {"name": "focus ability", "object": "Move Metal"}}, {"added": {"name": "focus ability", "object": "Repel Metal"}}, {"added": {"name": "focus ability", "object": "Destroy Metal"}}, {"added": {"name": "focus ability", "object": "Magnetic Field"}}, {"added": {"name": "focus ability", "object": "Command Metal"}}, {"added": {"name": "focus ability", "object": "Diamagnetism"}}]	9	1
+813	2018-07-16 00:24:42.808552-05	319	Levity	1	[{"added": {}}]	10	1
+814	2018-07-16 00:26:21.222495-05	320	Inspiration	1	[{"added": {}}]	10	1
+815	2018-07-16 00:26:48.77069-05	321	Knowledge	1	[{"added": {}}]	10	1
+816	2018-07-16 00:27:17.857898-05	322	Calm	1	[{"added": {}}]	10	1
+817	2018-07-16 00:27:45.134655-05	323	Able Assistance	1	[{"added": {}}]	10	1
+818	2018-07-16 00:28:10.597009-05	324	Master Entertainer	1	[{"added": {}}]	10	1
+819	2018-07-16 00:28:17.112178-05	22	Entertains	2	[{"added": {"name": "focus ability", "object": "Levity"}}, {"added": {"name": "focus ability", "object": "Inspiration"}}, {"added": {"name": "focus ability", "object": "Knowledge"}}, {"added": {"name": "focus ability", "object": "Calm"}}, {"added": {"name": "focus ability", "object": "Able Assistance"}}, {"added": {"name": "focus ability", "object": "Master Entertainer"}}]	9	1
+820	2018-07-16 00:32:54.075959-05	325	Duplicate	1	[{"added": {}}]	10	1
+821	2018-07-16 00:33:21.663344-05	326	Share Senses	1	[{"added": {}}]	10	1
+822	2018-07-16 00:33:50.233093-05	327	Superior Duplicate	1	[{"added": {}}]	10	1
+823	2018-07-16 00:34:26.86001-05	328	Damage Transference	1	[{"added": {}}]	10	1
+824	2018-07-16 00:34:54.422689-05	329	Coordinated Effort	1	[{"added": {}}]	10	1
+825	2018-07-16 00:35:27.426608-05	330	Resilient Duplicate	1	[{"added": {}}]	10	1
+826	2018-07-16 00:35:57.023785-05	331	Multiplicity	1	[{"added": {}}]	10	1
+827	2018-07-16 00:36:02.955369-05	23	Exists In Two Places At Once	2	[{"added": {"name": "focus ability", "object": "Duplicate"}}, {"added": {"name": "focus ability", "object": "Share Senses"}}, {"added": {"name": "focus ability", "object": "Superior Duplicate"}}, {"added": {"name": "focus ability", "object": "Damage Transference"}}, {"added": {"name": "focus ability", "object": "Coordinated Effort"}}, {"added": {"name": "focus ability", "object": "Resilient Duplicate"}}, {"added": {"name": "focus ability", "object": "Multiplicity"}}]	9	1
+828	2018-07-16 01:39:47.743483-05	332	Walk Through Walls	1	[{"added": {}}]	10	1
+829	2018-07-16 01:40:14.455504-05	333	Defensive Phasing	1	[{"added": {}}]	10	1
+830	2018-07-16 01:40:39.404365-05	334	Phased Attack	1	[{"added": {}}]	10	1
+831	2018-07-16 01:41:05.047232-05	335	Ghost	1	[{"added": {}}]	10	1
+832	2018-07-16 01:41:38.655206-05	336	Untouchable	1	[{"added": {}}]	10	1
+833	2018-07-16 01:42:09.259911-05	337	Enhanced Phased Attack	1	[{"added": {}}]	10	1
+834	2018-07-16 01:42:15.238033-05	24	Exists Partially Out Of Phase	2	[{"added": {"name": "focus ability", "object": "Walk Through Walls"}}, {"added": {"name": "focus ability", "object": "Defensive Phasing"}}, {"added": {"name": "focus ability", "object": "Phased Attack"}}, {"added": {"name": "focus ability", "object": "Ghost"}}, {"added": {"name": "focus ability", "object": "Untouchable"}}, {"added": {"name": "focus ability", "object": "Enhanced Phased Attack"}}]	9	1
+835	2018-07-16 01:55:01.496967-05	338	Trained Explorer	1	[{"added": {}}]	10	1
+836	2018-07-16 01:56:10.517006-05	339	Trained Infiltrator	1	[{"added": {}}]	10	1
+837	2018-07-16 01:56:33.38297-05	340	Eyes Adjusted	1	[{"added": {}}]	10	1
+838	2018-07-16 01:57:25.07052-05	341	Slippery Customer	1	[{"added": {}}]	10	1
+839	2018-07-16 01:57:53.800217-05	342	Resilient	1	[{"added": {}}]	10	1
+840	2018-07-16 01:58:32.079613-05	343	Dark Explorer	1	[{"added": {}}]	10	1
+841	2018-07-16 01:59:01.633147-05	344	Blinding Attack	1	[{"added": {}}]	10	1
+842	2018-07-16 01:59:07.44566-05	25	Explores Dark Places	2	[{"added": {"name": "focus ability", "object": "Trained Explorer"}}, {"added": {"name": "focus ability", "object": "Trained Infiltrator"}}, {"added": {"name": "focus ability", "object": "Eyes Adjusted"}}, {"added": {"name": "focus ability", "object": "Slippery Customer"}}, {"added": {"name": "focus ability", "object": "Resilient"}}, {"added": {"name": "focus ability", "object": "Dark Explorer"}}, {"added": {"name": "focus ability", "object": "Blinding Attack"}}]	9	1
+843	2018-07-16 02:19:03.710666-05	345	Diver	1	[{"added": {}}]	10	1
+844	2018-07-16 02:19:25.447308-05	346	Hold Breath	1	[{"added": {}}]	10	1
+845	2018-07-16 02:20:47.543529-05	347	Trained Swimmer	1	[{"added": {}}]	10	1
+847	2018-07-16 13:44:26.89029-05	348	Resist Underwater Hazards	1	[{"added": {}}]	10	1
+848	2018-07-16 13:44:57.299654-05	349	Aquatic Combat	1	[{"added": {}}]	10	1
+856	2018-07-16 13:49:49.457406-05	357	Water Adaptation	1	[{"added": {}}]	10	1
+857	2018-07-16 13:49:56.349346-05	26	Explores Deep Waters	2	[{"added": {"name": "focus ability", "object": "Eyes Adjusted"}}, {"added": {"name": "focus ability", "object": "Resist Underwater Hazards"}}, {"added": {"name": "focus ability", "object": "Aquatic Combat"}}, {"added": {"name": "focus ability", "object": "Athletic Conditioning"}}, {"added": {"name": "focus ability", "object": "Nimble Swimmer"}}, {"added": {"name": "focus ability", "object": "Swim"}}, {"added": {"name": "focus ability", "object": "Communication (Underwater)"}}, {"added": {"name": "focus ability", "object": "Elusive"}}, {"added": {"name": "focus ability", "object": "Deep Water Guide"}}, {"added": {"name": "focus ability", "object": "Master of the Deep Waters"}}, {"added": {"name": "focus ability", "object": "Water Adaptation"}}]	9	1
+858	2018-07-16 17:16:03.358541-05	358	Taking Advantage	1	[{"added": {}}]	10	1
+859	2018-07-16 17:16:18.649198-05	359	Liar	1	[{"added": {}}]	10	1
+860	2018-07-16 17:16:39.13145-05	360	Eye Gouge	1	[{"added": {}}]	10	1
+861	2018-07-16 17:17:05.979526-05	361	Spot Weakness	1	[{"added": {}}]	10	1
+862	2018-07-16 17:18:03.988953-05	362	Betrayal	1	[{"added": {}}]	10	1
+863	2018-07-16 17:19:05.38658-05	363	Mind Games	1	[{"added": {}}]	10	1
+864	2018-07-16 17:19:43.190615-05	364	Tooth and Nail	1	[{"added": {}}]	10	1
+865	2018-07-16 17:20:22.289064-05	365	Using the Environment	1	[{"added": {}}]	10	1
+866	2018-07-16 17:20:50.869679-05	366	Twisting the Knife	1	[{"added": {}}]	10	1
+867	2018-07-16 17:20:57.338862-05	27	Fights Dirty	2	[{"added": {"name": "focus ability", "object": "Taking Advantage"}}, {"added": {"name": "focus ability", "object": "Liar"}}, {"added": {"name": "focus ability", "object": "Eye Gouge"}}, {"added": {"name": "focus ability", "object": "Spot Weakness"}}, {"added": {"name": "focus ability", "object": "Betrayal"}}, {"added": {"name": "focus ability", "object": "Mind Games"}}, {"added": {"name": "focus ability", "object": "Tooth and Nail"}}, {"added": {"name": "focus ability", "object": "Using the Environment"}}, {"added": {"name": "focus ability", "object": "Twisting the Knife"}}]	9	1
+868	2018-07-16 22:52:03.359861-05	1	michael	2	[{"changed": {"fields": ["username", "first_name", "last_name"]}}]	4	1
+869	2018-07-16 22:52:44.082504-05	1	michael	2	[{"changed": {"fields": ["password"]}}]	4	1
+870	2018-07-21 01:27:38.987021-05	3	Other	1	[{"added": {}}]	15	1
+871	2018-07-21 01:27:53.695431-05	13	Any	1	[{"added": {}}]	17	1
+872	2018-07-21 01:41:38.751602-05	1	Angelic Ward	1	[{"added": {}}]	18	1
+873	2018-07-21 03:48:19.676605-05	1	Aldor Donatus	1	[{"added": {}}]	19	1
+874	2018-07-21 03:48:33.764726-05	1	Aldor Donatus	2	[]	19	1
+875	2018-07-21 03:51:39.659954-05	1	Aldor Donatus	2	[{"changed": {"fields": ["descriptor", "might_pool", "might_current"]}}]	19	1
+876	2018-07-21 17:45:04.513827-05	1	Aldor Donatus	2	[{"added": {"name": "character skill", "object": "Deceiving"}}]	19	1
+877	2018-07-21 17:45:18.33242-05	1	Aldor Donatus	2	[{"deleted": {"name": "character skill", "object": "Deceiving"}}]	19	1
+878	2018-07-21 18:21:30.794039-05	1	Aldor Donatus	2	[{"added": {"name": "character skill", "object": "Identifying"}}, {"added": {"name": "character skill", "object": "Deceiving"}}, {"added": {"name": "character skill", "object": "Leatherworking"}}]	19	1
+879	2018-07-21 18:21:46.448921-05	1	Aldor Donatus	2	[{"added": {"name": "character skill", "object": "History"}}]	19	1
+880	2018-07-21 18:26:21.044361-05	1	Aldor Donatus	2	[{"deleted": {"name": "character skill", "object": "Deceiving"}}, {"deleted": {"name": "character skill", "object": "History"}}, {"deleted": {"name": "character skill", "object": "Leatherworking"}}, {"deleted": {"name": "character skill", "object": "Identifying"}}]	19	1
+881	2018-07-21 19:53:15.14821-05	1	Aldor Donatus	2	[{"added": {"name": "character equipment", "object": "Dwarven breastplate"}}]	19	1
+882	2018-07-21 19:54:03.534521-05	1	Aldor Donatus	2	[{"added": {"name": "character skill", "object": "Carrying"}}, {"added": {"name": "character skill", "object": "Climbing"}}, {"added": {"name": "character equipment", "object": "Sword"}}, {"added": {"name": "character equipment", "object": "Rope (Hemp, 50ft.)"}}, {"changed": {"name": "character equipment", "object": "Leather jerkin", "fields": ["equipment"]}}]	19	1
+883	2018-07-21 20:29:34.472258-05	1	Aldor Donatus	2	[{"added": {"name": "character cypher", "object": "Adhesion"}}]	19	1
+884	2018-07-21 20:30:01.859441-05	1	Aldor Donatus	2	[{"changed": {"name": "character cypher", "object": "Adhesion", "fields": ["level"]}}]	19	1
+885	2018-07-21 20:34:38.380381-05	1	Aldor Donatus	2	[{"added": {"name": "character artifact", "object": "Angelic Ward"}}]	19	1
 \.
 
 
@@ -2536,6 +3452,12 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 15	cyphercore	sourcebook
 16	cyphercore	skill
 17	cyphercore	genre
+18	cyphercore	artifact
+19	cyphercore	character
+20	cyphercore	characterskill
+21	cyphercore	characterequipment
+22	cyphercore	charactercypher
+23	cyphercore	characterartifact
 \.
 
 
@@ -2610,6 +3532,18 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 64	cyphercore	0049_auto_20180713_0605	2018-07-13 01:05:33.478442-05
 65	cyphercore	0050_auto_20180715_0358	2018-07-14 22:59:01.835826-05
 66	cyphercore	0051_remove_skill_slug	2018-07-14 23:22:10.651921-05
+67	cyphercore	0052_artifact	2018-07-21 01:32:13.355101-05
+68	cyphercore	0053_artifact_form	2018-07-21 01:38:13.552769-05
+69	cyphercore	0054_auto_20180721_0734	2018-07-21 02:35:07.956824-05
+70	cyphercore	0055_character_genre	2018-07-21 02:42:42.285792-05
+71	cyphercore	0056_character_abilities	2018-07-21 03:13:33.05194-05
+72	cyphercore	0057_auto_20180721_2244	2018-07-21 17:44:26.374114-05
+73	cyphercore	0058_auto_20180721_2246	2018-07-21 17:46:29.64168-05
+74	cyphercore	0059_character_portrait_link	2018-07-21 18:33:37.328639-05
+75	cyphercore	0060_auto_20180722_0052	2018-07-21 19:52:53.766873-05
+76	cyphercore	0061_auto_20180722_0123	2018-07-21 20:23:53.19908-05
+77	cyphercore	0062_auto_20180722_0126	2018-07-21 20:26:12.868476-05
+78	cyphercore	0063_auto_20180722_0134	2018-07-21 20:34:21.313492-05
 \.
 
 
@@ -2622,12 +3556,16 @@ frzuaelk6s9qp0lb73fjhbycy2nk5ku7	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM
 8zzzt8ixbt3wgfq7ea0wh7wj6uu8x2jg	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-18 13:53:01.546725-05
 o3jn6823g5gx2c03l25g9cb9x49f0he9	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-18 13:54:31.591656-05
 kn3812jkoe4tmc05v1sxiicc1iqoc0r5	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-19 01:14:41.259452-05
-106dzgbqc00lrd8ooc2k2uqffgvcphyp	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-19 01:24:30.848485-05
 oh0lvxgaf6f4dc2rbbcjw83df7wx2xj9	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-19 13:52:53.012576-05
 0gsstv2ogxaw49dmrtfrwtdcjy742al6	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-19 14:59:00.518877-05
 g25iorn6tr68ngdyi0v2cydohjdkma4x	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-22 17:54:32.596478-05
-w72z7obg84yjcvjub3q5ijxjm39v09hf	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-24 22:40:24.5421-05
-5rkc69j97weiex9y8t4nhb2wjqgjw907	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-27 23:58:26.298849-05
+kblkw17tv4spol74742d5ruul19kt6qg	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-07-30 22:52:58.797453-05
+5bgmsgc7is0lyarys95y3g6ysm30sepp	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-01 16:23:07.07971-05
+bqascjgmft0lbhe50lemvjl10tdxnv1m	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-02 00:36:54.723888-05
+5zwg0uq8y4bnp6kl8azb0lsfm9lusyne	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-02 20:41:20.365818-05
+kt7qamdr9p6j0yjh3tho904n0lnep4k1	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 01:45:19.660568-05
+luotc209aumvy02e00s6tb17ua7qc4f8	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 17:44:41.319653-05
+0deshxvrg3rd5hx3q2t40tglso2vbviu	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 19:43:00.841289-05
 \.
 
 
@@ -2649,7 +3587,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 54, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 72, true);
 
 
 --
@@ -2677,7 +3615,56 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: cyphercore_ability_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_ability_id_seq', 219, true);
+SELECT pg_catalog.setval('public.cyphercore_ability_id_seq', 366, true);
+
+
+--
+-- Name: cyphercore_artifact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cyphercore_artifact_id_seq', 1, true);
+
+
+--
+-- Name: cyphercore_character_abilities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cyphercore_character_abilities_id_seq', 6, true);
+
+
+--
+-- Name: cyphercore_character_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cyphercore_character_id_seq', 1, true);
+
+
+--
+-- Name: cyphercore_characterartifact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cyphercore_characterartifact_id_seq', 1, true);
+
+
+--
+-- Name: cyphercore_charactercypher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cyphercore_charactercypher_id_seq', 1, true);
+
+
+--
+-- Name: cyphercore_characterequipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cyphercore_characterequipment_id_seq', 3, true);
+
+
+--
+-- Name: cyphercore_characterskill_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cyphercore_characterskill_id_seq', 7, true);
 
 
 --
@@ -2712,14 +3699,14 @@ SELECT pg_catalog.setval('public.cyphercore_focus_id_seq', 81, true);
 -- Name: cyphercore_focusability_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_focusability_id_seq', 46, true);
+SELECT pg_catalog.setval('public.cyphercore_focusability_id_seq', 197, true);
 
 
 --
 -- Name: cyphercore_genre_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_genre_id_seq', 12, true);
+SELECT pg_catalog.setval('public.cyphercore_genre_id_seq', 13, true);
 
 
 --
@@ -2733,7 +3720,7 @@ SELECT pg_catalog.setval('public.cyphercore_skill_id_seq', 38, true);
 -- Name: cyphercore_source_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_source_id_seq', 2, true);
+SELECT pg_catalog.setval('public.cyphercore_source_id_seq', 3, true);
 
 
 --
@@ -2754,21 +3741,21 @@ SELECT pg_catalog.setval('public.cyphercore_typeability_id_seq', 203, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 692, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 885, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 17, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 23, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 66, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 78, true);
 
 
 --
@@ -2881,6 +3868,94 @@ ALTER TABLE ONLY public.cyphercore_ability
 
 ALTER TABLE ONLY public.cyphercore_ability
     ADD CONSTRAINT cyphercore_ability_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_artifact cyphercore_artifact_name_ce00bafc_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_artifact
+    ADD CONSTRAINT cyphercore_artifact_name_ce00bafc_uniq UNIQUE (name);
+
+
+--
+-- Name: cyphercore_artifact cyphercore_artifact_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_artifact
+    ADD CONSTRAINT cyphercore_artifact_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_character_abilities cyphercore_character_abi_character_id_ability_id_d1e767c3_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character_abilities
+    ADD CONSTRAINT cyphercore_character_abi_character_id_ability_id_d1e767c3_uniq UNIQUE (character_id, ability_id);
+
+
+--
+-- Name: cyphercore_character_abilities cyphercore_character_abilities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character_abilities
+    ADD CONSTRAINT cyphercore_character_abilities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_character cyphercore_character_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character
+    ADD CONSTRAINT cyphercore_character_name_key UNIQUE (name);
+
+
+--
+-- Name: cyphercore_character cyphercore_character_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character
+    ADD CONSTRAINT cyphercore_character_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_characterartifact cyphercore_characterartifact_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterartifact
+    ADD CONSTRAINT cyphercore_characterartifact_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_charactercypher cyphercore_charactercypher_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_charactercypher
+    ADD CONSTRAINT cyphercore_charactercypher_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_characterequipment cyphercore_characterequipment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterequipment
+    ADD CONSTRAINT cyphercore_characterequipment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_characterskill cyphercore_characterskill_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterskill
+    ADD CONSTRAINT cyphercore_characterskill_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_cypher cyphercore_cypher_name_104c07ca_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_cypher
+    ADD CONSTRAINT cyphercore_cypher_name_104c07ca_uniq UNIQUE (name);
 
 
 --
@@ -3140,6 +4215,167 @@ CREATE INDEX cyphercore_ability_slug_5fd98add_like ON public.cyphercore_ability 
 --
 
 CREATE INDEX cyphercore_ability_sourcebook_id_cfa3b9d9 ON public.cyphercore_ability USING btree (sourcebook_id);
+
+
+--
+-- Name: cyphercore_artifact_genre_id_40bebc5e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_artifact_genre_id_40bebc5e ON public.cyphercore_artifact USING btree (genre_id);
+
+
+--
+-- Name: cyphercore_artifact_name_ce00bafc_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_artifact_name_ce00bafc_like ON public.cyphercore_artifact USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: cyphercore_artifact_slug_7fe7f1ae; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_artifact_slug_7fe7f1ae ON public.cyphercore_artifact USING btree (slug);
+
+
+--
+-- Name: cyphercore_artifact_slug_7fe7f1ae_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_artifact_slug_7fe7f1ae_like ON public.cyphercore_artifact USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: cyphercore_artifact_sourcebook_id_73758750; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_artifact_sourcebook_id_73758750 ON public.cyphercore_artifact USING btree (sourcebook_id);
+
+
+--
+-- Name: cyphercore_character_abilities_ability_id_7858c0e9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_abilities_ability_id_7858c0e9 ON public.cyphercore_character_abilities USING btree (ability_id);
+
+
+--
+-- Name: cyphercore_character_abilities_character_id_123abe4d; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_abilities_character_id_123abe4d ON public.cyphercore_character_abilities USING btree (character_id);
+
+
+--
+-- Name: cyphercore_character_descriptor_id_87c1e327; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_descriptor_id_87c1e327 ON public.cyphercore_character USING btree (descriptor_id);
+
+
+--
+-- Name: cyphercore_character_focus_id_3743e3e0; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_focus_id_3743e3e0 ON public.cyphercore_character USING btree (focus_id);
+
+
+--
+-- Name: cyphercore_character_genre_id_53a72f91; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_genre_id_53a72f91 ON public.cyphercore_character USING btree (genre_id);
+
+
+--
+-- Name: cyphercore_character_name_0940b62c_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_name_0940b62c_like ON public.cyphercore_character USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: cyphercore_character_slug_5366b8b5; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_slug_5366b8b5 ON public.cyphercore_character USING btree (slug);
+
+
+--
+-- Name: cyphercore_character_slug_5366b8b5_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_slug_5366b8b5_like ON public.cyphercore_character USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: cyphercore_character_type_id_f12ec437; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_character_type_id_f12ec437 ON public.cyphercore_character USING btree (type_id);
+
+
+--
+-- Name: cyphercore_characterartifact_artifact_id_edab2c9e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_characterartifact_artifact_id_edab2c9e ON public.cyphercore_characterartifact USING btree (artifact_id);
+
+
+--
+-- Name: cyphercore_characterartifact_character_id_ea801290; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_characterartifact_character_id_ea801290 ON public.cyphercore_characterartifact USING btree (character_id);
+
+
+--
+-- Name: cyphercore_charactercypher_character_id_03702696; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_charactercypher_character_id_03702696 ON public.cyphercore_charactercypher USING btree (character_id);
+
+
+--
+-- Name: cyphercore_charactercypher_cypher_id_a0ec9ac4; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_charactercypher_cypher_id_a0ec9ac4 ON public.cyphercore_charactercypher USING btree (cypher_id);
+
+
+--
+-- Name: cyphercore_characterequipment_character_id_a614ca36; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_characterequipment_character_id_a614ca36 ON public.cyphercore_characterequipment USING btree (character_id);
+
+
+--
+-- Name: cyphercore_characterequipment_equipment_id_e47a4775; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_characterequipment_equipment_id_e47a4775 ON public.cyphercore_characterequipment USING btree (equipment_id);
+
+
+--
+-- Name: cyphercore_characterskill_character_id_145f350e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_characterskill_character_id_145f350e ON public.cyphercore_characterskill USING btree (character_id);
+
+
+--
+-- Name: cyphercore_characterskill_skill_id_6032d749; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_characterskill_skill_id_6032d749 ON public.cyphercore_characterskill USING btree (skill_id);
+
+
+--
+-- Name: cyphercore_cypher_name_104c07ca_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_cypher_name_104c07ca_like ON public.cyphercore_cypher USING btree (name varchar_pattern_ops);
 
 
 --
@@ -3421,6 +4657,134 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 ALTER TABLE ONLY public.cyphercore_ability
     ADD CONSTRAINT cyphercore_ability_sourcebook_id_cfa3b9d9_fk_cyphercor FOREIGN KEY (sourcebook_id) REFERENCES public.cyphercore_sourcebook(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_artifact cyphercore_artifact_genre_id_40bebc5e_fk_cyphercore_genre_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_artifact
+    ADD CONSTRAINT cyphercore_artifact_genre_id_40bebc5e_fk_cyphercore_genre_id FOREIGN KEY (genre_id) REFERENCES public.cyphercore_genre(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_artifact cyphercore_artifact_sourcebook_id_73758750_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_artifact
+    ADD CONSTRAINT cyphercore_artifact_sourcebook_id_73758750_fk_cyphercor FOREIGN KEY (sourcebook_id) REFERENCES public.cyphercore_sourcebook(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_character_abilities cyphercore_character_ability_id_7858c0e9_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character_abilities
+    ADD CONSTRAINT cyphercore_character_ability_id_7858c0e9_fk_cyphercor FOREIGN KEY (ability_id) REFERENCES public.cyphercore_ability(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_characterartifact cyphercore_character_artifact_id_edab2c9e_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterartifact
+    ADD CONSTRAINT cyphercore_character_artifact_id_edab2c9e_fk_cyphercor FOREIGN KEY (artifact_id) REFERENCES public.cyphercore_artifact(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_charactercypher cyphercore_character_character_id_03702696_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_charactercypher
+    ADD CONSTRAINT cyphercore_character_character_id_03702696_fk_cyphercor FOREIGN KEY (character_id) REFERENCES public.cyphercore_character(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_character_abilities cyphercore_character_character_id_123abe4d_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character_abilities
+    ADD CONSTRAINT cyphercore_character_character_id_123abe4d_fk_cyphercor FOREIGN KEY (character_id) REFERENCES public.cyphercore_character(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_characterskill cyphercore_character_character_id_145f350e_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterskill
+    ADD CONSTRAINT cyphercore_character_character_id_145f350e_fk_cyphercor FOREIGN KEY (character_id) REFERENCES public.cyphercore_character(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_characterequipment cyphercore_character_character_id_a614ca36_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterequipment
+    ADD CONSTRAINT cyphercore_character_character_id_a614ca36_fk_cyphercor FOREIGN KEY (character_id) REFERENCES public.cyphercore_character(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_characterartifact cyphercore_character_character_id_ea801290_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterartifact
+    ADD CONSTRAINT cyphercore_character_character_id_ea801290_fk_cyphercor FOREIGN KEY (character_id) REFERENCES public.cyphercore_character(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_charactercypher cyphercore_character_cypher_id_a0ec9ac4_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_charactercypher
+    ADD CONSTRAINT cyphercore_character_cypher_id_a0ec9ac4_fk_cyphercor FOREIGN KEY (cypher_id) REFERENCES public.cyphercore_cypher(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_character cyphercore_character_descriptor_id_87c1e327_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character
+    ADD CONSTRAINT cyphercore_character_descriptor_id_87c1e327_fk_cyphercor FOREIGN KEY (descriptor_id) REFERENCES public.cyphercore_descriptor(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_characterequipment cyphercore_character_equipment_id_e47a4775_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterequipment
+    ADD CONSTRAINT cyphercore_character_equipment_id_e47a4775_fk_cyphercor FOREIGN KEY (equipment_id) REFERENCES public.cyphercore_equipment(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_character cyphercore_character_focus_id_3743e3e0_fk_cyphercore_focus_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character
+    ADD CONSTRAINT cyphercore_character_focus_id_3743e3e0_fk_cyphercore_focus_id FOREIGN KEY (focus_id) REFERENCES public.cyphercore_focus(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_character cyphercore_character_genre_id_53a72f91_fk_cyphercore_genre_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character
+    ADD CONSTRAINT cyphercore_character_genre_id_53a72f91_fk_cyphercore_genre_id FOREIGN KEY (genre_id) REFERENCES public.cyphercore_genre(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_characterskill cyphercore_character_skill_id_6032d749_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_characterskill
+    ADD CONSTRAINT cyphercore_character_skill_id_6032d749_fk_cyphercor FOREIGN KEY (skill_id) REFERENCES public.cyphercore_skill(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cyphercore_character cyphercore_character_type_id_f12ec437_fk_cyphercore_type_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_character
+    ADD CONSTRAINT cyphercore_character_type_id_f12ec437_fk_cyphercore_type_id FOREIGN KEY (type_id) REFERENCES public.cyphercore_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
