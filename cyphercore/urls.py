@@ -8,6 +8,8 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='cyphercore/index.html'), name='index'),
     path('abilities/', views.AbilityListView.as_view(), name='ability_list'),
     path('abilities/<slug:slug>/', views.AbilityDetailView.as_view(), name='ability_detail'),
+    path('characters/', views.CharacterListView.as_view(), name='character_list'),
+    path('characters/<slug:slug>/', views.CharacterDetailView.as_view(), name='character_detail'),
     path('descriptors/', views.DescriptorListView.as_view(), name='descriptor_list'),
     path('descriptors/<slug:slug>/', views.DescriptorDetailView.as_view(), name='descriptor_detail'),
     path('equipment/', views.EquipmentListView.as_view(), name='equipment_list'),

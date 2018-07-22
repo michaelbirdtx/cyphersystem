@@ -18,12 +18,11 @@
                 <div class="twelve columns">
                     <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}</span>
                     <h1>Type: {{ type.name }}</h1>
-                    <hr/>
-
-                    <h2>Description</h2>
                     {{ type.description|linebreaks }}
                     <hr/>
 
+                    <div>{{ type.base_abilities|linebreaks }}</div>
+                    <hr/>
                     <h2>Base Stats (+{{ type.pool_points }} Points to Spend)</h2>
                     <table>
                         <tr>
@@ -46,17 +45,13 @@
                         </tr>
                     </table>
 
-                    <h2>Base Abiliites</h2>
-                    {{ type.base_abilities|linebreaks }}
-                    <hr/>
-
                     <h2>Available Abilities</h2>
                     {% for item in type.typeability_set.all %}
                         <h3>Tier {{ item.tier }},
                         {{ item.ability.name }},
                         {{ item.ability.usage }},
                         Cost: {{ item.ability.cost }}</h3>
-                        <p>{{ item.ability.description|linebreaks }}</p>
+                        <div class="indent">{{ item.ability.description|linebreaks }}</div>
                     {% endfor %}
                     <hr />
                     <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}</span>

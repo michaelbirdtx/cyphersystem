@@ -27,6 +27,7 @@ class Descriptor(models.Model):
     class Meta:
         ordering = ['name']
     name = models.CharField('descriptor name', max_length=50, unique=True)
+    prefix = models.CharField(max_length=5, default='a')
     description = models.TextField(blank=True)
     characteristics = models.TextField(blank=True)
     starting_link = models.TextField(blank=True)

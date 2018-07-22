@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     </head>
-        <title>Cypher Core: {{ descriptor.name }}</title>
+        <title>Cypher Core: Abilities</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,19 +16,15 @@
         <div class="container">
             <div class="row">
                 <div class="twelve columns">
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Descriptor List</a> | {{ descriptor.name }}</span>
-                    <h1>Descriptor: {{ descriptor.name }}</h1>
-                    <div>{{ descriptor.description|linebreaks }}</div>
-                    <hr/>
-
-                    <h2>Characteristics</h2>
-                    <div class="indent">{{ descriptor.characteristics|linebreaks }}</div>
-                    <hr/>
-
-                    <h2>Starting Link</h2>
-                    <div class="indent">{{ descriptor.starting_link|linebreaks }}</div>
+                    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
+                    <h1>Cypher Core: Characters</h1>
+                    <ul>
+                        {% for character in character_list %}
+                        <li><a href="{{ character.slug }}">{{ character.name }}</a> is {{ character.descriptor.prefix}} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}</li>
+                        {% endfor %}
+                    </ul>
                     <hr />
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Descriptor List</a> | {{ descriptor.name }}</span>
+                    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ class GenreAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class DescriptorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'truncated_description', 'slug', 'sourcebook')
+    list_display = ('name', 'prefix', 'truncated_description', 'slug', 'sourcebook')
     search_fields = ['name']
 
 class TypeAbilitiesInline(admin.TabularInline):

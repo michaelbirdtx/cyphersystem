@@ -18,27 +18,24 @@
                 <div class="twelve columns">
                     <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Focus List</a> | {{ focus.name }}</span>
                     <h1>Focus: {{ focus.name }}</h1>
-                    <hr/>
-
-                    <h2>Description</h2>
                     {{ focus.description|linebreaks }}
                     <hr/>
 
                     <h2>Connections</h2>
-                    {{ focus.connections|linebreaks }}
+                    <div class="indent">{{ focus.connections|linebreaks }}</div>
                     <hr/>
 
                     <h2>Other Details</h2>
-                    {{ focus.other_details|linebreaks }}
+                    <div class="indent">{{ focus.other_details|linebreaks }}</div>
                     <hr/>
 
                     <h2>Abilities</h2>
                     {% for item in focus.focusability_set.all %}
-                                <h3>Tier {{ item.tier }},
-                                {{ item.ability.name }},
-                                {{ item.ability.usage }},
-                                Cost: {{ item.ability.cost }}</h3>
-                                {{ item.ability.description|linebreaks }}
+                        <h3>Tier {{ item.tier }},
+                        {{ item.ability.name }},
+                        {{ item.ability.usage }},
+                        Cost: {{ item.ability.cost }}</h3>
+                        <div class="indent">{{ item.ability.description|linebreaks }}</div>
                     {% endfor %}
                     <hr />
                     <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Focus List</a> | {{ focus.name }}</span>
