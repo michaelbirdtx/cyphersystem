@@ -11,12 +11,14 @@
         <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
         <style>
             {% if "summary" in request.path %}
+            #portrait-background { display: none; }
             #stat-pools { display: none; }
             #other-stats { display: none; }
             #recovery-damage { display: none; }
             #equipment { display: none; }
             #cyphers { display: none; }
             #artifacts { display: none; }
+            #notes { display: none; }
             {% endif %}
         </style>
     </head>
@@ -33,15 +35,17 @@
                     <p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}} who {{ character.focus }}</strong></p>
                     <hr />
                     <!-- Character Portrait & Background -->
-                    <div class="row">
-                        <div class="three columns">
-                            <img class="character-portrait" src="{{ character.portrait_link }}" />
+                    <section id='portrait-background'>
+                        <div class="row">
+                            <div class="three columns">
+                                <img class="character-portrait" src="{{ character.portrait_link }}" />
+                            </div>
+                            <div class="nine columns compact character-background">
+                                {{ character.background|linebreaks }}
+                            </div>
                         </div>
-                        <div class="nine columns compact character-background">
-                            {{ character.background|linebreaks }}
-                        </div>
-                    </div>
-                    <hr />
+                        <hr />
+                    </section>
                     <!-- Stat Pools -->
                     <section id="stat-pools">
                         <div class="row">
