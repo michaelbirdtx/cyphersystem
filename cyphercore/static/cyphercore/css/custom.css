@@ -1,7 +1,6 @@
 body {
     font-size: 1.5em;
     line-height: 1.5;
-    margin-bottom: 5rem;
     margin-top: 3rem;
 }
 
@@ -146,9 +145,6 @@ ul {
 }
 
 @media print {
-    section {
-        break-inside: avoid;
-    }
     .breadcrumbs {
         display: none;
     }
@@ -157,9 +153,6 @@ ul {
     }
     .no-print {
         display: none;
-    }
-    .row {
-        page-break-inside: avoid;
     }
 }
 
