@@ -47,6 +47,7 @@ class Ability(models.Model):
     ABILITY_USAGE_CHOICES = (
         ('Action', 'Action'),
         ('Enabler', 'Enabler'),
+        ('Special', 'Special'),
     )
     usage = models.CharField(
             max_length=10,

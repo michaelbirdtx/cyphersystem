@@ -47,10 +47,10 @@
 
                     <h2>Available Abilities</h2>
                     {% for item in type.typeability_set.all %}
-                        <h3>Tier {{ item.tier }},
-                        {{ item.ability.name }},
-                        {{ item.ability.usage }},
-                        Cost: {{ item.ability.cost }}</h3>
+                        <h3>Tier {{ item.tier }}:
+                        {{ item.ability.name }}
+                        ({{ item.ability.usage }};
+                        Cost: {{ item.ability.cost }})</h3>
                         <div class="indent">{{ item.ability.description|linebreaks }}</div>
                     {% endfor %}
                     <hr />
