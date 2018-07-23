@@ -6,13 +6,13 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
-    margin-bottom: 1.6rem;
 }
 
 h1 {
     font-size: 2.5rem;
     line-height: 1;
-    letter-spacing: -.1rem;
+    letter-spacing: -.1rem
+    margin-bottom: 1rem;
     margin-top: 1rem;
     color: darkred;
 }
@@ -22,15 +22,15 @@ h2 {
     font-size: 1.8rem;
     line-height: 1;
     letter-spacing: -.1rem;
-    margin-bottom: 1rem;
+    margin-bottom: .8rem;
 }
 
 h3 {
     font-size: 1.6rem;
     line-height: 1;
     letter-spacing: -.1rem;
-    margin-bottom: 1rem;
-    margin-top: 1.5rem;
+    margin-bottom: .3rem;
+    margin-top: 1rem;
 }
 
 h4 {
@@ -60,12 +60,16 @@ a:hover {
 }
 
 br {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
 }
 
 hr {
     border-top: 1px solid #ccc;
     margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+p {
     margin-bottom: 1rem;
 }
 
@@ -123,9 +127,9 @@ ul {
     background-color: lightgray;
     border: 1px solid black;
     border-radius: 3px;
-    line-height: 3.3rem;
+    line-height: 3rem;
     margin: 0 .5rem;
-    padding: .3rem 1.5rem;
+    padding: .2rem 1.5rem;
     white-space: nowrap;
 }
 
@@ -145,11 +149,23 @@ ul {
 }
 
 @media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .avoid-break {
+        page-break-inside: avoid;
+    }
     .breadcrumbs {
         display: none;
     }
     .compact {
         font-size: smaller;
+    }
+    .container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
     }
     .no-print {
         display: none;
@@ -158,6 +174,6 @@ ul {
 
 @media screen {
     .container {
-        margin-bottom: 1em;
+        margin-bottom: 2em;
     }
 }
