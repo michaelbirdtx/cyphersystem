@@ -44,10 +44,13 @@ class Ability(models.Model):
         ordering = ['name']
         verbose_name_plural = 'Abilities'
     name = models.CharField(max_length=50,unique=True)
+    ACTION = 'Action'
+    ENABLER = 'Enabler'
+    SPECIAL = 'Special'
     ABILITY_USAGE_CHOICES = (
-        ('Action', 'Action'),
-        ('Enabler', 'Enabler'),
-        ('Special', 'Special'),
+        (ACTION, 'Action'),
+        (ENABLER, 'Enabler'),
+        (SPECIAL, 'Special'),
     )
     usage = models.CharField(
             max_length=10,
@@ -137,7 +140,15 @@ class Equipment(models.Model):
         verbose_name_plural = 'Equipment'
     name = models.CharField(max_length=50,unique=False)
     genre = models.ForeignKey(Genre, default=1, on_delete=models.PROTECT)
-    type = models.CharField(max_length=30)
+    ARMOR = 'Armor'
+    WEAPON = 'Weapon'
+    OTHER = 'Other'
+    EQUIPMENT_TYPE_CHOICES = (
+        (ARMOR, 'Armor'),
+        (WEAPON, 'Weapon'),
+        (OTHER, 'Other'),
+    )
+    type = models.CharField(max_length=30,choices=EQUIPMENT_TYPE_CHOICES,default=OTHER)
     base_cost = models.CharField(blank=True, max_length=30)
     notes = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
