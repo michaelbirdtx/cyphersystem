@@ -53,7 +53,24 @@ class FocusAdmin(admin.ModelAdmin):
     list_display = ('name', 'truncated_description', 'slug', 'sourcebook')
     search_fields = ['name']
 
+class AbilityFociInline(admin.TabularInline):
+    model = FocusAbility
+    autocomplete_fields = ['focus']
+    extra = 0
+    ordering = ['focus__name']
+    verbose_name = "Related Focus"
+    verbose_name_plural = "Related Foci"
+
+class AbilityTypesInline(admin.TabularInline):
+    model = TypeAbility
+    autocomplete_fields = ['type']
+    extra = 0
+    ordering = ['type__name']
+    verbose_name = "Related Type"
+    verbose_name_plural = "Related Types"
+
 class AbilityAdmin(admin.ModelAdmin):
+    inlines = [AbilityFociInline, AbilityTypesInline]
     list_display = ('name', 'usage', 'cost', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
