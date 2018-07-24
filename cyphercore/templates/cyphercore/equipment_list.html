@@ -2,10 +2,8 @@
 <html>
     </head>
         <title>Cypher Core: Equipment</title>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
@@ -22,7 +20,6 @@
                     <table>
                         <tr>
                             <th>Item Name</th>
-                            <th>Genre</th>
                             <th>Type</th>
                             <th>Base Cost</th>
                             <th>Notes</th>
@@ -30,7 +27,6 @@
                         {% for equipment in equipment_list %}
                         <tr>
                             <td>{{ equipment.name }}</td>
-                            <td>{{ equipment.genre }}</td>
                             <td>{{ equipment.type }}</td>
                             <td>{{ equipment.base_cost }}</td>
                             <td>{{ equipment.notes }}</td>
