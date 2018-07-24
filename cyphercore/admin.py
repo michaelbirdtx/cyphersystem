@@ -5,15 +5,11 @@ admin.site.site_title = 'Cypher System'
 admin.site.index_title = 'Admin'
 
 # Register your models here.
-from .models import Sourcebook, Genre, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact
+from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact
 
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name', 'enabled')
     list_editable = ('enabled',)
-    search_fields = ['name']
-
-class GenreAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sourcebook')
     search_fields = ['name']
 
 class DescriptorAdmin(admin.ModelAdmin):
@@ -80,7 +76,7 @@ class SkillAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'genre', 'type', 'base_cost', 'truncated_notes', 'slug', 'sourcebook')
+    list_display = ('name', 'type', 'base_cost', 'truncated_notes', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'type', 'base_cost']
 
@@ -136,5 +132,4 @@ admin.site.register(Cypher, CypherAdmin)
 admin.site.register(Artifact, ArtifactAdmin)
 admin.site.register(Sourcebook, SourcebookAdmin)
 admin.site.register(Skill, SkillAdmin)
-admin.site.register(Genre, GenreAdmin)
 admin.site.register(Character, CharacterAdmin)

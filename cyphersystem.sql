@@ -301,7 +301,6 @@ CREATE TABLE public.cyphercore_artifact (
     effect text NOT NULL,
     depletion character varying(20) NOT NULL,
     slug character varying(50) NOT NULL,
-    genre_id integer NOT NULL,
     sourcebook_id integer NOT NULL,
     form text NOT NULL
 );
@@ -366,7 +365,6 @@ CREATE TABLE public.cyphercore_character (
     descriptor_id integer NOT NULL,
     focus_id integer NOT NULL,
     type_id integer NOT NULL,
-    genre_id integer NOT NULL,
     portrait_link character varying(200) NOT NULL
 );
 
@@ -511,7 +509,8 @@ CREATE TABLE public.cyphercore_characterequipment (
     id integer NOT NULL,
     quantity integer NOT NULL,
     character_id integer NOT NULL,
-    equipment_id integer NOT NULL
+    equipment_id integer NOT NULL,
+    cost character varying(20) NOT NULL
 );
 
 
@@ -664,8 +663,7 @@ CREATE TABLE public.cyphercore_equipment (
     notes text NOT NULL,
     type character varying(30) NOT NULL,
     slug character varying(50) NOT NULL,
-    sourcebook_id integer NOT NULL,
-    genre_id integer NOT NULL
+    sourcebook_id integer NOT NULL
 );
 
 
@@ -766,41 +764,6 @@ ALTER TABLE public.cyphercore_focusability_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.cyphercore_focusability_id_seq OWNED BY public.cyphercore_focusability.id;
-
-
---
--- Name: cyphercore_genre; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.cyphercore_genre (
-    id integer NOT NULL,
-    name character varying(50) NOT NULL,
-    sourcebook_id integer NOT NULL
-);
-
-
-ALTER TABLE public.cyphercore_genre OWNER TO postgres;
-
---
--- Name: cyphercore_genre_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.cyphercore_genre_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.cyphercore_genre_id_seq OWNER TO postgres;
-
---
--- Name: cyphercore_genre_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.cyphercore_genre_id_seq OWNED BY public.cyphercore_genre.id;
 
 
 --
@@ -1211,13 +1174,6 @@ ALTER TABLE ONLY public.cyphercore_focus ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.cyphercore_focusability ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_focusability_id_seq'::regclass);
-
-
---
--- Name: cyphercore_genre id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cyphercore_genre ALTER COLUMN id SET DEFAULT nextval('public.cyphercore_genre_id_seq'::regclass);
 
 
 --
@@ -2121,8 +2077,8 @@ COPY public.cyphercore_ability (id, name, usage, cost, description, slug, source
 -- Data for Name: cyphercore_artifact; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cyphercore_artifact (id, name, level_range, effect, depletion, slug, genre_id, sourcebook_id, form) FROM stdin;
-1	Angelic Ward	1d6+2	Once activated, the figurine’s spirit emerges and becomes semisolid as a glowing, human-sized winged angel. It follows within 3 feet (1 m) of the figurine owner. Anything within long range that attacks the owner is attacked by the spirit ward, which sends out a bolt of flesh-rotting energy, doing damage equal to the artifact’s level. Once activated, it functions for a day.	1 in 1d10	angelic-ward	1	1	A tiny figurine of a winged angel.
+COPY public.cyphercore_artifact (id, name, level_range, effect, depletion, slug, sourcebook_id, form) FROM stdin;
+1	Angelic Ward	1d6+2	Once activated, the figurine’s spirit emerges and becomes semisolid as a glowing, human-sized winged angel. It follows within 3 feet (1 m) of the figurine owner. Anything within long range that attacks the owner is attacked by the spirit ward, which sends out a bolt of flesh-rotting energy, doing damage equal to the artifact’s level. Once activated, it functions for a day.	1 in 1d10	angelic-ward	1	A tiny figurine of a winged angel.
 \.
 
 
@@ -2130,8 +2086,8 @@ COPY public.cyphercore_artifact (id, name, level_range, effect, depletion, slug,
 -- Data for Name: cyphercore_character; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cyphercore_character (id, name, background, notes, tier, effort, cypher_limit, money, xp, might_current, might_pool, might_edge, speed_current, speed_pool, speed_edge, intellect_current, intellect_pool, intellect_edge, armor, recovery_roll, impaired, debilitated, one_action, ten_minutes, one_hour, ten_hours, slug, descriptor_id, focus_id, type_id, genre_id, portrait_link) FROM stdin;
-1	Aldor Donatus	Aldor's parents were murdered, and the mystery remains unsolved.\r\nAldor joined the current endeavor because he saw that the other adventurers were in danger.\r\nOne of Aldor's fellow adventurers, Tanic, has confided in Aldor that he doesn’t think the gods are real. Aldor is not sure how to deal with that.	Blessings of the Gods choices:\r\n* Benevolence/Righteousness/Spirit (2+ Intellect points)\r\n* Protection/Silence (3 Intellect points)	1	1	2	0	0	15	15	0	10	10	0	13	13	1	0	1	f	f	f	f	f	f	aldor-donatus	42	11	4	1	https://i.pinimg.com/736x/c0/4d/31/c04d31e8acab8faa49a2d12958393742.jpg
+COPY public.cyphercore_character (id, name, background, notes, tier, effort, cypher_limit, money, xp, might_current, might_pool, might_edge, speed_current, speed_pool, speed_edge, intellect_current, intellect_pool, intellect_edge, armor, recovery_roll, impaired, debilitated, one_action, ten_minutes, one_hour, ten_hours, slug, descriptor_id, focus_id, type_id, portrait_link) FROM stdin;
+1	Aldor Donatus	Aldor's parents were murdered, and the mystery remains unsolved.\r\nAldor joined the current endeavor because he saw that the other adventurers were in danger.\r\nOne of Aldor's fellow adventurers, Tanic, has confided in Aldor that he doesn’t think the gods are real. Aldor is not sure how to deal with that.	Blessings of the Gods choices:\r\n* Benevolence/Righteousness/Spirit (2+ Intellect points)\r\n* Protection/Silence (3 Intellect points)	1	1	2	0	0	15	15	0	10	10	0	13	13	1	0	1	f	f	f	f	f	f	aldor-donatus	42	11	4	https://i.pinimg.com/736x/c0/4d/31/c04d31e8acab8faa49a2d12958393742.jpg
 \.
 
 
@@ -2169,15 +2125,15 @@ COPY public.cyphercore_charactercypher (id, level, appearance, character_id, cyp
 -- Data for Name: cyphercore_characterequipment; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cyphercore_characterequipment (id, quantity, character_id, equipment_id) FROM stdin;
-1	1	1	15
-2	1	1	29
-3	1	1	21
-5	1	1	17
-6	1	1	5
-7	4	1	6
-8	1	1	39
-9	1	1	27
+COPY public.cyphercore_characterequipment (id, quantity, character_id, equipment_id, cost) FROM stdin;
+1	1	1	15	
+2	1	1	29	
+3	1	1	21	
+5	1	1	17	
+6	1	1	5	
+7	4	1	6	
+8	1	1	39	
+9	1	1	27	
 \.
 
 
@@ -2198,6 +2154,23 @@ COPY public.cyphercore_characterskill (id, skill_level, character_id, skill_id) 
 
 COPY public.cyphercore_cypher (id, name, level_range, effect, slug, sourcebook_id) FROM stdin;
 1	Adhesion	1d6	Allows for automatic climbing of any surface, even horizontal ones. Lasts for twenty minutes.	adhesion	1
+2	Age Taker	1d6+4	Begins a process of rejuvenation that removes years from the wearer’s physiological age. Over the course of the next seven days, the wearer sheds a number of years equal to three times the cypher’s level. The cypher doesn’t regress physiological age past the age of twenty-three.	age-taker	1
+3	Analeptic	1d6+2	Restores a number of points equal to the cypher’s level to the user’s Speed Pool.	analeptic	1
+4	Antivenom	1d6+2	Renders user immune to poisons of the same level or lower (and ends any such ongoing effects, if any, already in the user’s system).	antivenom	1
+5	Armor Reinforcer	1d6+1	The user’s Armor gains an enhancement for a day. Roll a d6 to determine the result.\r\n1: +1 to Armor\r\n2: +2 to Armor\r\n3: +3 to Armor\r\n4: +2 to Armor, +5 against damage from fire\r\n5: +2 to Armor, +5 against damage from cold\r\n6: +2 to Armor, +5 against damage from acid	armor-reinforcer	1
+6	Attractor	1d6+4	One unanchored item your size or smaller within long range is drawn immediately to you. This takes one round. The item has no momentum when it arrives.	attractor	1
+7	Banishing	1d6	For the next twenty-four hours, each time you strike a solid creature or object (with a weapon or your fist), a burst of energy teleports it an immediate distance in a random direction (not up or down). The difficulty of a teleported creature’s actions (including defense) is modified by one step to its detriment on its next turn.	banishing	1
+8	Blackout	1d6+2	An area within immediate range of the user becomes secure against any effect outside the area that sees, hears, or otherwise senses what occurs inside. To outside observers, the area is a “blur” to any sense applied. Taps, scrying sensors, and other direct feed surveillance methods are also rendered inoperative within the area for twenty- four hours.	blackout	1
+9	Blinking	1d6	For the next twenty-four hours, each time you are struck hard enough to take damage (but not more than once per round), you teleport an immediate distance in a random direction (not up or down). Since you are prepared for this effect and your foe is not, the difficulty of your defense roll is modified by one step to your benefit for one round after you teleport.	blinking	1
+10	Catholicon	1d6+2	Cures any disease of the same level or lower.	catholicon	1
+11	Chemical Factory	1d6	After one hour, the sweat of the user produces 1d6 doses of a valuable liquid (these doses are not considered cyphers). They must be used within one week. Effects vary:\r\n01–04: Euphoric for 1d6 hours\r\n05–08: Hallucinogenic for 1d6 hours\r\n09–12: Stimulant for 1d6 hours\r\n13–16: Depressant for 1d6 hours\r\n17–20: Nutrient supplement\r\n21–25: Antivenom\r\n26–30: Cures disease\r\n31–35: See in the dark for one hour\r\n36–45: Restores a number of Might Pool points equal to cypher level\r\n46–55: Restores a number of Speed Pool points equal to cypher level\r\n56–65: Restores a number of Intellect Pool points equal to cypher level\r\n66–75: Increases Might Edge by 1 for one hour\r\n76–85: Increases Speed Edge by 1 for one hour\r\n86–95: Increases Intellect Edge by 1 for one hour\r\n96–00: Restores all Pools to full	chemical-factory	1
+12	Comprehension	1d6+1	Within five minutes, the user can understand the words of a specific language keyed to the cypher. This\r\nis true even of creatures that do not normally have a language. If the user could already understand the language, the cypher has no effect. Once the cypher is used, the effect is permanent, and this cypher no longer counts against the number of cyphers that a PC can bear.	comprehension	1
+13	Condition Remover	1d6+3	Cures one occurrence of a specific health condition. It does not prevent the possibility of future occurrences of the same condition. Roll a d20 to determine what it cures.\r\n1: Addiction to one substance\r\n2: Autoimmune disease\r\n3: Bacterial infection\r\n4: Bad breath\r\n5: Blisters\r\n6: Bloating\r\n7: Cancer\r\n8: Chapped lips\r\n9: Flatus\r\n10: Heartburn\r\n11: Hiccups\r\n12: Ingrown hairs\r\n13: Insomnia\r\n14: Joint problem\r\n15: Muscle cramp\r\n16: Pimples\r\n17: Psychosis\r\n18: Stiff neck\r\n19: Viral infection\r\n20: Hangover	condition-remover	1
+14	Contingent Activator	1d6+2	If the device is activated in conjunction with another cypher, the user can specify a condition\r\nunder which the linked cypher will activate. The linked cypher retains the contingent command until it is used (either normally or contingently). For example, when this cypher is linked to a cypher that provides a form of healing or protection, the user could specify that the linked cypher will activate if he becomes damaged to a certain degree or is subject to a particular dangerous circumstance. Until the linked cypher\r\nis used, this cypher continues to count toward the maximum number of cyphers a PC can carry.	contingent-activator	1
+15	Controlled Blinking	1d6+2	For the next twenty-four hours, each time you are struck hard enough to inflict damage (but no more than once per round), you teleport to a spot you desire within immediate range. Since you are prepared for this effect and your foe is not, the difficulty of your defense rolls is modified by one step to your benefit for one round after you teleport.	controlled-blinking	1
+16	Curative	1d6+2	Restores a number of points equal to the cypher’s level to the user’s Might Pool.	curative	1
+17	Curse Bringer	1d6+1	The curse bringer can be activated when given to an individual who doesn’t realize its significance. The next time the victim attempts an important task when the cypher is in her possession, the difficulty of the task is modified by three steps to her detriment.	curse-bringer	1
+18	Darksight	1d6	Grants the ability to see in the dark for eight hours.	darksight	1
 \.
 
 
@@ -2263,49 +2236,97 @@ COPY public.cyphercore_descriptor (id, name, description, characteristics, start
 -- Data for Name: cyphercore_equipment; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, sourcebook_id, genre_id) FROM stdin;
-24	Battleaxe	Expensive	Medium weapon.	Weapon	battleaxe	1	1
-26	Cutlass	Expensive	Medium weapon.	Weapon	cutlass	1	1
-2	Crossbow bolts	Inexpensive		Weapon	crossbow-bolts	1	1
-3	Knife (rusty and worn)	Inexpensive	Light weapon (won’t last long).	Weapon	knife-rusty-and-worn	1	1
-4	Wooden club	Inexpensive	Light weapon.	Weapon	wooden-club	1	1
-9	Blowgun	Moderate	Light weapon, immediate range.	Weapon	blowgun	1	1
-10	Dagger	Moderate	Light weapon.	Weapon	dagger	1	1
-11	Handaxe	Moderate	Light weapon.	Weapon	handaxe	1	1
-12	Sword (substandard)	Moderate	Medium weapon (won’t last long).	Weapon	sword-substandard	1	1
-13	Throwing knife	Moderate	Light weapon, short range.	Weapon	throwing-knife	1	1
-15	Leather jerkin	Moderate	Light armor.	Armor	leather-jerkin	1	1
-14	Hides and furs	Moderate	Light armor.	Armor	hides-and-furs	1	1
-5	Burlap sack	Inexpensive		Other	burlap-sack	1	1
-6	Candle	Inexpensive		Other	candle	1	1
-7	Iron rations (1 day)	Inexpensive		Other	iron-rations-1-day	1	1
-8	Torch	Inexpensive	Sold in lots of 3.	Other	torch	1	1
-28	Quarterstaff	Expensive	Medium weapon (requires 2 hands).	Weapon	quarterstaff	1	1
-30	Breastplate	Expensive	Medium armor.	Armor	breastplate	1	1
-32	Chainmail	Expensive	Medium armor.	Armor	chainmail	1	1
-34	Heavy crossbow	Very Expensive	Heavy weapon, long range.	Weapon	heavy-crossbow	1	1
-36	Dwarven breastplate	Very Expensive	Medium armor, encumbers as light armor.	Armor	dwarven-breastplate	1	1
-38	Disguise kit	Very Expensive	Asset for disguise tasks.	Other	disguise-kit	1	1
-40	Spyglass	Very Expensive	Asset for perception tasks at range.	Other	spyglass	1	1
-42	Sailing ship (small)	Exorbitant		Other	sailing-ship-small	1	1
-21	Rope (Hemp, 50ft.)	Moderate		Other	rope-hemp-50ft	1	1
-25	Bow	Expensive	Medium weapon, long range.	Weapon	bow	1	1
-27	Light crossbow	Expensive	Medium weapon, long range.	Weapon	light-crossbow	1	1
-17	Bedroll	Moderate		Other	bedroll	1	1
-19	Hourglass	Moderate		Other	hourglass	1	1
-20	Lantern	Moderate		Other	lantern	1	1
-22	Spikes and hammer	Moderate	Includes 10 spikes.	Other	spikes-and-hammer	1	1
-23	Tent	Moderate		Other	tent	1	1
-29	Sword	Expensive	Medium weapon.	Weapon	sword	1	1
-31	Brigandine	Expensive	Medium armor.	Armor	brigandine	1	1
-33	Greatsword	Very Expensive	Heavy weapon.	Weapon	greatsword	1	1
-35	Sword (jeweled)	Very Expensive	Medium weapon.	Weapon	sword-jeweled	1	1
-37	Full plate armor	Very Expensive	Heavy armor.	Armor	full-plate-armor	1	1
-39	Healing kit	Very Expensive	Asset for healing tasks.	Other	healing-kit	1	1
-41	Elven chainmail	Exorbitant	Medium armor, encumbers as no armor.	Armor	elven-chainmail	1	1
-18	Crowbar	Moderate		Other	crowbar	1	1
-1	Arrows	Inexpensive	Sold in lots of 12.	Weapon	arrows	1	1
-16	Backback	Moderate		Other	backback	1	1
+COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, sourcebook_id) FROM stdin;
+24	Battleaxe	Expensive	Medium weapon.	Weapon	battleaxe	1
+26	Cutlass	Expensive	Medium weapon.	Weapon	cutlass	1
+2	Crossbow bolts	Inexpensive		Weapon	crossbow-bolts	1
+3	Knife (rusty and worn)	Inexpensive	Light weapon (won’t last long).	Weapon	knife-rusty-and-worn	1
+4	Wooden club	Inexpensive	Light weapon.	Weapon	wooden-club	1
+9	Blowgun	Moderate	Light weapon, immediate range.	Weapon	blowgun	1
+10	Dagger	Moderate	Light weapon.	Weapon	dagger	1
+11	Handaxe	Moderate	Light weapon.	Weapon	handaxe	1
+12	Sword (substandard)	Moderate	Medium weapon (won’t last long).	Weapon	sword-substandard	1
+13	Throwing knife	Moderate	Light weapon, short range.	Weapon	throwing-knife	1
+15	Leather jerkin	Moderate	Light armor.	Armor	leather-jerkin	1
+14	Hides and furs	Moderate	Light armor.	Armor	hides-and-furs	1
+5	Burlap sack	Inexpensive		Other	burlap-sack	1
+6	Candle	Inexpensive		Other	candle	1
+7	Iron rations (1 day)	Inexpensive		Other	iron-rations-1-day	1
+8	Torch	Inexpensive	Sold in lots of 3.	Other	torch	1
+28	Quarterstaff	Expensive	Medium weapon (requires 2 hands).	Weapon	quarterstaff	1
+30	Breastplate	Expensive	Medium armor.	Armor	breastplate	1
+32	Chainmail	Expensive	Medium armor.	Armor	chainmail	1
+34	Heavy crossbow	Very Expensive	Heavy weapon, long range.	Weapon	heavy-crossbow	1
+36	Dwarven breastplate	Very Expensive	Medium armor, encumbers as light armor.	Armor	dwarven-breastplate	1
+38	Disguise kit	Very Expensive	Asset for disguise tasks.	Other	disguise-kit	1
+40	Spyglass	Very Expensive	Asset for perception tasks at range.	Other	spyglass	1
+42	Sailing ship (small)	Exorbitant		Other	sailing-ship-small	1
+27	Light crossbow	Expensive	Medium weapon, long range.	Weapon	light-crossbow	1
+17	Bedroll	Moderate		Other	bedroll	1
+19	Hourglass	Moderate		Other	hourglass	1
+20	Lantern	Moderate		Other	lantern	1
+22	Spikes and hammer	Moderate	Includes 10 spikes.	Other	spikes-and-hammer	1
+23	Tent	Moderate		Other	tent	1
+29	Sword	Expensive	Medium weapon.	Weapon	sword	1
+31	Brigandine	Expensive	Medium armor.	Armor	brigandine	1
+33	Greatsword	Very Expensive	Heavy weapon.	Weapon	greatsword	1
+35	Sword (jeweled)	Very Expensive	Medium weapon.	Weapon	sword-jeweled	1
+37	Full plate armor	Very Expensive	Heavy armor.	Armor	full-plate-armor	1
+39	Healing kit	Very Expensive	Asset for healing tasks.	Other	healing-kit	1
+41	Elven chainmail	Exorbitant	Medium armor, encumbers as no armor.	Armor	elven-chainmail	1
+18	Crowbar	Moderate		Other	crowbar	1
+46	Duct tape roll	Inexpensive		Other	duct-tape-roll	1
+47	Flashlight	Inexpensive		Other	flashlight	1
+45	Knife (simple)	Inexpensive	Light weapon (won't last long).	Weapon	knife-simple	1
+48	Padlock with keys	Inexpensive		Other	padlock-keys	1
+49	Trail rations (1 day)	Inexpensive		Other	trail-rations-1-day	1
+50	Hand grenade	Moderate	Explosive weapon, inflicts 4 points of damage in immediate radius.	Weapon	hand-grenade	1
+51	Hunting knife	Moderate	Light weapon.	Weapon	hunting-knife	1
+52	Machete	Moderate	Medium weapon.	Weapon	machete	1
+53	Nightstick	Moderate	Light weapon.	Weapon	nightstick	1
+54	Leather jacket	Moderate	Light armor.	Armor	leather-jacket	1
+55	Bag of heavy tools	Moderate		Other	bag-heavy-tools	1
+56	Bag of light tools	Moderate		Other	bag-light-tools	1
+57	Binoculars	Moderate	Asset for perception tasks at range.	Other	binoculars	1
+58	Bolt cutters	Moderate		Other	bolt-cutters	1
+59	Cell phone	Moderate		Other	cell-phone	1
+60	Climbing gear	Moderate		Other	climbing-gear	1
+61	Crowbar	Moderate		Other	crowbar	1
+62	Electric lantern	Moderate		Other	electric-lantern	1
+63	First aid kit	Moderate	Asset for healing tasks.	Other	first-aid-kit	1
+64	Handcuffs	Moderate		Other	handcuffs	1
+65	Rope (nylon, 50 ft.)	Moderate		Other	rope-nylon-50-ft	1
+70	Rifle	Expensive	Medium weapon, long range.	Weapon	rifle	1
+21	Rope (hemp, 50 ft.)	Moderate		Other	rope-hemp-50ft	1
+66	Sleeping bag	Moderate		Other	sleeping-bag	1
+67	Tent	Moderate		Other	tent	1
+68	Light handgun	Expensive	Light weapon, short range.	Other	light-handgun	1
+69	Medium handgun	Expensive		Weapon	medium-handgun	1
+25	Bow	Expensive	Medium weapon, long range.	Weapon	bow	1
+71	Shotgun	Expensive	Heavy weapon, immediate range.	Weapon	shotgun	1
+72	Kevlar vest	Expensive	Medium armor.	Armor	kevlar-vest	1
+73	Camera designed to be concealed	Expensive	Transmits at long range.	Other	camera-designed-be-concealed	1
+74	Microphone designed to be concealed	Expensive	Transmits at long range.	Other	microphone-designed-be-concealed	1
+75	Cold weather camping gear	Expensive		Other	cold-weather-camping-gear	1
+76	Nightvision goggles	Expensive		Other	nightvision-goggles	1
+77	Scuba gear	Expensive		Other	scuba-gear	1
+78	Smartphone	Expensive		Other	smartphone	1
+79	Straightjacket	Expensive		Other	straightjacket	1
+80	Heavy handgun	Very Expensive	Heavy weapon, long range.	Weapon	heavy-handgun	1
+1	Arrows	Inexpensive	Sold in lots of 12.	Weapon	arrows	1
+81	Assault rifle	Very Expensive	Heavy weapon, rapid-fire weapon, long range.	Weapon	assault-rifle	1
+16	Backback	Moderate		Other	backback	1
+82	Heavy rifle	Very Expensive	Heavy weapon, 300-foot (91 m) range.	Weapon	heavy-rifle	1
+83	Submachine gun	Very Expensive	Medium weapon, rapid-fire weapon, short range.	Weapon	submachine-gun	1
+84	Lightweight body armor	Very Expensive	Medium armor, encumbers as light armor.	Armor	lightweight-body-armor	1
+85	Military body armor	Very Expensive	Heavy armor.	Armor	military-body-armor	1
+86	Disguise kit	Very Expensive	Asset for disguise tasks.	Other	disguise-kit	1
+87	Used car	Very Expensive	Level 3.	Other	used-car	1
+88	Small boat	Very Expensive	Level 3.	Other	small-boat	1
+89	Large boat	Exorbitant	Level 5.	Other	large-boat	1
+90	Luxury car	Exorbitant	Level 5.	Other	luxury-car	1
+91	Sports car	Exorbitant	Level 6.	Other	sports-car	1
+44	Ammo (box of 50 rounds)	Inexpensive		Weapon	ammo-box-50-rounds	1
 \.
 
 
@@ -2959,27 +2980,6 @@ COPY public.cyphercore_focusability (id, tier, ability_id, focus_id) FROM stdin;
 561	5	717	75
 562	6	718	75
 563	6	719	75
-\.
-
-
---
--- Data for Name: cyphercore_genre; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.cyphercore_genre (id, name, sourcebook_id) FROM stdin;
-1	Fantasy	1
-2	Modern	1
-3	Science Fiction	1
-4	Horror	1
-5	Superheroes	1
-6	Post-Apocalyptic	2
-7	Mythological	2
-8	Fairy Tale	2
-9	Childhood Adventure	2
-10	Historical	2
-11	Crime and Espionage	2
-12	Hard Science Fiction	2
-13	Any	3
 \.
 
 
@@ -4625,6 +4625,83 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 1357	2018-07-24 02:26:50.579903-05	718	Tower of Intellect	1	[{"added": {}}]	10	1
 1358	2018-07-24 02:27:20.811523-05	719	Knowledge Is Power 3	1	[{"added": {}}]	10	1
 1359	2018-07-24 02:27:32.655055-05	75	Would Rather Be Reading	2	[{"added": {"name": "focus ability", "object": "Knowledge Is Power 1"}}, {"added": {"name": "focus ability", "object": "Enriched Mind"}}, {"added": {"name": "focus ability", "object": "Applying Your Knowledge"}}, {"added": {"name": "focus ability", "object": "Knowledge Is Power 2"}}, {"added": {"name": "focus ability", "object": "Trivia"}}, {"added": {"name": "focus ability", "object": "Smarter Every Day"}}, {"added": {"name": "focus ability", "object": "Tower of Intellect"}}, {"added": {"name": "focus ability", "object": "Knowledge Is Power 3"}}]	9	1
+1360	2018-07-24 02:32:05.3501-05	44	Ammo (box of 50 rounds)	1	[{"added": {}}]	13	1
+1361	2018-07-24 02:32:21.066697-05	45	Knife (simple)	1	[{"added": {}}]	13	1
+1362	2018-07-24 02:32:34.911031-05	46	Duct tape roll	1	[{"added": {}}]	13	1
+1363	2018-07-24 02:32:48.762412-05	47	Flashlight	1	[{"added": {}}]	13	1
+1364	2018-07-24 02:33:06.66161-05	45	Knife (simple)	2	[{"changed": {"fields": ["notes"]}}]	13	1
+1365	2018-07-24 02:33:40.104277-05	48	Padlock with keys	1	[{"added": {}}]	13	1
+1366	2018-07-24 02:34:00.511031-05	49	Trail rations (1 day)	1	[{"added": {}}]	13	1
+1367	2018-07-24 02:34:20.663846-05	50	Hand grenade	1	[{"added": {}}]	13	1
+1368	2018-07-24 02:34:43.244698-05	50	Hand grenade	2	[{"changed": {"fields": ["notes"]}}]	13	1
+1369	2018-07-24 02:35:11.642888-05	51	Hunting knife	1	[{"added": {}}]	13	1
+1370	2018-07-24 02:35:34.641644-05	52	Machete	1	[{"added": {}}]	13	1
+1371	2018-07-24 02:35:52.554017-05	53	Nightstick	1	[{"added": {}}]	13	1
+1372	2018-07-24 02:36:10.321614-05	54	Leather jacket	1	[{"added": {}}]	13	1
+1373	2018-07-24 02:36:43.365548-05	16	Backback	2	[{"changed": {"fields": ["genre"]}}]	13	1
+1374	2018-07-24 02:37:06.547567-05	55	Bag of heavy tools	1	[{"added": {}}]	13	1
+1375	2018-07-24 02:37:20.179426-05	56	Bag of light tools	1	[{"added": {}}]	13	1
+1376	2018-07-24 02:37:47.006919-05	57	Binoculars	1	[{"added": {}}]	13	1
+1377	2018-07-24 02:38:00.062547-05	58	Bolt cutters	1	[{"added": {}}]	13	1
+1378	2018-07-24 02:38:19.465088-05	59	Cell phone	1	[{"added": {}}]	13	1
+1379	2018-07-24 02:38:40.780739-05	60	Climbing gear	1	[{"added": {}}]	13	1
+1380	2018-07-24 02:38:55.179234-05	61	Crowbar	1	[{"added": {}}]	13	1
+1381	2018-07-24 02:39:09.343428-05	62	Electric lantern	1	[{"added": {}}]	13	1
+1382	2018-07-24 02:39:24.76867-05	63	First aid kit	1	[{"added": {}}]	13	1
+1383	2018-07-24 02:39:35.881568-05	64	Handcuffs	1	[{"added": {}}]	13	1
+1384	2018-07-24 02:39:50.649498-05	65	Rope (nylon, 50 ft.)	1	[{"added": {}}]	13	1
+1385	2018-07-24 02:40:02.578671-05	21	Rope (hemp, 50ft.)	2	[{"changed": {"fields": ["name"]}}]	13	1
+1386	2018-07-24 02:40:14.04719-05	21	Rope (hemp, 50 ft.)	2	[{"changed": {"fields": ["name"]}}]	13	1
+1387	2018-07-24 02:40:31.695914-05	66	Sleeping bag	1	[{"added": {}}]	13	1
+1388	2018-07-24 02:40:41.603593-05	67	Tent	1	[{"added": {}}]	13	1
+1389	2018-07-24 02:41:13.856728-05	68	Light handgun	1	[{"added": {}}]	13	1
+1390	2018-07-24 02:42:52.827647-05	69	Medium handgun	1	[{"added": {}}]	13	1
+1391	2018-07-24 02:43:43.899545-05	25	Bow	2	[{"changed": {"fields": ["genre"]}}]	13	1
+1392	2018-07-24 02:44:28.307489-05	70	Rifle	1	[{"added": {}}]	13	1
+1393	2018-07-24 02:45:05.786878-05	71	Shotgun	1	[{"added": {}}]	13	1
+1394	2018-07-24 02:46:14.676997-05	72	Kevlar vest	1	[{"added": {}}]	13	1
+1395	2018-07-24 02:46:39.552479-05	73	Camera designed to be concealed	1	[{"added": {}}]	13	1
+1396	2018-07-24 02:46:55.775108-05	74	Microphone designed to be concealed	1	[{"added": {}}]	13	1
+1397	2018-07-24 02:47:31.043642-05	75	Cold weather camping gear	1	[{"added": {}}]	13	1
+1398	2018-07-24 02:47:44.822445-05	76	Nightvision goggles	1	[{"added": {}}]	13	1
+1399	2018-07-24 02:47:58.706239-05	77	Scuba gear	1	[{"added": {}}]	13	1
+1400	2018-07-24 02:48:12.65185-05	78	Smartphone	1	[{"added": {}}]	13	1
+1401	2018-07-24 02:48:24.423068-05	79	Straightjacket	1	[{"added": {}}]	13	1
+1402	2018-07-24 02:51:46.236694-05	80	Heavy handgun	1	[{"added": {}}]	13	1
+1403	2018-07-24 02:52:11.219392-05	81	Assault rifle	1	[{"added": {}}]	13	1
+1404	2018-07-24 02:52:53.465979-05	82	Heavy rifle	1	[{"added": {}}]	13	1
+1405	2018-07-24 02:53:18.456222-05	83	Submachine gun	1	[{"added": {}}]	13	1
+1406	2018-07-24 02:53:55.875848-05	84	Lightweight body armor	1	[{"added": {}}]	13	1
+1407	2018-07-24 02:54:18.459448-05	85	Military body armor	1	[{"added": {}}]	13	1
+1408	2018-07-24 02:55:07.103273-05	86	Disguise kit	1	[{"added": {}}]	13	1
+1409	2018-07-24 02:55:31.844895-05	87	Used car	1	[{"added": {}}]	13	1
+1410	2018-07-24 02:55:46.530106-05	88	Small boat	1	[{"added": {}}]	13	1
+1411	2018-07-24 02:56:13.072875-05	89	Large boat	1	[{"added": {}}]	13	1
+1412	2018-07-24 02:56:32.267868-05	90	Luxury car	1	[{"added": {}}]	13	1
+1413	2018-07-24 02:57:09.214287-05	91	Sports car	1	[{"added": {}}]	13	1
+1414	2018-07-24 03:08:57.705477-05	13	Any	3		17	1
+1415	2018-07-24 03:09:13.337732-05	44	Ammo (box of 50 rounds)	2	[{"changed": {"fields": ["genre"]}}]	13	1
+1416	2018-07-24 03:09:30.896422-05	1	Arrows	2	[{"changed": {"fields": ["genre"]}}]	13	1
+1417	2018-07-24 03:09:42.689208-05	81	Assault rifle	2	[{"changed": {"fields": ["genre"]}}]	13	1
+1418	2018-07-24 03:09:55.303014-05	16	Backback	2	[{"changed": {"fields": ["genre"]}}]	13	1
+1419	2018-07-24 03:14:56.446615-05	1	Adhesion	2	[]	14	1
+1420	2018-07-24 03:15:17.473298-05	2	Age Taker	1	[{"added": {}}]	14	1
+1421	2018-07-24 03:15:35.503496-05	3	Analeptic	1	[{"added": {}}]	14	1
+1422	2018-07-24 03:15:52.505709-05	4	Antivenom	1	[{"added": {}}]	14	1
+1423	2018-07-24 03:16:39.91238-05	5	Armor Reinforcer	1	[{"added": {}}]	14	1
+1424	2018-07-24 03:16:55.778545-05	6	Attractor	1	[{"added": {}}]	14	1
+1425	2018-07-24 03:17:14.689249-05	7	Banishing	1	[{"added": {}}]	14	1
+1426	2018-07-24 03:17:30.060181-05	8	Blackout	1	[{"added": {}}]	14	1
+1427	2018-07-24 03:17:53.509681-05	9	Blinking	1	[{"added": {}}]	14	1
+1428	2018-07-24 03:18:11.038879-05	10	Catholicon	1	[{"added": {}}]	14	1
+1429	2018-07-24 03:19:39.795329-05	11	Chemical Factory	1	[{"added": {}}]	14	1
+1430	2018-07-24 03:19:57.583908-05	12	Comprehension	1	[{"added": {}}]	14	1
+1431	2018-07-24 03:21:46.259874-05	13	Condition Remover	1	[{"added": {}}]	14	1
+1432	2018-07-24 03:22:10.190614-05	14	Contingent Activator	1	[{"added": {}}]	14	1
+1433	2018-07-24 03:22:34.640403-05	15	Controlled Blinking	1	[{"added": {}}]	14	1
+1434	2018-07-24 03:23:07.849142-05	16	Curative	1	[{"added": {}}]	14	1
+1435	2018-07-24 03:23:24.212305-05	17	Curse Bringer	1	[{"added": {}}]	14	1
+1436	2018-07-24 03:23:37.14573-05	18	Darksight	1	[{"added": {}}]	14	1
 \.
 
 
@@ -4744,6 +4821,12 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 78	cyphercore	0063_auto_20180722_0134	2018-07-21 20:34:21.313492-05
 79	cyphercore	0064_descriptor_prefix	2018-07-21 21:05:40.767165-05
 80	cyphercore	0065_auto_20180724_0537	2018-07-24 00:37:16.553494-05
+81	cyphercore	0066_auto_20180724_0742	2018-07-24 02:42:19.647839-05
+82	cyphercore	0067_auto_20180724_0745	2018-07-24 02:45:22.939345-05
+83	cyphercore	0068_characterequipment_cost	2018-07-24 02:49:55.005095-05
+84	cyphercore	0069_auto_20180724_0806	2018-07-24 03:07:09.392568-05
+85	cyphercore	0070_remove_equipment_genre	2018-07-24 03:13:13.843233-05
+86	cyphercore	0071_auto_20180724_0813	2018-07-24 03:13:14.207243-05
 \.
 
 
@@ -4871,7 +4954,7 @@ SELECT pg_catalog.setval('public.cyphercore_characterskill_id_seq', 18, true);
 -- Name: cyphercore_cypher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_cypher_id_seq', 1, true);
+SELECT pg_catalog.setval('public.cyphercore_cypher_id_seq', 18, true);
 
 
 --
@@ -4885,7 +4968,7 @@ SELECT pg_catalog.setval('public.cyphercore_descriptor_id_seq', 51, true);
 -- Name: cyphercore_equipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_equipment_id_seq', 43, true);
+SELECT pg_catalog.setval('public.cyphercore_equipment_id_seq', 91, true);
 
 
 --
@@ -4900,13 +4983,6 @@ SELECT pg_catalog.setval('public.cyphercore_focus_id_seq', 81, true);
 --
 
 SELECT pg_catalog.setval('public.cyphercore_focusability_id_seq', 563, true);
-
-
---
--- Name: cyphercore_genre_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.cyphercore_genre_id_seq', 13, true);
 
 
 --
@@ -4941,7 +5017,7 @@ SELECT pg_catalog.setval('public.cyphercore_typeability_id_seq', 203, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1359, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1436, true);
 
 
 --
@@ -4955,7 +5031,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 23, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 80, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 86, true);
 
 
 --
@@ -5215,22 +5291,6 @@ ALTER TABLE ONLY public.cyphercore_focusability
 
 
 --
--- Name: cyphercore_genre cyphercore_genre_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cyphercore_genre
-    ADD CONSTRAINT cyphercore_genre_name_key UNIQUE (name);
-
-
---
--- Name: cyphercore_genre cyphercore_genre_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cyphercore_genre
-    ADD CONSTRAINT cyphercore_genre_pkey PRIMARY KEY (id);
-
-
---
 -- Name: cyphercore_skill cyphercore_skill_name_a62c2dfe_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5418,13 +5478,6 @@ CREATE INDEX cyphercore_ability_sourcebook_id_cfa3b9d9 ON public.cyphercore_abil
 
 
 --
--- Name: cyphercore_artifact_genre_id_40bebc5e; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX cyphercore_artifact_genre_id_40bebc5e ON public.cyphercore_artifact USING btree (genre_id);
-
-
---
 -- Name: cyphercore_artifact_name_ce00bafc_like; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -5478,13 +5531,6 @@ CREATE INDEX cyphercore_character_descriptor_id_87c1e327 ON public.cyphercore_ch
 --
 
 CREATE INDEX cyphercore_character_focus_id_3743e3e0 ON public.cyphercore_character USING btree (focus_id);
-
-
---
--- Name: cyphercore_character_genre_id_53a72f91; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX cyphercore_character_genre_id_53a72f91 ON public.cyphercore_character USING btree (genre_id);
 
 
 --
@@ -5628,13 +5674,6 @@ CREATE INDEX cyphercore_descriptor_sourcebook_id_9f8023cd ON public.cyphercore_d
 
 
 --
--- Name: cyphercore_equipment_genre_id_8a2e02f4; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX cyphercore_equipment_genre_id_8a2e02f4 ON public.cyphercore_equipment USING btree (genre_id);
-
-
---
 -- Name: cyphercore_equipment_slug_4eddb5fb; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -5695,20 +5734,6 @@ CREATE INDEX cyphercore_focusability_ability_id_85c3749a ON public.cyphercore_fo
 --
 
 CREATE INDEX cyphercore_focusability_focus_id_4e08d994 ON public.cyphercore_focusability USING btree (focus_id);
-
-
---
--- Name: cyphercore_genre_name_b42f25bd_like; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX cyphercore_genre_name_b42f25bd_like ON public.cyphercore_genre USING btree (name varchar_pattern_ops);
-
-
---
--- Name: cyphercore_genre_sourcebook_id_89eb9339; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX cyphercore_genre_sourcebook_id_89eb9339 ON public.cyphercore_genre USING btree (sourcebook_id);
 
 
 --
@@ -5860,14 +5885,6 @@ ALTER TABLE ONLY public.cyphercore_ability
 
 
 --
--- Name: cyphercore_artifact cyphercore_artifact_genre_id_40bebc5e_fk_cyphercore_genre_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cyphercore_artifact
-    ADD CONSTRAINT cyphercore_artifact_genre_id_40bebc5e_fk_cyphercore_genre_id FOREIGN KEY (genre_id) REFERENCES public.cyphercore_genre(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: cyphercore_artifact cyphercore_artifact_sourcebook_id_73758750_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5964,14 +5981,6 @@ ALTER TABLE ONLY public.cyphercore_character
 
 
 --
--- Name: cyphercore_character cyphercore_character_genre_id_53a72f91_fk_cyphercore_genre_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cyphercore_character
-    ADD CONSTRAINT cyphercore_character_genre_id_53a72f91_fk_cyphercore_genre_id FOREIGN KEY (genre_id) REFERENCES public.cyphercore_genre(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: cyphercore_characterskill cyphercore_character_skill_id_6032d749_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6004,14 +6013,6 @@ ALTER TABLE ONLY public.cyphercore_descriptor
 
 
 --
--- Name: cyphercore_equipment cyphercore_equipment_genre_id_8a2e02f4_fk_cyphercore_genre_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cyphercore_equipment
-    ADD CONSTRAINT cyphercore_equipment_genre_id_8a2e02f4_fk_cyphercore_genre_id FOREIGN KEY (genre_id) REFERENCES public.cyphercore_genre(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
 -- Name: cyphercore_equipment cyphercore_equipment_sourcebook_id_35248e09_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6041,14 +6042,6 @@ ALTER TABLE ONLY public.cyphercore_focusability
 
 ALTER TABLE ONLY public.cyphercore_focusability
     ADD CONSTRAINT cyphercore_focusabil_focus_id_4e08d994_fk_cyphercor FOREIGN KEY (focus_id) REFERENCES public.cyphercore_focus(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: cyphercore_genre cyphercore_genre_sourcebook_id_89eb9339_fk_cyphercor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cyphercore_genre
-    ADD CONSTRAINT cyphercore_genre_sourcebook_id_89eb9339_fk_cyphercor FOREIGN KEY (sourcebook_id) REFERENCES public.cyphercore_sourcebook(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

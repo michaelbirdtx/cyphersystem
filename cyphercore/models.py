@@ -15,14 +15,6 @@ class Sourcebook(models.Model):
     def __str__(self):
         return self.name
 
-class Genre(models.Model):
-    class Meta:
-        ordering = ['name']
-    name = models.CharField('genre', max_length=50, unique=True)
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
-    def __str__(self):
-        return self.name
-
 class Descriptor(models.Model):
     class Meta:
         ordering = ['name']
@@ -139,7 +131,6 @@ class Equipment(models.Model):
         ordering = ['name']
         verbose_name_plural = 'Equipment'
     name = models.CharField(max_length=50,unique=False)
-    genre = models.ForeignKey(Genre, default=1, on_delete=models.PROTECT)
     ARMOR = 'Armor'
     WEAPON = 'Weapon'
     OTHER = 'Other'
@@ -148,7 +139,7 @@ class Equipment(models.Model):
         (WEAPON, 'Weapon'),
         (OTHER, 'Other'),
     )
-    type = models.CharField(max_length=30,choices=EQUIPMENT_TYPE_CHOICES,default=OTHER)
+    type = models.CharField(max_length=30,choices=EQUIPMENT_TYPE_CHOICES)
     base_cost = models.CharField(blank=True, max_length=30)
     notes = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
@@ -177,7 +168,6 @@ class Artifact(models.Model):
     class Meta:
         ordering = ['name']
     name = models.CharField(max_length=50,unique=True)
-    genre = models.ForeignKey(Genre, default=1, on_delete=models.PROTECT)
     level_range = models.CharField(max_length=10)
     form = models.TextField()
     effect = models.TextField()
@@ -200,7 +190,6 @@ class Character(models.Model):
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
-    genre = models.ForeignKey(Genre, default=1, on_delete=models.PROTECT)
     portrait_link = models.URLField(max_length=200,blank=True)
     background = models.TextField(blank=True)
     notes = models.TextField(blank=True)
@@ -260,6 +249,7 @@ class CharacterEquipment(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+    cost = models.CharField(max_length=20, blank=True)
     def __str__(self):
         return self.equipment.name
 
