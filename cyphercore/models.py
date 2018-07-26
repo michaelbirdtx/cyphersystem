@@ -130,7 +130,7 @@ class Equipment(models.Model):
     class Meta:
         ordering = ['name']
         verbose_name_plural = 'Equipment'
-    name = models.CharField(max_length=50,unique=False)
+    name = models.CharField(max_length=50,unique=True)
     ARMOR = 'Armor'
     WEAPON = 'Weapon'
     OTHER = 'Other'
