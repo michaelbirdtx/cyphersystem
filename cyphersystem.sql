@@ -546,8 +546,7 @@ CREATE TABLE public.cyphercore_characterskill (
     id integer NOT NULL,
     skill_level character varying(1) NOT NULL,
     character_id integer NOT NULL,
-    skill_id integer NOT NULL,
-    skill_global boolean NOT NULL
+    skill_id integer NOT NULL
 );
 
 
@@ -1319,6 +1318,9 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 70	Can add character artifact	23	add_characterartifact
 71	Can change character artifact	23	change_characterartifact
 72	Can delete character artifact	23	delete_characterartifact
+73	Can add character form	24	add_characterform
+74	Can change character form	24	change_characterform
+75	Can delete character form	24	delete_characterform
 \.
 
 
@@ -2080,6 +2082,12 @@ COPY public.cyphercore_ability (id, name, usage, cost, description, slug, source
 
 COPY public.cyphercore_artifact (id, name, level_range, effect, depletion, slug, sourcebook_id, form) FROM stdin;
 1	Angelic Ward	1d6+2	Once activated, the figurine’s spirit emerges and becomes semisolid as a glowing, human-sized winged angel. It follows within 3 feet (1 m) of the figurine owner. Anything within long range that attacks the owner is attacked by the spirit ward, which sends out a bolt of flesh-rotting energy, doing damage equal to the artifact’s level. Once activated, it functions for a day.	1 in 1d10	angelic-ward	1	A tiny figurine of a winged angel.
+2	Ring of Dragon's Flight	1d6+2	When the wearer activates the ring, dragon wings unfurl from his back, and for one minute he can fly\r\nup to long range. The ring does not confer the ability to hover or make fine adjustments while in flight.	1 in 1d10	ring-dragons-flight	1	A green iron ring that appears like a dragon wound around the finger.
+3	Soulflaying Weapon	1d6+1	This weapon functions as a normal weapon of its kind. The wielder can use an action to activate its soulflaying magic for one minute. During that time, if the weapon scores a hit, it inflicts normal damage, plus 3 additional points of Intellect damage on all creatures that have souls (not automatons, mindless undead, or the like).	1 in 1d100	soulflaying-weapon	1	A weapon of any type, with engraved glowing runes denoting soulflaying.
+4	Spellbook of the Amber Mage	1d6	When the user incants from the spellbook and succeeds at a level 3 Intellect-based task, she can attempt to trap a creature within long range inside a block of amber. Only creatures whose level is equal to or lower than the artifact’s level can be targeted. A creature successfully caught is preserved in perfect stasis until the encasing amber is broken away (the amber has 10 points of health per level of the artifact).	1 in 1d20	spellbook-amber-mage	1	A weighty tome bound in amber filled with pages of spell runes.
+5	Wand of Firebolts	1d6+2	When activated, the wand looses a blast of fire at a chosen target within short range, inflicting damage equal to the artifact’s level.	1 in 1d20	wand-firebolts	1	A wand of red wood 8 inches (20 cm) long, carved with intricate flamelike images.
+6	Amber Casement	1d6+4	The device solidifies the air in a 10-foot (3 m) cube of space, the center of which must be within short range. The air is turned into an amberlike substance, and those trapped in it will likely suffocate or starve.	1–4 in 1d6	amber-casement	1	A series of short, rounded tubes and hoses about 12 inches (30 cm) long.
+7	Metabolism Bud	1d6	The pod grafts onto any living host (usually near the brain or spine) and injects chemicals that boost the creature’s metabolism. This permanently raises the host’s Speed Pool maximum by 5 points.		metabolism-bud	1	An organic pod, almost like a small, hemispherical bit of brain; once grafted to a host, the host’s flesh grows over the pod until it is only a lump.
 \.
 
 
@@ -2111,6 +2119,7 @@ COPY public.cyphercore_character_abilities (id, character_id, ability_id) FROM s
 --
 
 COPY public.cyphercore_characterartifact (id, level, artifact_id, character_id) FROM stdin;
+3	1	5	1
 \.
 
 
@@ -2119,6 +2128,7 @@ COPY public.cyphercore_characterartifact (id, level, artifact_id, character_id) 
 --
 
 COPY public.cyphercore_charactercypher (id, level, appearance, character_id, cypher_id) FROM stdin;
+3	1	A red liquid stored in a small glass vial.	1	3
 \.
 
 
@@ -2142,10 +2152,10 @@ COPY public.cyphercore_characterequipment (id, quantity, character_id, equipment
 -- Data for Name: cyphercore_characterskill; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cyphercore_characterskill (id, skill_level, character_id, skill_id, skill_global) FROM stdin;
-8	T	1	20	t
-17	T	1	8	t
-18	T	1	9	t
+COPY public.cyphercore_characterskill (id, skill_level, character_id, skill_id) FROM stdin;
+8	T	1	20
+17	T	1	8
+18	T	1	9
 \.
 
 
@@ -2471,6 +2481,22 @@ COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, source
 105	Stunstick	Expensive	Medium weapon, inflicts no damage but human-sized or smaller target loses next action.	Weapon	stunstick	1
 106	Armored bodysuit	Expensive	Medium armor.	Armor	armored-bodysuit	1
 107	Environment suit	Expensive	Provides 24 hours of atmosphere and +10 to Armor against extreme temperatures.	Other	environment-suit	1
+108	Wrist computer	Expensive	Asset for most knowledge-based tasks.	Other	wrist-computer	1
+109	Heavy blaster	Very Expensive	Heavy weapon, long range.	Weapon	heavy-blaster	1
+110	Heavy blaster rifle	Very Expensive	Heavy weapon, 300-foot (91m) range.	Weapon	heavy-blaster-rifle	1
+111	Pulse laser gun	Very Expensive	Medium weapon, rapid-fire weapon, long range.	Weapon	pulse-laser-gun	1
+112	Battlesuit	Very Expensive	Heavy armor, also works as an environment suit.	Armor	battlesuit	1
+113	Gravity regulator	Very Expensive	Belt-mounted device that regulates gravity to 1 G for wearer if within 0 G to 3 G conditions.	Other	gravity-regulator	1
+114	Handheld scanner	Very Expensive	Belt-mounted device that regulates gravity to 1 G for wearer if within 0 G to 3 G conditions.	Other	handheld-scanner	1
+115	Hovercraft	Very Expensive	Level 4.	Other	hovercraft	1
+116	Infiltrator	Very Expensive	Asset for lockpicking tasks when used with electronic locks.	Other	infiltrator	1
+117	Jetpack	Very Expensive	Level 4.	Other	jetpack	1
+118	Stealthsuit	Very Expensive	Asset for stealth tasks.	Other	stealthsuit	1
+119	Blast cannon	Exorbitant	10 points of damage, 500-foot (152 m) range, requires a tripod and two people to operate.	Weapon	blast-cannon	1
+120	Force field	Exorbitant	Not armor, offers +1 to Armor.	Armor	force-field	1
+122	Robot servant	Exorbitant	Level 3.	Other	robot-servant	1
+123	Small spaceship	Exorbitant	Level 4.	Other	small-spaceship	1
+121	Luxury hovercar	Exorbitant	Level 5.	Other	luxury-hovercar	1
 \.
 
 
@@ -5004,6 +5030,32 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 1592	2018-07-26 00:57:22.08058-05	105	Stunstick	1	[{"added": {}}]	13	1
 1593	2018-07-26 00:57:41.804304-05	106	Armored bodysuit	1	[{"added": {}}]	13	1
 1594	2018-07-26 01:26:38.083255-05	107	Environment suit	1	[{"added": {}}]	13	1
+1595	2018-07-26 02:56:45.372201-05	108	Wrist computer	1	[{"added": {}}]	13	1
+1596	2018-07-26 14:41:21.409942-05	109	Heavy blaster	1	[{"added": {}}]	13	1
+1597	2018-07-26 14:41:51.252781-05	110	Heavy blaster rifle	1	[{"added": {}}]	13	1
+1598	2018-07-26 14:42:17.168389-05	111	Pulse laser gun	1	[{"added": {}}]	13	1
+1599	2018-07-26 14:42:41.88278-05	112	Battlesuit	1	[{"added": {}}]	13	1
+1600	2018-07-26 14:43:21.570239-05	113	Gravity regulator	1	[{"added": {}}]	13	1
+1601	2018-07-26 14:44:30.163294-05	114	Handheld scanner	1	[{"added": {}}]	13	1
+1602	2018-07-26 14:45:24.184514-05	115	Hovercraft	1	[{"added": {}}]	13	1
+1603	2018-07-26 14:45:48.682433-05	116	Infiltrator	1	[{"added": {}}]	13	1
+1604	2018-07-26 14:46:10.664713-05	117	Jetpack	1	[{"added": {}}]	13	1
+1605	2018-07-26 14:46:39.930213-05	118	Stealthsuit	1	[{"added": {}}]	13	1
+1606	2018-07-26 14:49:36.391107-05	119	Blast cannon	1	[{"added": {}}]	13	1
+1607	2018-07-26 14:49:59.749661-05	120	Force field	1	[{"added": {}}]	13	1
+1608	2018-07-26 14:50:20.219736-05	121	Luxury hovercar	1	[{"added": {}}]	13	1
+1609	2018-07-26 14:50:36.47565-05	122	Robot servant	1	[{"added": {}}]	13	1
+1610	2018-07-26 14:50:51.554237-05	123	Small spaceship	1	[{"added": {}}]	13	1
+1611	2018-07-26 14:51:02.38818-05	121	Luxury hovercar	2	[{"changed": {"fields": ["notes"]}}]	13	1
+1612	2018-07-26 14:52:13.005553-05	2	Ring of Dragon's Flight	1	[{"added": {}}]	18	1
+1613	2018-07-26 14:52:48.334396-05	3	Soulflaying Weapon	1	[{"added": {}}]	18	1
+1614	2018-07-26 15:09:15.480847-05	4	Spellbook of the Amber Mage	1	[{"added": {}}]	18	1
+1615	2018-07-26 15:09:58.648558-05	5	Wand of Firebolts	1	[{"added": {}}]	18	1
+1616	2018-07-26 15:15:04.94302-05	1	Aldor Donatus	2	[{"added": {"name": "character cypher", "object": "Analeptic"}}]	19	1
+1617	2018-07-26 15:16:14.708073-05	1	Aldor Donatus	2	[{"changed": {"name": "character cypher", "object": "Analeptic", "fields": ["appearance"]}}]	19	1
+1618	2018-07-26 15:17:38.642505-05	1	Aldor Donatus	2	[{"added": {"name": "character artifact", "object": "Wand of Firebolts"}}]	19	1
+1619	2018-07-26 15:43:55.615849-05	6	Amber Casement	1	[{"added": {}}]	18	1
+1620	2018-07-26 15:48:14.678894-05	7	Metabolism Bud	1	[{"added": {}}]	18	1
 \.
 
 
@@ -5035,6 +5087,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 21	cyphercore	characterequipment
 22	cyphercore	charactercypher
 23	cyphercore	characterartifact
+24	cyphercore	characterform
 \.
 
 
@@ -5130,7 +5183,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 85	cyphercore	0070_remove_equipment_genre	2018-07-24 03:13:13.843233-05
 86	cyphercore	0071_auto_20180724_0813	2018-07-24 03:13:14.207243-05
 87	cyphercore	0072_auto_20180726_0012	2018-07-25 19:14:45.51145-05
-88	cyphercore	0073_characterskill_skill_global	2018-07-25 19:44:21.220436-05
+90	cyphercore	0073_auto_20180726_2013	2018-07-26 15:14:07.929035-05
+91	cyphercore	0074_auto_20180726_2047	2018-07-26 15:47:54.740309-05
 \.
 
 
@@ -5175,7 +5229,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 72, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 75, true);
 
 
 --
@@ -5210,7 +5264,7 @@ SELECT pg_catalog.setval('public.cyphercore_ability_id_seq', 719, true);
 -- Name: cyphercore_artifact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_artifact_id_seq', 1, true);
+SELECT pg_catalog.setval('public.cyphercore_artifact_id_seq', 7, true);
 
 
 --
@@ -5231,14 +5285,14 @@ SELECT pg_catalog.setval('public.cyphercore_character_id_seq', 1, true);
 -- Name: cyphercore_characterartifact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_characterartifact_id_seq', 2, true);
+SELECT pg_catalog.setval('public.cyphercore_characterartifact_id_seq', 3, true);
 
 
 --
 -- Name: cyphercore_charactercypher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_charactercypher_id_seq', 2, true);
+SELECT pg_catalog.setval('public.cyphercore_charactercypher_id_seq', 3, true);
 
 
 --
@@ -5273,7 +5327,7 @@ SELECT pg_catalog.setval('public.cyphercore_descriptor_id_seq', 51, true);
 -- Name: cyphercore_equipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_equipment_id_seq', 107, true);
+SELECT pg_catalog.setval('public.cyphercore_equipment_id_seq', 123, true);
 
 
 --
@@ -5322,21 +5376,21 @@ SELECT pg_catalog.setval('public.cyphercore_typeability_id_seq', 203, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1594, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1620, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 23, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 24, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 88, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 91, true);
 
 
 --
