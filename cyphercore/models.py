@@ -260,7 +260,7 @@ class CharacterCypher(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     cypher = models.ForeignKey(Cypher, on_delete=models.CASCADE)
     level = models.IntegerField(default=1)
-    appearance = models.TextField()
+    appearance = models.TextField(blank=True)
     def __str__(self):
         return self.cypher.name
 
