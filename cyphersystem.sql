@@ -546,7 +546,8 @@ CREATE TABLE public.cyphercore_characterskill (
     id integer NOT NULL,
     skill_level character varying(1) NOT NULL,
     character_id integer NOT NULL,
-    skill_id integer NOT NULL
+    skill_id integer NOT NULL,
+    skill_global boolean NOT NULL
 );
 
 
@@ -1326,7 +1327,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$100000$tgVvlTAuZ6eE$ZHttJYXDJ5HOa7vCrJujk/cINW1k4NNYTlpuz0hhHxI=	2018-07-21 19:43:00.73126-05	t	michael	Michael	Bird	michaelbirdtx@icloud.com	t	t	2018-07-03 23:43:27-05
+1	pbkdf2_sha256$100000$tgVvlTAuZ6eE$ZHttJYXDJ5HOa7vCrJujk/cINW1k4NNYTlpuz0hhHxI=	2018-07-26 01:00:16.323822-05	t	michael	Michael	Bird	michaelbirdtx@icloud.com	t	t	2018-07-03 23:43:27-05
 \.
 
 
@@ -2141,10 +2142,10 @@ COPY public.cyphercore_characterequipment (id, quantity, character_id, equipment
 -- Data for Name: cyphercore_characterskill; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cyphercore_characterskill (id, skill_level, character_id, skill_id) FROM stdin;
-8	T	1	20
-17	T	1	8
-18	T	1	9
+COPY public.cyphercore_characterskill (id, skill_level, character_id, skill_id, skill_global) FROM stdin;
+8	T	1	20	t
+17	T	1	8	t
+18	T	1	9	t
 \.
 
 
@@ -2171,6 +2172,138 @@ COPY public.cyphercore_cypher (id, name, level_range, effect, slug, sourcebook_i
 16	Curative	1d6+2	Restores a number of points equal to the cypher’s level to the user’s Might Pool.	curative	1
 17	Curse Bringer	1d6+1	The curse bringer can be activated when given to an individual who doesn’t realize its significance. The next time the victim attempts an important task when the cypher is in her possession, the difficulty of the task is modified by three steps to her detriment.	curse-bringer	1
 18	Darksight	1d6	Grants the ability to see in the dark for eight hours.	darksight	1
+19	Death Bringer	1d6	For the next minute, when the user strikes an NPC or creature whose level is equal to or less than the cypher’s level, she can choose to make a second attack roll. If the second attack roll is a success, the target is killed. If the target is a PC, the character instead moves down one step on the damage track.	death-bringer	1
+20	Density	1d6	For the next twenty-four hours, each time you strike a solid creature or object with a weapon, the weapon suddenly increases dramatically in weight, causing the blow to inflict 2 additional points of damage.	density	1
+21	Detonation	1d6+2	Projects a small physical explosive up to a long distance away that explodes in an immediate radius, inflicting damage equal to the cypher’s level. Roll for the type of damage:\r\n01–10: Cell-disrupting (harms only flesh)\r\n11–30: Corrosive\r\n31–40: Electrical discharge\r\n41–50: Heat drain (cold)\r\n51–75: Fire\r\n76–00: Shrapnel	detonation	1
+22	Detonation (Creature)	1d6+1	Projects a small physical explosive up to a long distance away that explodes and creates a momentary teleportation gate. A random creature whose level is equal to or less than the cypher’s level appears through the gate and attacks the closest target.	detonation-creature	1
+23	Detonation (Dessicating)	1d6+2	Projects a small physical explosive up to a long distance away that bursts in an immediate radius, draining moisture from everything within it. Living creatures take damage equal to the cypher’s level. Water in the area is vaporized.	detonation-dessicating	1
+24	Detonation (Flash)	1d6+2	Projects a small physical explosive up to a long distance away that bursts in an immediate radius, blinding all within it for one minute.	detonation-flash	1
+25	Detonation (Gravity)	1d6+2	Projects a small physical explosive up to a long distance away that bursts in an immediate radius, inflicting damage equal to the cypher’s level by increasing gravity tremendously for one second. All creatures in the area are crushed to the ground for one round and cannot take physical actions.	detonation-gravity	1
+26	Detonation (Gravity Inversion)	1d6+1	Projects a small physical explosive up to a long distance away that explodes, and for one hour gravity reverses within long range of the explosion.	detonation-gravity-inversion	1
+27	Detonation (Massive)	1d6+2	Projects a small physical explosive up to a long distance away that explodes in a short-range radius, inflicting damage equal to the cypher’s level. Roll for the type of damage:\r\n01–10: Cell-disrupting (harms only flesh)\r\n11–30: Corrosive\r\n31–40: Electrical discharge\r\n41–50: Heat drain (cold)\r\n51–75: Fire\r\n76–00: Shrapnel	detonation-massive	1
+28	Detonation (Master Disruption)	1d6+4	Projects a small physical explosive up to a long distance away that explodes in an immediate radius, releasing nanites that rearrange matter in random ways. Inflicts damage equal to the cypher’s level.	detonation-master-disruption	1
+29	Detonation (Pressure)	1d6+2	Projects a small physical explosive up to a long distance away that explodes in an immediate radius, inflicting impact damage equal to the cypher’s level. Also moves unattended objects out of the area if they weigh less than 20 pounds (9 kg) per cypher level.	detonation-pressure	1
+30	Detonation (Singularity)	10	Projects a small physical explosive up to a long distance away that explodes and creates a momentary singularity that tears at the fabric of the universe. Inflicts 20 points of damage to all within short range, drawing them (or their remains) together to immediate range (if possible). Player characters in the radius who fail a Might defense roll move down one step on the damage track.	detonation-singularity	1
+31	Detonation (Sonic)	1d6+2	Projects a small physical explosive up to a long distance away that explodes with terrifying sound, deafening all in an immediate radius.	detonation-sonic	1
+32	Detonation (Spawn)	1d6+2	Projects a small physical explosive up to a long distance away that bursts in an immediate radius, blinding all within it for one minute and inflicting damage equal to the cypher’s level.\r\nThe burst spawns 1d6 additional detonations; in the next round, each additional detonation flies to a random spot within short range and explodes in an immediate radius. Roll for the type of damage dealt by all detonations:\r\n01–10: Cell-disrupting (harms only flesh)\r\n11–30: Corrosive\r\n31–40: Electrical discharge\r\n41–50: Heat drain (cold)\r\n51–75: Fire\r\n76–00: Shrapnel	detonation-spawn	1
+40	Enduring Shield	1d6+4	For the next day, the user has an asset to Speed defense rolls.	enduring-shield	1
+41	Equipment Cache	1d6+1	The user can rummage around and produce from the cypher a desired piece of equipment (not an artifact) whose level does not exceed the cypher’s level. The piece of equipment persists for up to twenty-four hours, unless its fundamental nature allows only a single use (such as with a grenade).	equipment-cache	1
+33	Detonation (Web)	1d6+2	Projects a small physical explosive up to a long distance away that explodes in an immediate radius and creates sticky strands of goo. PCs caught in the area must use a Might-based action to get out, with the difficulty determined by the cypher level. NPCs break free if their level is higher than the cypher level.	detonation-web	1
+34	Disguise Module	1d6+2	For the next hour, the user’s features become almost identical to those of one designated person she has previously interacted with. This lowers the difficulty by two steps when the user attempts to disguise herself as the designated person. Once designated, the user cannot shift the effect to look like another person, though she can remove the module to look like herself again before the end of the hour.	disguise-module	1
+35	Disrupting	1d6	For the next twenty-four hours, each time you strike a solid creature or object, you generate a burst of nanites that directly attack its organic cells. The target takes 1 additional point of damage and loses its next action.	disrupting	1
+36	Eagleseye	1d6	Grants the ability to see ten times as far as normal for one hour.	eagleseye	1
+37	Effect Resistance	1d6+1	Provides a chance for additional resistance to directly damaging effects of all kinds, such as fire, lightning, and the like for a day. (It does not provide resistance to blunt force, slashing, or piercing attacks.) If the level of the effect is less than or equal to the level of the cypher, the user gains an additional defense roll to avoid it. On a successful defense roll, treat the attack as if the user had succeeded on his regular defense roll.	effect-resistance	1
+38	Effort Enhancer	1d6	The user can apply one level of Effort to a noncombat task without spending points from a Pool. The level of Effort provided by this cypher does not count toward the maximum amount of Effort a character can normally apply to one task.	effort-enhancer	1
+39	Effort Enhancer (Combat)	1d6+1	For the next hour, the user can apply one level of Effort to any task (including a combat task) without spending points from a Pool. The level of Effort provided by this cypher does not count toward the maximum amount of Effort a character can normally apply to one task.	effort-enhancer-combat	1
+42	Farsight	1d6+1	The user can observe a location he has visited previously, regardless of how far away it is (even across galaxies). This vision persists for up to ten minutes.	farsight	1
+43	Fireproofing	1d6+4	A nonliving object treated by this cypher has Armor against fire damage equal to the cypher’s level for twenty-four hours.	fireproofing	1
+44	Flame-Retardant Wall	1d6	Creates an immobile plane of permeable energy up to 20 feet by 20 feet (6 m by 6 m) for one hour. The plane conforms to the space available. Flames passing through the plane are extinguished.	flame-retardant-wall	1
+45	Force Cube	1d6+3	Creates an immobile cube composed of six planes of solid force, each 30 feet (9 m) to a side, for one hour. The planes conform to the space available.	force-cube	1
+46	Force Field	1d6	For the next twenty-four hours, the user is surrounded by a powerful force field, granting her +2 to Armor.	force-field	1
+47	Force Screen Projector	1d6+3	Creates an immobile plane of solid force up to 20 feet by 20 feet (6 m by 6 m) for one hour. The plane conforms to the space available.	force-screen-projector	1
+48	Force Shield Projector	1d6+3	Creates a shimmering energy shield around the user for one hour, during which time he gains +3 to Armor (or +4 to Armor if the cypher is level 5 or higher).	force-shield-projector	1
+49	Friction Reducer	1d6	Spread across an area up to 10 feet (3 m) square, this makes things extremely slippery. For one hour, the difficulty of movement tasks in the area is increased by three steps.	friction-reducer	1
+50	Frigid Wall	1d6+2	Creates a wall of supercooled air up to30 feet by 30 feet by 1 foot (9m by 9m by 30 cm) that inflicts damage equal to the cypher’s level on anything that passes through it. The wall conforms to the space available. It lasts for ten minutes.	frigid-wall	1
+51	Gas Bomb	1d6+2	Thrown a short distance, this bursts in a poisonous cloud within an immediate area. The cloud lingers for 1d6 rounds unless conditions dictate otherwise. Effects vary:\r\n01–10 Thick smoke: occludes sight while the cloud lasts.\r\n11–20 Choking gas: living creatures that breathe lose their actions to choking and coughing for a number of rounds equal to the cypher’s level.\r\n21–50 Poison gas: living creatures that breathe suffer damage equal to the cypher’s level.\r\n51–60 Corrosive gas: everything suffers damage equal to the cypher’s level.\r\n61–65 Hallucinogenic gas: living creatures that breathe lose their actions to hallucinations and visions for a number of rounds equal to the cypher’s level.\r\n66–70 Nerve gas: living creatures that breathe suffer Speed damage equal to the cypher’s level.\r\n71–80 Mind-numbing gas: living creatures that breathe suffer Intellect damage equal to the cypher’s level.\r\n81–83 Fear gas: living creatures that breathe and think flee in a random direction in fear (or are paralyzed with fear) for a number of rounds equal to the cypher’s level.\r\n84–86 Amnesia gas: living creatures that breathe and think permanently lose all memory of the last minute.\r\n87–96 Sleep gas: living creatures\r\nthat breathe fall asleep for a number of rounds equal to the cypher’s level or until awoken by a violent action or an extremely loud noise.\r\n97–00 Rage gas: living creatures that breathe and think make a melee attack on the nearest creature and continue to do so for a number of rounds equal to the cypher’s level.	gas-bomb	1
+52	Gravity Nullifier	1d6+3	For one hour, the user can float into the air, moving vertically up to a short distance per round (but not horizontally without taking some other action, such as pushing along the ceiling). The user must weigh less than 50 pounds (23 kg) per level of the cypher.	gravity-nullifier	1
+53	Gravity-Nullifying Application	1d6+2	If a nonliving object no larger than a person is coated by this cypher, it floats 1d20 feet in the air permanently and no longer has weight if carried (though it needs to be strapped down).	gravity-nullifying-application	1
+54	Heat Attack	1d6	For the next twenty-four hours, each time you strike a solid creature or object, you generate a burst of heat that inflicts 2 additional points of damage.	heat-attack	1
+55	Hunter/Seeker	1d6	With long-range movement, this intelligent missile tracks and attacks a specified target, which must be within sight when selected. If it misses, it continues to attack one additional time per cypher level until it hits. For example, a level 4 hunter/seeker will attack a maximum of five times. Different hunter/seekers have different effects:\r\n01–50: Inflicts 8 points of damage.\r\n51–80: Bears a poisoned needle that inflicts 3 points of damage plus poison.\r\n81–90: Explodes, inflicting 6 points of damage to all within immediate range.\r\n91–95: Shocks for 4 points of electricity damage, and stuns for one round per cypher level.\r\n96–00: Covers target in sticky goo that immediately hardens, holding him fast until he breaks free with a Might action (difficulty equal to the cypher’s level + 2).	hunterseeker	1
+56	Image Projector	1d6	Projects one of the following immobile images in the area described for one hour. The image appears 25 feet (8 m) away from the user. Scenes include movement, sound, and smell.\r\n01–20: Terrifying creature of an unknown species, perhaps no longer alive in the world (10-foot [3 m] cube)\r\n21–40: Huge machine that obscures sight (30-foot [9 m] cube)\r\n41–50: Beautiful pastoral scene (50-foot [15 m] cube)\r\n51–60: Food that looks delicious but may not be familiar (10-foot [3 m] cube)\r\n61–80: Solid color that obscures sight (50-foot [15 m] cube)\r\n81–00: Incomprehensible scene that is disorienting and strange (20-foot [6 m] cube)	image-projector	1
+57	Inferno Wall	1d6+2	Creates a wall of extreme heat up to 30 feet by 30 feet by 1 foot (9 m by 9 m by 30 cm) that inflicts damage equal to the cypher’s level on anything that passes through it. The wall conforms to the space available. It lasts for ten minutes.	inferno-wall	1
+58	Infiltrator	1d6	Tiny capsule launches and moves at great speed, mapping and scanning an unknown area. It moves 500 feet (152 m) per level, scanning an area up to 50 feet (15 m) per level away from it. It identifies basic layout, creatures, and major energy sources. Its movement is blocked by any physical or energy barrier.	infiltrator	1
+59	Information Sensor	1d6+2	Over the course of one day, the user can activate the cypher a total number of times equal to its level. Each time, she can select a living creature within long range and learn the following about it: level, origin, species, name, and possibly other facts (such as an individual’s credit score, home address, phone number, and related information).	information-sensor	1
+60	Instant Servant	1d6	Small device expands into a humanoid automaton that is roughly 2 feet (60 cm) tall. Its level is equal to the cypher’s level, and it can understand the verbal commands of the character who activated it. Commanding the servant is not an action. It can make attacks or perform actions as ordered to the best of its abilities, but it cannot speak.\r\nThe automaton has short-range movement but never goes farther than long range away from the character who activated it. At the GM’s discretion, the servant might have specialized knowledge, such as how to operate a particular device. Otherwise, it has no special knowledge. In any case, the servant is not artificially intelligent or capable of initiating action. It does only as commanded.\r\nThe servant operates for one hour per cypher level.	instant-servant	1
+61	Instant Shelter	1d6+3	With the addition of water and air, this expands into a simple one-room structure with a door and a transparent window. The structure is 10 feet by 10 feet by 20 feet (3 m by 3 m by 6 m). It is permanent and immobile once created.	instant-shelter	1
+62	Intellect Booster	1d6+2	Adds 1 to the user’s Intellect Edge for one hour.	intellect-booster	1
+63	Intelligence Enhancement	1d6	The difficulty of any task involving intelligent deduction—such as playing chess, inferring a connection between clues, solving a mathematical problem, finding a bug in computer code, and so on—is decreased by two steps for the user for one hour. In the subsequent hour, the strain increases the difficulty for the same tasks by two steps.	intelligence-enhancement	1
+84	Nutrition and Hydration	1d6+1	The user can go without food and water for a number of days equal to the cypher’s level without ill effect.	nutrition-and-hydration	1
+64	Knowledge Enhancement	1d6	For the next twenty-four hours, the character has training in a predetermined skill. Although the skill could be anything (including something specific to the operation of a particular device), common skills include:\r\n01–10: Melee attacks\r\n11–20: Ranged attacks\r\n21–40: One type of academic or esoteric lore (biology, history, magic, and so on)\r\n41–50: Repairing (sometimes specific to one device)\r\n51–60: Crafting (usually specific to one thing)\r\n61–70: Persuasion\r\n71–75: Healing\r\n76–80: Speed defense\r\n81–85: Intellect defense\r\n85–90: Swimming\r\n91–95: Riding\r\n96–00: Sneaking	knowledge-enhancement	1
+65	Lightning Wall	1d6+2	Creates a wall of electric bolts up to 30 feet by 30 feet by 1 foot (9 m by 9 m by 30 cm) that inflicts damage equal to the cypher’s level on anything that passes through it. The wall conforms to the space available. It lasts for ten minutes.	lightning-wall	1
+66	Machine Control	1d6+2	Splits into two pieces; one is affixed to a device and the other to a character. The character can then use his mind to control the device at long range, bidding it to do anything it could do normally. Thus, a device could be activated or deactivated, and a vehicle could be piloted. The control lasts for ten minutes, and once the device is chosen, it cannot be changed.	machine-control	1
+67	Magnetic Attack Roll	1d6+2	The user throws this cypher at a target within short range, and it drills into the target for one round, inflicting damage equal to the cypher’s level. If the target is made of metal or wearing metal (such as armor), the difficulty of the attack is decreased by one step.	magnetic-attack-roll	1
+68	Magnetic Master	1d6+2	Establishes a connection with one metal object within short range that a human could hold in one hand. The user can then move or manipulate the object anywhere within short range (each movement or manipulation is an action). For example, he could wield a weapon or drag a helm affixed to a foe’s head to and fro. The connection lasts for ten rounds.	magnetic-master	1
+69	Magnetic Shield	1d6+2	For ten minutes, metal objects cannot come within immediate range of the user. Metal items already in the area when the device is activated are slowly pushed out.	magnetic-shield	1
+70	Manipulation Beam	1d6+2	Over the course of one day, the user can activate the cypher a total number of times equal to its level. Each time, she can affect an object she can see within long range that is not too heavy for her to affect physically. The effect must occur over the course of a round and could include closing or opening a door, keying in a number on a keypad, transferring an object a short distance, wresting an object from another creature’s grasp (on a successful Might- based roll), or pushing a creature an immediate distance.	manipulation-beam	1
+71	Matter Transference Ray	1d6+3	The user can target one nonliving object within long range that is her size or smaller and whose level is less than or equal to the cypher’s level. The object is transferred directly to a random location at least 100 miles (161 km) away. If the GM feels it appropriate to the circumstances, only a portion of an object is transferred (a portion whose volume is no more than the user’s).	matter-transference-ray	1
+72	Meditation Aid	1d6+2	Restores a number of points equal to the cypher’s level to the user’s Intellect Pool.	meditation-aid	1
+73	Memory Switch	1d6+2	The user selects a point within long range, and the minds of all thinking creatures within immediate range of that point are attacked. Victims are dazed and take no action for a round, and they have no memory of the preceding hour.	memory-switch	1
+74	Mental Scrambler	1d6+2	Two rounds after being activated, the device creates an invisible field that fills an area within short range and lasts for one minute. The field scrambles the mental processes of all thinking creatures. The effect lasts as long as they remain in the field and for 1d6 rounds after, although an Intellect defense roll is allowed each round to act normally (both in the field and after leaving it). Each mental scrambler is keyed to a specific effect. Roll a d100 for effect:\r\n01–30: Victims cannot act.\r\n31–40: Victims cannot speak.\r\n41–50: Victims move slowly (immediate range) and clumsily.\r\n51–60: Victims cannot see or hear.\r\n61–70: Victims lose all sense of direction, depth, and proportion.\r\n71–80: Victims do not recognize anyone they know.\r\n81–88: Victims suffer partial amnesia.\r\n89–94: Victims suffer total amnesia.\r\n95–98: Victims lose all inhibitions, revealing secrets and performing surprising actions.\r\n99–00: Victims’ ethics are inverted.	mental-scrambler	1
+75	Metal Death	1d6+2	Produces a stream of foam that covers an area about 3 feet by 3 feet (1 m by 1 m), transforming any metal that it touches into a substance as brittle as thin glass. The foam affects metal to a depth of about 6 inches (15 cm).	metal-death	1
+76	Mind Meld	1d6+1	Lets the user speak telepathically with creatures he can see within short range for up to one hour. The user can’t read a target’s thoughts, except those that are specifically “transmitted.” This effect transcends normal language barriers, but a target must have a mind that allows for such communication to be possible.	mind-meld	1
+77	Mind-Restricting Wall	1d6+2	Creates an immobile plane of permeable energy up to 20 feet by 20 feet (6 m by 6 m) for one hour. The plane conforms to the space available. Intelligent creatures passing through the plane fall unconscious for up to one hour, or until slapped awake or damaged.	mind-restricting-wall	1
+78	Mind Stabilizer	1d6	The user gains +5 to Armor against Intellect damage.	mind-stabilizer	1
+79	Monoblade	1d6+2	Produces a 6-inch (15 cm) blade that’s the same level as the cypher. The blade cuts through any material of a level lower than its own. If used as a weapon, it is a light weapon that ignores Armor of a level lower than its own. The blade lasts for ten minutes.	monoblade	1
+80	Monohorn	1d6+3	The user gains a horn in the center of his forehead. The horn is deadly sharp and strong, and it spirals down to a solid base where it fuses with his flesh and bone. The user is specialized in making melee attacks with the horn, which is considered a medium weapon. The horn lasts for a number of hours equal to the cypher’s level.	monohorn	1
+81	Motion Sensor	1d6+2	For one hour, this cypher indicates when any movement occurs within short range, and when large creatures or objects move within long range (the cypher distinguishes between the two). It also indicates the number and size of the creatures or objects in motion.	motion-sensor	1
+82	Null Field	1d6+3	The user and all creatures within immediate range gain +5 to Armor against damage of a specified kind for one hour. Roll a d100 to determine the effect.\r\n01–12: Fire\r\n13–27: Cold\r\n28–39: Acid\r\n40–52: Psychic\r\n53–65: Sonic\r\n66–72: Electrical\r\n73–84: Poison\r\n85–95: Blunt force\r\n96–00: Slashing and piercing	null-field	1
+83	Nullification Ray	1d6+3	The user can immediately end one ongoing effect within long range that is produced by an artifact, cypher, or special ability.	nullification-ray	1
+85	Perfect Memory	1d6	Allows the user to mentally record everything she sees for thirty seconds and store the recording permanently in her long-term memory. This cypher is useful for watching someone pick a specific lock, enter a complex code, or do something else that happens quickly.	perfect-memory	1
+86	Personal Environment Field	1d6+2	Creates an aura of temperature and atmosphere that will sustain a human safely for twenty-four hours. The aura extends to 1 foot (30 cm) around the user. It does not protect against sudden flashes of temperature change (such as from a heat ray). A small number of these cyphers (1%) accommodate the preferred environment of a nonhuman, nonterrestrial creature.	personal-environment-field	1
+87	Phase Changer	1d6+1	Puts the user out of phase for one minute. During this time, she can pass through solid objects as though she were entirely insubstantial, like a ghost. She cannot make physical attacks or be physically attacked.	phase-changer	1
+88	Phase Distruptor	1d6+2	Puts a portion of a physical structure (like a wall or floor) out of phase for one hour. It affects an area equal to a 10-foot (3 m) cube. While the area is out of phase, creatures and objects can pass through it as if it were not there, although one cannot see through it, and it blocks light.	phase-distruptor	1
+89	Poison (Emotion)	1d6+2	The victim feels a specific emotion for one hour. Roll a d100:\r\n01–20: Anger. Likely to attack anyone who disagrees with him. Very hard to interact with; the difficulty of all such actions is increased by two steps.\r\n21–40: Fear. Flees in terror for one minute when threatened.\r\n41–60: Lust. Cannot focus on any nonsexual activity.\r\n61–75: Sadness. The difficulty of all tasks is increased by one step.\r\n76–85: Complacency. Has no motivation. The difficulty of all tasks is increased by two steps.\r\n86–95: Joy. Easy to interact with in a pleasant manner; the difficulty of all such actions is decreased by one step.\r\n96–00: Love. Much easier to interact with; the difficulty of all such actions is decreased by two steps, but temporary attachment is likely.	poison-emotion	1
+90	Poison (Explosive)	1d6+1	Once this substance enters the bloodstream, it travels to the brain and reorganizes into an explosive that detonates when activated, inflicting 10 points of damage (ignoring Armor). Roll a d100 to determine the means of detonation:\r\n01–25: The detonator is activated (must be within long range).\r\n26–40: A specified amount of time passes.\r\n41–50: The victim takes a specific action.\r\n51–55: A specific note is sung or played on an instrument within short range.\r\n56–60: The victim smells a specific scent within immediate range.\r\n61–80: The victim comes within long range of the detonator.\r\n81–00: The victim is no longer within long range of the detonator.	poison-explosive	1
+91	Poison (Mind Controlling)	1d6+2	The victim must carry out a specific action in response to a specific trigger. Roll a d100 to determine the effect:\r\n01–20: Lies down for one minute with eyes closed when told to do so.\r\n21–40: Flees in terror for one minute when threatened.\r\n41–60: Answers questions truthfully for one minute.\r\n61–75: Attacks close friend for one round when within immediate range.\r\n76–85: Obeys next verbal command given (if it is understood).\r\n86–95: For twenty-four hours, becomes sexually attracted to the next creature of its own species that it sees.\r\n96–00: Moves toward the next red object seen in lieu of all other actions, ignoring self- preservation.	poison-mind-controlling	1
+92	Poison (Mind Disrupting)	1d6+2	The victim suffers Intellect damage equal to the cypher’s level and cannot take actions for a number of rounds equal to the cypher’s level.	poison-mind-disrupting	1
+93	Psychic Communique	1d6+2	Allows the user to project a one-time, one-way telepathic message of up to ten words, with an unlimited range, to anyone he knows.	psychic-communique	1
+94	Radiation Spike	1d6+4	Delivers a powerful burst of radiation that disrupts the tissue of any creature touched, inflicting damage equal to the cypher’s level.	radiation-spike	1
+95	Ray Emitter	1d6+2	Allows the user to project a ray of destructive energy up to 200 feet (61 m) that inflicts damage equal to the cypher’s level. Roll a d100 for the type of damage:\r\n01–50: Heat/concentrated light\r\n51–60: Cell-disrupting radiation\r\n61–80: Force\r\n81–87: Magnetic wave\r\n88–93: Molecular bond disruption\r\n94–00: Concentrated cold	ray-emitter	1
+96	Ray Emitter (Command)	1d6+2	Allows the user to project a ray up to 200 feet (61 m) that forces a target to obey the next verbal command given (if it is understood).	ray-emitter-command	1
+97	Ray Emitter (Fear)	1d6+2	Allows the user to project a ray up to 200 feet (61 m) that causes the target to flee in terror for one minute.	ray-emitter-fear	1
+98	Ray Emitter (Friend Slaying)	1d6+2	Allows the user to project a ray up to 200 feet (61 m) that causes the target to attack its nearest ally for one round.	ray-emitter-friend-slaying	1
+99	Ray Emitter (Mind Disrupting)	1d6+2	Allows the user to project a ray of destructive energy up to 200 feet (61 m) that inflicts Intellect damage equal to the cypher’s level. Also, the victim cannot take actions for a number of rounds equal to the cypher’s level.	ray-emitter-mind-disrupting	1
+100	Ray Emitter (Numbing)	1d6+2	Allows the user to project a ray of energy up to 200 feet (61 m) that numbs one limb of the target, making it useless for one minute. A small number of these devices (5%) induce numbness that lasts for one hour.	ray-emitter-numbing	1
+101	Ray Emitter (Paralysis)	1d6+2	Allows the user to project a ray of energy up to 200 feet (61 m) that paralyzes the target for one minute. A small number of these devices (5%) induce paralysis that lasts for one hour.	ray-emitter-paralysis	1
+102	Reality Spike	1d6+4	Once activated, the cypher does not move—ever—even if activated in midair. A Might action will dislodge it, but then it is ruined.	reality-spike	1
+103	Reflex Enhancer	1d6	The difficulty of any task involving manual dexterity—such as pickpocketing, lockpicking, juggling, operating on a patient, defusing a bomb, and so on—is decreased by two steps for one hour.	reflex-enhancer	1
+104	Rejuvenator	1d6+2	Restores a number of points equal to the cypher’s level to one random stat Pool. Roll a d100:\r\n01–50: Might Pool\r\n51–75: Speed Pool\r\n76–00: Intellect Pool	rejuvenator	1
+105	Remembering	1d6	Allows the user to recall any one experience she’s ever had. The experience can be no longer than one minute, but the recall is perfect, so (for example) if she saw someone dial a phone, she will remember the number.	remembering	1
+106	Remote Viewer	1d6	For one hour, the user can see everything going on in the vicinity of the cypher, regardless of the distance between them.	remote-viewer	1
+132	Teleporter (Planetary)	1d6+4	User teleports anywhere on the planet to a location he has previously visited or seen. He arrives safely with his possessions but cannot take anything else with him.	teleporter-planetary	1
+107	Repair Unit	1d10	The cypher becomes a multiarmed sphere that floats. It repairs one designated item (of a level equal to or less than its own) that has been damaged but not destroyed. The repair unit can also create spare parts, unless the GM rules that the parts are too specialized or rare (in which case, the unit repairs the device except for the specialized part). Repair time is 1d100 + 20 minutes.	repair-unit	1
+108	Repeater	1d6+1	For the next minute, the user’s ranged weapon fires one additional time with ammo fabricated by the cypher. The weapon wielder can aim the free shot at the same target as the initiating shot, or at a target next to the first one.	repeater	1
+109	Retaliation	1d6	For the next twenty-four hours, anyone striking the user receives a small burst of electricity that inflicts 1 point of damage (no action or roll required).	retaliation	1
+110	Secret	1d6	The user can ask the GM one question and get a general answer. The GM assigns a level to the question, so the more obscure the answer, the more difficult the task. Generally, knowledge that a PC could find by looking somewhere other than his current location is level 1, and obscure knowledge of the past is level 7. Gaining knowledge of the future is level 10, and such knowledge is always open to interpretation.	secret	1
+111	Sheen	1d6	For one week, the user’s cells are coated with a protective veneer that resists damage (+1 to Armor) and decreases the difficulty of Might defense rolls by two steps. However, healing is more difficult during this time; all recovery rolls suffer a –1 penalty.	sheen	1
+112	Shock Attack	1d6	For the next twenty-four hours, each time the user strikes a solid creature or object, the user generates a burst of electricity, inflicting 1 additional point of damage.	shock-attack	1
+113	Shocker	1d6+4	Delivers a powerful burst of electricity that shocks any creature touched, inflicting damage equal to the cypher’s level.	shocker	1
+114	Skill Boost	1d6	Dramatically but temporarily alters the user’s mind and body so she can perform one specific physical action with the difficulty decreased by three steps. Once activated, this boost can be used a number of times equal to the cypher’s level, but only within a twenty- four-hour period. The boost takes effect each time the action is performed. For example, a level 3 cypher boosts the first three times that action is attempted. The action can be one of many possibilities. Roll a d100:\r\n01–15: Melee attack\r\n16–30: Ranged attack\r\n31–40: Speed defense\r\n41–50: Might defense\r\n51–60: Intellect defense\r\n61–68: Jumping\r\n69–76: Climbing\r\n77–84: Running\r\n85–92: Swimming\r\n93–94: Sneaking\r\n95–96: Balancing\r\n97–98: Perceiving\r\n99: Carrying\r\n00: Escaping	skill-boost	1
+115	Slave Maker	1d6+2	To activate the cypher, the user must succeed on a melee attack against a creature about the size of the user and whose level does not exceed the cypher’s level. The cypher bonds to the target, who immediately becomes calm. The target awaits the user’s commands and carries out all orders to the best of its ability. The target remains so enslaved for a number of hours equal to the cypher’s level minus the target’s level. (If the result is 0, the target remains enslaved for one minute.)	slave-maker	1
+116	Sleep Inducer	1d6	Touch puts the victim to sleep for ten minutes or until awoken by a violent action or an extremely loud noise.	sleep-inducer	1
+117	Sniper Module	1d6	For the next hour, the effective range of the user’s ranged weapon increases to 2 miles (3 km).	sniper-module	1
+118	Solvent	1d10	Dissolves 1 cubic foot of material each round. After one round per cypher level, the cypher becomes inert.	solvent	1
+119	Sonic Hole	1d6+2	Draws all sound within long range into the device for one round per cypher level. Within the affected area, no sound can be heard.	sonic-hole	1
+120	Sound Dampener	1d6+2	Dampens all sound within immediate range, providing an asset for all creatures in the area to attempt stealth actions.	sound-dampener	1
+121	Spatial Warp	1d6+4	When affixed to a device that affects a single target at range, that range is increased to 1 mile (2 km) with no penalties. Space is temporarily warped in terms of seeing and reaching the target. If direct line of sight is important to the device’s effect, it remains important.	spatial-warp	1
+122	Speed Boost	1d6+2	Adds 1 to Speed Edge for one hour.	speed-boost	1
+123	Spy	1d6+2	Produces a tiny spying object that resists detection as a level 8 creature. The object moves at great speed, mapping and scanning an unknown area. It moves 500 feet (152 m) per level, scanning an area up to 50 feet (15 m) away from it. It identifies basic layout, creatures, and major energy sources. Its movement is blocked by any physical or energy barrier. At the end of its mapping run, it returns to the user and reports. If it discovers a predefined target during its run (such as “a creature of level 5 or higher,” “a locked door,” “a major energy source,” and so on), it detonates instead, dealing electrical and shrapnel damage equal to the cypher’s level to all creatures and objects in short range.	spy	1
+124	Stasis Keeper	1d6	Puts a subject into stasis for a number of days equal to the cypher’s level, or until it is violently disturbed. An object in stasis does not age and comes out of the stasis alive and in the same condition as it went in, with no memory of the period of inactivity.	stasis-keeper	1
+125	Stim	1d6	Decreases the difficulty of the next action taken by three steps.	stim	1
+126	Strength Boost	1d6+2	Adds 1 to Might Edge for one hour.	strength-boost	1
+127	Strength Enhancer	1d6	The difficulty of any noncombat task involving raw strength—such as breaking down a door, lifting a heavy boulder, forcing open elevator doors, competing in a weightlifting competition, and so on—is decreased by two steps for one hour.	strength-enhancer	1
+128	Subdual Field	1d6+3	Two rounds after being activated, the device creates an invisible field that fills a specified area (such as a cube of a certain size) within long range. The field lasts for one minute. It affects the minds of thinking beings within the field, preventing them from taking hostile actions. The effect lasts as long as they remain in the field and for 1d6 rounds after, although an Intellect defense roll is allowed each round to act normally (both in the field and after leaving it).	subdual-field	1
+129	Telepathy	1d6+2	For one hour, the device enables long-range mental communication with anyone the user can see.	telepathy	1
+130	Teleporter (Bounder)	1d6+2	User teleports up to 100 × the cypher level in feet to a location he can see. He arrives safely with his possessions but cannot take anything else with him.	teleporter-bounder	1
+131	Teleporter (Interstellar)	1d6+4	User teleports anywhere in the galaxy to a location he has previously visited or seen. He arrives safely with his possessions but cannot take anything else with him.	teleporter-interstellar	1
+133	Teleporter (Traveler)	1d6+4	User teleports up to 100 × the cypher level in miles to a location he has previously visited or seen. He arrives safely with his possessions but cannot take anything else with him.	teleporter-traveler	1
+134	Temporal Viewer	1d6+4	Displays moving images and sound, up to ten minutes in length, depicting events that occurred at the current location up to one year prior. The user specifies the time period shown by the viewer.	temporal-viewer	1
+135	Time Dilation (Defensive)	1d6	For the next twenty-four hours, when the user is attacked, she moves in rapid, seemingly random jumps, a few inches to one side or the other. This is an asset that modifies attacks by two steps in her favor.	time-dilation-defensive	1
+136	Time Dilation (Offensive)	1d6	For the next twenty-four hours, when the user makes a melee attack, she moves at almost instantaneous speed, modifying her attacks by two steps in her favor.	time-dilation-offensive	1
+137	Tissue Regeneration	1d6+4	For the next hour, the user regains 1 point lost to damage per round, up to a total number of points equal to twice the cypher’s level. As each point is regained, he chooses which Pool to add it to. If all his Pools are at maximum, the regeneration pauses until he takes more damage, at which point it begins again (if any time remains in the hour) until the duration expires.	tissue-regeneration	1
+138	Tracer	1d6+4	Fires a microscopic tracer that clings to any surface within short range. For the next twenty-four hours, the launcher shows the distance and direction to the tracer, as long as it is in the same dimension.	tracer	1
+139	Trick Embedder	1d6	A nonintelligent animal immediately and perfectly learns one trick it is capable of physically performing\r\n(roll over, heel, spin, shake, go to an indicated place within long range, and so on). The trick must be designated when the cypher is activated.	trick-embedder	1
+140	Uninterruptible Power Source	1d6+4	Provides power appropriate to another device for up to a day. The device to be powered can be as simple as a light source or as complex as a small starcraft, assuming the cypher’s level is equal to the item’s power requirements. A desk lamp is a level 1 power requirement, a car engine is a level 5 power requirement, and a starship is a level 10 power requirement.	uninterruptible-power-source	1
+141	Vanisher	1d6+2	The user becomes invisible for ten minutes, during which time she is specialized in stealth and Speed defense tasks. This effect ends if she does something to reveal her presence or position—attacking, using an ability, moving a large object, and so on. If this occurs, she can regain the remaining invisibility effect by taking an action to focus on hiding her position.	vanisher	1
+142	Visage Changer	1d6	Changes the appearance of one human-sized creature. The change takes ten minutes to apply and lasts for twenty-four hours.	visage-changer	1
+143	Visual Displacement Device	1d6	Projects holographic images of the user to confuse attackers. The images appear around the user, giving him an asset to Speed defense actions for ten minutes.	visual-displacement-device	1
+144	Vocal Translator	1d6	For twenty-four hours, translates everything said by the user into a language that anyone can understand.	vocal-translator	1
+145	Warmth	1d6	Keeps the user warm and comfortable, even in the harshest cold temperatures, for twenty-four hours. During this time, the user has Armor equal to the cypher’s level that protects against cold damage.	warmth	1
+146	Water Adapter	1d6	The user can breathe underwater and operate at any depth (without facing debilitating consequences of changing pressure) for eight hours.	water-adapter	1
+147	Weapon Enhancement	1d6+2	Modifies a weapon’s attack in a particular fashion for one hour. Roll a d100 for effect:\r\n01–10: Decreases difficulty of attack by one step\r\n11–20: Deals bonus electrical damage equal to cypher level\r\n21–30: Deals bonus cold damage equal to cypher level\r\n31–40: Deals bonus poison damage equal to cypher level\r\n41–50: Deals bonus acid damage equal to cypher level\r\n51–60: Deals bonus fire damage equal to cypher level\r\n61–70: Deals bonus sonic damage equal to cypher level\r\n71–80: Deals bonus psychic damage equal to cypher level\r\n81–90: Knockback (on 18–20 on successful attack roll, target knocked back 30 feet [9 m])\r\n91–95: Holding (on 18–20 on successful attack roll, target can’t act on its next turn)\r\n96–97: Decreases difficulty of attack by two steps\r\n98: Banishing (on 18–20 on successful attack roll, target is sent to random location at least 100 miles [161 km] away)\r\n99: Explodes, inflicting damage equal to cypher level to all within immediate range\r\n00: Heart-seeking (on 18–20 on successful attack roll, target is killed)	weapon-enhancement	1
+148	Wings	1d6+2	User can fly at her normal running speed for one hour.	wings	1
+149	X-Ray Viewer	1d6+4	Allows the user to see through up to 2 feet (60 cm) of material, if the cypher’s level is higher than the material’s level. The effect lasts for one minute.	x-ray-viewer	1
+150	Zero Point Field	1d6+3	Renders an inanimate object outside the effects of most energy for one minute. This means the object cannot be harmed, moved, or manipulated in any way. It remains in place (even in midair).	zero-point-field	1
 \.
 
 
@@ -2258,7 +2391,6 @@ COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, source
 32	Chainmail	Expensive	Medium armor.	Armor	chainmail	1
 34	Heavy crossbow	Very Expensive	Heavy weapon, long range.	Weapon	heavy-crossbow	1
 36	Dwarven breastplate	Very Expensive	Medium armor, encumbers as light armor.	Armor	dwarven-breastplate	1
-38	Disguise kit	Very Expensive	Asset for disguise tasks.	Other	disguise-kit	1
 40	Spyglass	Very Expensive	Asset for perception tasks at range.	Other	spyglass	1
 42	Sailing ship (small)	Exorbitant		Other	sailing-ship-small	1
 27	Light crossbow	Expensive	Medium weapon, long range.	Weapon	light-crossbow	1
@@ -2276,7 +2408,6 @@ COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, source
 41	Elven chainmail	Exorbitant	Medium armor, encumbers as no armor.	Armor	elven-chainmail	1
 18	Crowbar	Moderate		Other	crowbar	1
 46	Duct tape roll	Inexpensive		Other	duct-tape-roll	1
-47	Flashlight	Inexpensive		Other	flashlight	1
 45	Knife (simple)	Inexpensive	Light weapon (won't last long).	Weapon	knife-simple	1
 48	Padlock with keys	Inexpensive		Other	padlock-keys	1
 49	Trail rations (1 day)	Inexpensive		Other	trail-rations-1-day	1
@@ -2290,8 +2421,6 @@ COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, source
 57	Binoculars	Moderate	Asset for perception tasks at range.	Other	binoculars	1
 58	Bolt cutters	Moderate		Other	bolt-cutters	1
 59	Cell phone	Moderate		Other	cell-phone	1
-60	Climbing gear	Moderate		Other	climbing-gear	1
-61	Crowbar	Moderate		Other	crowbar	1
 62	Electric lantern	Moderate		Other	electric-lantern	1
 63	First aid kit	Moderate	Asset for healing tasks.	Other	first-aid-kit	1
 64	Handcuffs	Moderate		Other	handcuffs	1
@@ -2299,7 +2428,6 @@ COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, source
 70	Rifle	Expensive	Medium weapon, long range.	Weapon	rifle	1
 21	Rope (hemp, 50 ft.)	Moderate		Other	rope-hemp-50ft	1
 66	Sleeping bag	Moderate		Other	sleeping-bag	1
-67	Tent	Moderate		Other	tent	1
 68	Light handgun	Expensive	Light weapon, short range.	Other	light-handgun	1
 69	Medium handgun	Expensive		Weapon	medium-handgun	1
 25	Bow	Expensive	Medium weapon, long range.	Weapon	bow	1
@@ -2316,6 +2444,7 @@ COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, source
 1	Arrows	Inexpensive	Sold in lots of 12.	Weapon	arrows	1
 81	Assault rifle	Very Expensive	Heavy weapon, rapid-fire weapon, long range.	Weapon	assault-rifle	1
 16	Backback	Moderate		Other	backback	1
+60	Climbing gear	Moderate	Asset for climbing tasks.	Other	climbing-gear	1
 82	Heavy rifle	Very Expensive	Heavy weapon, 300-foot (91 m) range.	Weapon	heavy-rifle	1
 83	Submachine gun	Very Expensive	Medium weapon, rapid-fire weapon, short range.	Weapon	submachine-gun	1
 84	Lightweight body armor	Very Expensive	Medium armor, encumbers as light armor.	Armor	lightweight-body-armor	1
@@ -2327,6 +2456,21 @@ COPY public.cyphercore_equipment (id, name, base_cost, notes, type, slug, source
 90	Luxury car	Exorbitant	Level 5.	Other	luxury-car	1
 91	Sports car	Exorbitant	Level 6.	Other	sports-car	1
 44	Ammo (box of 50 rounds)	Inexpensive		Weapon	ammo-box-50-rounds	1
+92	Energy pack (50 shots)	Inexpensive		Weapon	energy-pack-50-shots	1
+94	Flashlight	Inexpensive		Other	flashlight	1
+95	Survival rations (1 day)	Inexpensive		Other	survival-rations-1-day	1
+96	Grenade (Sonic)	Moderate	Explosive weapon, inflicts 2 points of damage in immediate radius, plus MIght defense roll or lose next turn.	Weapon	grenade-sonic	1
+97	Grenade (thermite)	Moderate	Explosive weapon, inflicts 5 points of damage in immediate radius.	Weapon	grenade-thermite	1
+98	Breather	Moderate	8 hours of breathable air.	Other	breather	1
+99	Communicator	Moderate	Planetary range.	Other	communicator	1
+100	Environment tent	Moderate		Other	environment-tent	1
+101	Portable lamp	Moderate		Other	portable-lamp	1
+102	Light blaster	Expensive	Light weapon, short range.	Weapon	light-blaster	1
+103	Medium blaster	Expensive	Medium weapon, long range.	Weapon	medium-blaster	1
+104	Needler	Expensive	Light weapon, long range.	Weapon	needler	1
+105	Stunstick	Expensive	Medium weapon, inflicts no damage but human-sized or smaller target loses next action.	Weapon	stunstick	1
+106	Armored bodysuit	Expensive	Medium armor.	Armor	armored-bodysuit	1
+107	Environment suit	Expensive	Provides 24 hours of atmosphere and +10 to Armor against extreme temperatures.	Other	environment-suit	1
 \.
 
 
@@ -4702,6 +4846,164 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 1434	2018-07-24 03:23:07.849142-05	16	Curative	1	[{"added": {}}]	14	1
 1435	2018-07-24 03:23:24.212305-05	17	Curse Bringer	1	[{"added": {}}]	14	1
 1436	2018-07-24 03:23:37.14573-05	18	Darksight	1	[{"added": {}}]	14	1
+1437	2018-07-24 03:25:16.91336-05	19	Death Bringer	1	[{"added": {}}]	14	1
+1438	2018-07-24 03:25:31.496093-05	20	Density	1	[{"added": {}}]	14	1
+1439	2018-07-24 03:26:30.573314-05	21	Detonation	1	[{"added": {}}]	14	1
+1440	2018-07-24 03:26:51.659034-05	22	Detonation (Creature)	1	[{"added": {}}]	14	1
+1441	2018-07-24 03:27:10.376402-05	23	Detonation (Dessicating)	1	[{"added": {}}]	14	1
+1442	2018-07-24 03:27:28.12506-05	24	Detonation (Flash)	1	[{"added": {}}]	14	1
+1443	2018-07-24 03:27:57.431143-05	25	Detonation (Gravity)	1	[{"added": {}}]	14	1
+1444	2018-07-24 03:28:18.162878-05	26	Detonation (Gravity Inversion)	1	[{"added": {}}]	14	1
+1445	2018-07-24 03:28:53.830925-05	27	Detonation (Massive)	1	[{"added": {}}]	14	1
+1446	2018-07-24 03:29:18.698583-05	28	Detonation (Master Disruption)	1	[{"added": {}}]	14	1
+1447	2018-07-24 03:29:37.300618-05	29	Detonation (Pressure)	1	[{"added": {}}]	14	1
+1448	2018-07-24 03:30:01.942139-05	30	Detonation (Singularity)	1	[{"added": {}}]	14	1
+1449	2018-07-24 03:30:32.580286-05	31	Detonation (Sonic)	1	[{"added": {}}]	14	1
+1450	2018-07-24 20:13:32.431583-05	32	Detonation (Spawn)	1	[{"added": {}}]	14	1
+1451	2018-07-24 20:14:03.480695-05	33	Detonation (Web)	1	[{"added": {}}]	14	1
+1452	2018-07-24 20:20:46.69787-05	33	Detonation (Web)	2	[{"changed": {"fields": ["effect"]}}]	14	1
+1453	2018-07-24 20:21:18.668092-05	33	Detonation (Web)	2	[{"changed": {"fields": ["effect"]}}]	14	1
+1454	2018-07-24 20:24:52.027644-05	33	Detonation (Web)	2	[{"changed": {"fields": ["effect"]}}]	14	1
+1455	2018-07-24 20:25:19.094802-05	34	Disguise Module	1	[{"added": {}}]	14	1
+1456	2018-07-24 20:25:37.325479-05	35	Disrupting	1	[{"added": {}}]	14	1
+1457	2018-07-24 20:25:52.099863-05	36	Eagleseye	1	[{"added": {}}]	14	1
+1458	2018-07-24 20:26:13.494113-05	37	Effect Resistance	1	[{"added": {}}]	14	1
+1459	2018-07-24 20:26:30.287824-05	38	Effort Enhancer	1	[{"added": {}}]	14	1
+1460	2018-07-24 20:27:01.15708-05	39	Effort Enhancer (Combat)	1	[{"added": {}}]	14	1
+1461	2018-07-24 20:27:19.647304-05	40	Enduring Shield	1	[{"added": {}}]	14	1
+1462	2018-07-24 20:27:38.595163-05	41	Equipment Cache	1	[{"added": {}}]	14	1
+1463	2018-07-24 20:27:53.4181-05	42	Farsight	1	[{"added": {}}]	14	1
+1464	2018-07-24 20:28:07.071054-05	43	Fireproofing	1	[{"added": {}}]	14	1
+1465	2018-07-24 20:28:28.476592-05	44	Flame-Retardant Wall	1	[{"added": {}}]	14	1
+1466	2018-07-24 20:28:47.429268-05	45	Force Cube	1	[{"added": {}}]	14	1
+1467	2018-07-24 20:29:01.847463-05	46	Force Field	1	[{"added": {}}]	14	1
+1468	2018-07-24 20:29:18.697323-05	47	Force Screen Projector	1	[{"added": {}}]	14	1
+1469	2018-07-24 20:29:39.945386-05	48	Force Shield Projector	1	[{"added": {}}]	14	1
+1470	2018-07-24 20:29:57.352674-05	49	Friction Reducer	1	[{"added": {}}]	14	1
+1471	2018-07-24 20:30:51.501073-05	50	Frigid Wall	1	[{"added": {}}]	14	1
+1472	2018-07-24 20:31:45.667215-05	51	Gas Bomb	1	[{"added": {}}]	14	1
+1473	2018-07-24 20:33:33.448393-05	52	Gravity Nullifier	1	[{"added": {}}]	14	1
+1474	2018-07-24 20:33:55.880963-05	53	Gravity-Nullifying Application	1	[{"added": {}}]	14	1
+1475	2018-07-24 20:34:35.51499-05	54	Heat Attack	1	[{"added": {}}]	14	1
+1476	2018-07-24 20:35:15.316761-05	55	Hunter/Seeker	1	[{"added": {}}]	14	1
+1477	2018-07-24 20:36:41.654785-05	56	Image Projector	1	[{"added": {}}]	14	1
+1478	2018-07-24 20:37:01.341912-05	57	Inferno Wall	1	[{"added": {}}]	14	1
+1479	2018-07-24 20:37:20.368875-05	58	Infiltrator	1	[{"added": {}}]	14	1
+1480	2018-07-24 20:37:39.027526-05	59	Information Sensor	1	[{"added": {}}]	14	1
+1481	2018-07-24 20:38:15.945817-05	60	Instant Servant	1	[{"added": {}}]	14	1
+1482	2018-07-24 20:38:41.516896-05	60	Instant Servant	2	[{"changed": {"fields": ["effect"]}}]	14	1
+1483	2018-07-24 20:38:57.906073-05	61	Instant Shelter	1	[{"added": {}}]	14	1
+1484	2018-07-24 20:39:16.916964-05	62	Intellect Booster	1	[{"added": {}}]	14	1
+1485	2018-07-24 20:39:32.293256-05	63	Intelligence Enhancement	1	[{"added": {}}]	14	1
+1486	2018-07-24 20:43:10.796525-05	64	Knowledge Enhancement	1	[{"added": {}}]	14	1
+1487	2018-07-24 20:43:54.571903-05	65	Lightning Wall	1	[{"added": {}}]	14	1
+1488	2018-07-24 20:44:20.141332-05	66	Machine Control	1	[{"added": {}}]	14	1
+1489	2018-07-24 20:44:37.377495-05	67	Magnetic Attack Roll	1	[{"added": {}}]	14	1
+1490	2018-07-24 20:44:55.695671-05	68	Magnetic Master	1	[{"added": {}}]	14	1
+1491	2018-07-24 20:45:19.616115-05	69	Magnetic Shield	1	[{"added": {}}]	14	1
+1492	2018-07-24 20:45:36.84155-05	70	Manipulation Beam	1	[{"added": {}}]	14	1
+1493	2018-07-24 20:46:00.433703-05	71	Matter Transference Ray	1	[{"added": {}}]	14	1
+1494	2018-07-24 20:46:16.758977-05	72	Meditation Aid	1	[{"added": {}}]	14	1
+1495	2018-07-24 20:46:30.931354-05	73	Memory Switch	1	[{"added": {}}]	14	1
+1496	2018-07-24 20:47:20.834505-05	74	Mental Scrambler	1	[{"added": {}}]	14	1
+1497	2018-07-24 20:47:39.631125-05	75	Metal Death	1	[{"added": {}}]	14	1
+1498	2018-07-24 20:48:06.088155-05	76	Mind Meld	1	[{"added": {}}]	14	1
+1499	2018-07-24 20:48:34.387699-05	77	Mind-Restricting Wall	1	[{"added": {}}]	14	1
+1500	2018-07-24 20:48:48.602003-05	78	Mind Stabilizer	1	[{"added": {}}]	14	1
+1501	2018-07-24 20:50:05.757003-05	79	Monoblade	1	[{"added": {}}]	14	1
+1502	2018-07-24 20:50:54.167023-05	80	Monohorn	1	[{"added": {}}]	14	1
+1503	2018-07-24 20:51:08.05354-05	81	Motion Sensor	1	[{"added": {}}]	14	1
+1504	2018-07-24 20:52:35.502293-05	82	Null Field	1	[{"added": {}}]	14	1
+1505	2018-07-24 20:52:59.632228-05	83	Nullification Ray	1	[{"added": {}}]	14	1
+1506	2018-07-24 20:53:19.846551-05	84	Nutrition and Hydration	1	[{"added": {}}]	14	1
+1507	2018-07-24 20:53:34.986959-05	85	Perfect Memory	1	[{"added": {}}]	14	1
+1508	2018-07-24 20:54:07.931821-05	86	Personal Environment Field	1	[{"added": {}}]	14	1
+1509	2018-07-24 20:54:24.874357-05	87	Phase Changer	1	[{"added": {}}]	14	1
+1510	2018-07-24 20:54:39.201552-05	88	Phase Distruptor	1	[{"added": {}}]	14	1
+1511	2018-07-24 20:55:43.669374-05	89	Poison (Emotion)	1	[{"added": {}}]	14	1
+1512	2018-07-24 20:56:30.900462-05	90	Poison (Explosive)	1	[{"added": {}}]	14	1
+1513	2018-07-24 21:57:35.445625-05	91	Poison (Mind Controlling)	1	[{"added": {}}]	14	1
+1514	2018-07-24 22:02:47.889236-05	91	Poison (Mind Controlling)	2	[]	14	1
+1515	2018-07-24 22:04:04.494448-05	92	Poison (Mind Disrupting)	1	[{"added": {}}]	14	1
+1516	2018-07-24 22:05:26.557115-05	93	Psychic Communique	1	[{"added": {}}]	14	1
+1517	2018-07-24 22:05:46.176702-05	94	Radiation Spike	1	[{"added": {}}]	14	1
+1518	2018-07-24 22:06:46.915417-05	95	Ray Emitter	1	[{"added": {}}]	14	1
+1519	2018-07-24 22:07:11.228061-05	96	Ray Emitter (Command)	1	[{"added": {}}]	14	1
+1520	2018-07-24 22:07:30.958941-05	97	Ray Emitter (Fear)	1	[{"added": {}}]	14	1
+1521	2018-07-24 22:10:18.361155-05	98	Ray Emitter (Friend Slaying)	1	[{"added": {}}]	14	1
+1522	2018-07-24 22:10:43.025067-05	99	Ray Emitter (Mind Disrupting)	1	[{"added": {}}]	14	1
+1523	2018-07-24 22:11:01.679886-05	100	Ray Emitter (Numbing)	1	[{"added": {}}]	14	1
+1524	2018-07-24 22:11:46.637236-05	101	Ray Emitter (Paralysis)	1	[{"added": {}}]	14	1
+1525	2018-07-24 22:13:06.256659-05	102	Reality Spike	1	[{"added": {}}]	14	1
+1526	2018-07-24 22:13:22.113586-05	103	Reflex Enhancer	1	[{"added": {}}]	14	1
+1527	2018-07-24 22:13:58.635883-05	104	rejuvenator	1	[{"added": {}}]	14	1
+1528	2018-07-24 22:14:09.136748-05	104	Rejuvenator	2	[{"changed": {"fields": ["name"]}}]	14	1
+1529	2018-07-24 22:14:32.69906-05	105	Remembering	1	[{"added": {}}]	14	1
+1530	2018-07-24 22:14:49.527693-05	106	Remote Viewer	1	[{"added": {}}]	14	1
+1531	2018-07-24 22:16:24.896494-05	107	Repair Unit	1	[{"added": {}}]	14	1
+1532	2018-07-24 22:16:39.7256-05	108	Repeater	1	[{"added": {}}]	14	1
+1533	2018-07-24 22:16:59.848516-05	109	Retaliation	1	[{"added": {}}]	14	1
+1534	2018-07-24 22:17:15.416158-05	110	Secret	1	[{"added": {}}]	14	1
+1535	2018-07-24 22:17:29.91359-05	111	Sheen	1	[{"added": {}}]	14	1
+1536	2018-07-24 22:17:47.423476-05	112	Shock Attack	1	[{"added": {}}]	14	1
+1537	2018-07-24 22:18:03.47229-05	113	Shocker	1	[{"added": {}}]	14	1
+1538	2018-07-24 22:19:10.361524-05	114	Skill Boost	1	[{"added": {}}]	14	1
+1539	2018-07-24 22:20:07.738933-05	115	Slave Maker	1	[{"added": {}}]	14	1
+1540	2018-07-24 22:20:26.88172-05	116	Sleep Inducer	1	[{"added": {}}]	14	1
+1541	2018-07-24 22:20:40.825833-05	117	Sniper Module	1	[{"added": {}}]	14	1
+1542	2018-07-24 22:20:57.865867-05	118	Solvent	1	[{"added": {}}]	14	1
+1543	2018-07-24 22:23:11.374054-05	119	Sonic Hole	1	[{"added": {}}]	14	1
+1544	2018-07-24 22:23:24.082673-05	120	Sound Dampener	1	[{"added": {}}]	14	1
+1545	2018-07-24 22:23:46.071875-05	121	Spatial Warp	1	[{"added": {}}]	14	1
+1546	2018-07-24 22:24:52.246889-05	122	Speed Boost	1	[{"added": {}}]	14	1
+1547	2018-07-24 22:25:13.240063-05	123	Spy	1	[{"added": {}}]	14	1
+1548	2018-07-24 22:25:32.057681-05	124	Stasis Keeper	1	[{"added": {}}]	14	1
+1549	2018-07-24 22:25:41.996477-05	125	Stim	1	[{"added": {}}]	14	1
+1550	2018-07-24 22:25:56.141659-05	126	Strength Boost	1	[{"added": {}}]	14	1
+1551	2018-07-24 22:26:40.795106-05	127	Strength Enhancer	1	[{"added": {}}]	14	1
+1552	2018-07-24 22:27:00.045539-05	128	Subdual Field	1	[{"added": {}}]	14	1
+1553	2018-07-24 22:27:13.60334-05	129	Telepathy	1	[{"added": {}}]	14	1
+1554	2018-07-24 22:46:44.469396-05	130	Teleporter (Bounder)	1	[{"added": {}}]	14	1
+1555	2018-07-24 22:47:03.940655-05	131	Teleporter (Interstellar)	1	[{"added": {}}]	14	1
+1556	2018-07-24 22:47:55.845754-05	132	Teleporter (Planetary)	1	[{"added": {}}]	14	1
+1557	2018-07-24 22:48:22.088592-05	133	Teleporter (Traveler)	1	[{"added": {}}]	14	1
+1558	2018-07-24 22:48:38.0729-05	134	Temporal Viewer	1	[{"added": {}}]	14	1
+1559	2018-07-24 22:52:32.764762-05	135	Time Dilation (Defensive)	1	[{"added": {}}]	14	1
+1560	2018-07-24 22:52:53.677126-05	136	Time Dilation (Offensive)	1	[{"added": {}}]	14	1
+1561	2018-07-24 22:53:24.135235-05	137	Tissue Regeneration	1	[{"added": {}}]	14	1
+1562	2018-07-24 22:53:42.860773-05	138	Tracer	1	[{"added": {}}]	14	1
+1563	2018-07-24 22:54:07.469294-05	139	Trick Embedder	1	[{"added": {}}]	14	1
+1564	2018-07-24 22:55:09.59098-05	140	Uninterruptible Power Source	1	[{"added": {}}]	14	1
+1565	2018-07-24 22:55:30.608934-05	141	Vanisher	1	[{"added": {}}]	14	1
+1566	2018-07-24 22:55:45.63363-05	142	Visage Changer	1	[{"added": {}}]	14	1
+1567	2018-07-24 22:56:06.971084-05	143	Visual Displacement Device	1	[{"added": {}}]	14	1
+1568	2018-07-24 22:56:22.75145-05	144	Vocal Translator	1	[{"added": {}}]	14	1
+1569	2018-07-24 22:56:35.264926-05	145	Warmth	1	[{"added": {}}]	14	1
+1570	2018-07-24 22:56:54.705855-05	146	Water Adapter	1	[{"added": {}}]	14	1
+1571	2018-07-24 22:58:02.135438-05	147	Weapon Enhancement	1	[{"added": {}}]	14	1
+1572	2018-07-24 22:58:19.974288-05	148	Wings	1	[{"added": {}}]	14	1
+1573	2018-07-24 22:58:40.274204-05	149	X-Ray Viewer	1	[{"added": {}}]	14	1
+1574	2018-07-24 22:58:57.528853-05	150	Zero Point Field	1	[{"added": {}}]	14	1
+1575	2018-07-25 19:02:35.168404-05	92	Energy pack (50 shots)	1	[{"added": {}}]	13	1
+1576	2018-07-25 19:03:01.731752-05	93	Knife (simple)	1	[{"added": {}}]	13	1
+1577	2018-07-25 19:03:29.697384-05	94	Flashlight	1	[{"added": {}}]	13	1
+1578	2018-07-25 19:03:48.182661-05	95	Survival rations (1 day)	1	[{"added": {}}]	13	1
+1579	2018-07-25 19:08:02.954423-05	38	Disguise kit	3		13	1
+1580	2018-07-25 19:08:02.991986-05	93	Knife (simple)	3		13	1
+1581	2018-07-25 19:09:08.254556-05	47	Flashlight	3		13	1
+1582	2018-07-25 19:23:22.778448-05	96	Grenade (Sonic)	1	[{"added": {}}]	13	1
+1583	2018-07-25 19:29:35.384035-05	97	Grenade (thermite)	1	[{"added": {}}]	13	1
+1584	2018-07-25 19:38:32.649218-05	98	Breather	1	[{"added": {}}]	13	1
+1585	2018-07-25 20:21:51.044553-05	60	Climbing gear	2	[{"changed": {"fields": ["notes"]}}]	13	1
+1586	2018-07-25 21:06:09.64851-05	99	Communicator	1	[{"added": {}}]	13	1
+1587	2018-07-25 22:09:53.647275-05	100	Environment tent	1	[{"added": {}}]	13	1
+1588	2018-07-25 22:22:48.939527-05	101	Portable lamp	1	[{"added": {}}]	13	1
+1589	2018-07-25 22:27:19.218844-05	102	Light blaster	1	[{"added": {}}]	13	1
+1590	2018-07-25 22:53:33.279659-05	103	Medium blaster	1	[{"added": {}}]	13	1
+1591	2018-07-26 00:54:54.802422-05	104	Needler	1	[{"added": {}}]	13	1
+1592	2018-07-26 00:57:22.08058-05	105	Stunstick	1	[{"added": {}}]	13	1
+1593	2018-07-26 00:57:41.804304-05	106	Armored bodysuit	1	[{"added": {}}]	13	1
+1594	2018-07-26 01:26:38.083255-05	107	Environment suit	1	[{"added": {}}]	13	1
 \.
 
 
@@ -4827,6 +5129,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 84	cyphercore	0069_auto_20180724_0806	2018-07-24 03:07:09.392568-05
 85	cyphercore	0070_remove_equipment_genre	2018-07-24 03:13:13.843233-05
 86	cyphercore	0071_auto_20180724_0813	2018-07-24 03:13:14.207243-05
+87	cyphercore	0072_auto_20180726_0012	2018-07-25 19:14:45.51145-05
+88	cyphercore	0073_characterskill_skill_global	2018-07-25 19:44:21.220436-05
 \.
 
 
@@ -4849,6 +5153,7 @@ bqascjgmft0lbhe50lemvjl10tdxnv1m	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc
 kt7qamdr9p6j0yjh3tho904n0lnep4k1	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 01:45:19.660568-05
 luotc209aumvy02e00s6tb17ua7qc4f8	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 17:44:41.319653-05
 0deshxvrg3rd5hx3q2t40tglso2vbviu	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 19:43:00.841289-05
+iayzt9l9m0nqxy89h7cpbd2wrjqzvkag	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-09 01:00:16.336737-05
 \.
 
 
@@ -4954,7 +5259,7 @@ SELECT pg_catalog.setval('public.cyphercore_characterskill_id_seq', 18, true);
 -- Name: cyphercore_cypher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_cypher_id_seq', 18, true);
+SELECT pg_catalog.setval('public.cyphercore_cypher_id_seq', 150, true);
 
 
 --
@@ -4968,7 +5273,7 @@ SELECT pg_catalog.setval('public.cyphercore_descriptor_id_seq', 51, true);
 -- Name: cyphercore_equipment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cyphercore_equipment_id_seq', 91, true);
+SELECT pg_catalog.setval('public.cyphercore_equipment_id_seq', 107, true);
 
 
 --
@@ -5017,7 +5322,7 @@ SELECT pg_catalog.setval('public.cyphercore_typeability_id_seq', 203, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1436, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1594, true);
 
 
 --
@@ -5031,7 +5336,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 23, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 86, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 88, true);
 
 
 --
@@ -5256,6 +5561,14 @@ ALTER TABLE ONLY public.cyphercore_descriptor
 
 ALTER TABLE ONLY public.cyphercore_descriptor
     ADD CONSTRAINT cyphercore_descriptor_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cyphercore_equipment cyphercore_equipment_name_defe972e_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cyphercore_equipment
+    ADD CONSTRAINT cyphercore_equipment_name_defe972e_uniq UNIQUE (name);
 
 
 --
@@ -5671,6 +5984,13 @@ CREATE INDEX cyphercore_descriptor_slug_a6544323_like ON public.cyphercore_descr
 --
 
 CREATE INDEX cyphercore_descriptor_sourcebook_id_9f8023cd ON public.cyphercore_descriptor USING btree (sourcebook_id);
+
+
+--
+-- Name: cyphercore_equipment_name_defe972e_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX cyphercore_equipment_name_defe972e_like ON public.cyphercore_equipment USING btree (name varchar_pattern_ops);
 
 
 --
