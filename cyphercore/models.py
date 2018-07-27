@@ -48,7 +48,7 @@ class Ability(models.Model):
             max_length=10,
             choices = ABILITY_USAGE_CHOICES,
             default='Action')
-    cost = models.CharField(blank=True,max_length=20)
+    cost = models.CharField(blank=False,default='-',max_length=20)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
     sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
