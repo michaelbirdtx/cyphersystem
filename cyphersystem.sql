@@ -1329,7 +1329,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$100000$rSwp0cSHEnMz$gOPJ4nmF63wBGgAW3w5/CL8rtuttVBC2YuIi75pFvNM=	2018-07-26 23:44:57.51032-05	t	admin				t	t	2018-07-03 23:43:27-05
+1	pbkdf2_sha256$100000$rSwp0cSHEnMz$gOPJ4nmF63wBGgAW3w5/CL8rtuttVBC2YuIi75pFvNM=	2018-07-27 00:29:40.341108-05	t	admin				t	t	2018-07-03 23:43:27-05
 \.
 
 
@@ -2105,7 +2105,6 @@ COPY public.cyphercore_artifact (id, name, level_range, effect, depletion, slug,
 --
 
 COPY public.cyphercore_character (id, name, background, notes, tier, effort, cypher_limit, money, xp, might_current, might_pool, might_edge, speed_current, speed_pool, speed_edge, intellect_current, intellect_pool, intellect_edge, armor, recovery_roll, impaired, debilitated, one_action, ten_minutes, one_hour, ten_hours, slug, descriptor_id, focus_id, type_id, portrait_link) FROM stdin;
-1	Aldor Donatus	Aldor's parents were murdered, and the mystery remains unsolved.\r\nAldor joined the current endeavor because he saw that the other adventurers were in danger.\r\nOne of Aldor's fellow adventurers, Tanic, has confided in Aldor that he doesn’t think the gods are real. Aldor is not sure how to deal with that.	Blessings of the Gods choices:\r\n* Benevolence/Righteousness/Spirit (2+ Intellect points)\r\n* Protection/Silence (3 Intellect points)	1	1	2	0	0	15	15	0	10	10	0	13	13	1	0	1	f	f	f	f	f	f	aldor-donatus	42	11	4	https://i.pinimg.com/736x/c0/4d/31/c04d31e8acab8faa49a2d12958393742.jpg
 \.
 
 
@@ -2114,12 +2113,6 @@ COPY public.cyphercore_character (id, name, background, notes, tier, effort, cyp
 --
 
 COPY public.cyphercore_character_abilities (id, character_id, ability_id) FROM stdin;
-1	1	243
-2	1	244
-3	1	149
-4	1	151
-5	1	154
-6	1	156
 \.
 
 
@@ -2128,7 +2121,6 @@ COPY public.cyphercore_character_abilities (id, character_id, ability_id) FROM s
 --
 
 COPY public.cyphercore_characterartifact (id, level, artifact_id, character_id) FROM stdin;
-3	1	5	1
 \.
 
 
@@ -2137,7 +2129,6 @@ COPY public.cyphercore_characterartifact (id, level, artifact_id, character_id) 
 --
 
 COPY public.cyphercore_charactercypher (id, level, appearance, character_id, cypher_id) FROM stdin;
-3	1	A red liquid stored in a small glass vial.	1	3
 \.
 
 
@@ -2146,14 +2137,6 @@ COPY public.cyphercore_charactercypher (id, level, appearance, character_id, cyp
 --
 
 COPY public.cyphercore_characterequipment (id, quantity, character_id, equipment_id, cost) FROM stdin;
-1	1	1	15	
-2	1	1	29	
-3	1	1	21	
-5	1	1	17	
-6	1	1	5	
-7	4	1	6	
-8	1	1	39	
-9	1	1	27	
 \.
 
 
@@ -2162,9 +2145,6 @@ COPY public.cyphercore_characterequipment (id, quantity, character_id, equipment
 --
 
 COPY public.cyphercore_characterskill (id, skill_level, character_id, skill_id) FROM stdin;
-8	T	1	20
-17	T	1	8
-18	T	1	9
 \.
 
 
@@ -5095,6 +5075,7 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 1642	2018-07-26 23:42:38.221361-05	2	aislin	1	[{"added": {}}]	4	1
 1643	2018-07-26 23:43:32.898199-05	2	aislin	3		4	1
 1644	2018-07-26 23:44:05.053464-05	1	admin	2	[{"changed": {"fields": ["username", "first_name", "last_name", "email"]}}]	4	1
+1645	2018-07-27 00:30:10.036211-05	1	Aldor Donatus	3		19	1
 \.
 
 
@@ -5240,13 +5221,13 @@ oh0lvxgaf6f4dc2rbbcjw83df7wx2xj9	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM
 0gsstv2ogxaw49dmrtfrwtdcjy742al6	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-19 14:59:00.518877-05
 g25iorn6tr68ngdyi0v2cydohjdkma4x	YmFhYmJlNGZjY2Y3NTg2N2U5NDY1MDRhNjZjOGE4ZDU2YjM0MTViYjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5OGE5ZTMzM2Y3ZGQ1Nzk0ODRmY2E3MzZjMzUyMmVkNDhiY2Q5YTNlIn0=	2018-07-22 17:54:32.596478-05
 kblkw17tv4spol74742d5ruul19kt6qg	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-07-30 22:52:58.797453-05
-5bgmsgc7is0lyarys95y3g6ysm30sepp	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-01 16:23:07.07971-05
 bqascjgmft0lbhe50lemvjl10tdxnv1m	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-02 00:36:54.723888-05
 kt7qamdr9p6j0yjh3tho904n0lnep4k1	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 01:45:19.660568-05
 luotc209aumvy02e00s6tb17ua7qc4f8	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 17:44:41.319653-05
 0deshxvrg3rd5hx3q2t40tglso2vbviu	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-04 19:43:00.841289-05
 iayzt9l9m0nqxy89h7cpbd2wrjqzvkag	YWQxMjk1MDc3MjRjMDE5YTQ2ZTNkNmNjNjIxMjQ1OTRhNzc3ZjIxNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzMxZDg2NjEwMzZlMjY2MmI4YjNiMTE5MGNjYTM4NDczYTFmMTJkIn0=	2018-08-09 01:00:16.336737-05
 i9m07lo03e5d54xeobj0708bmuf2ngsb	MDNkYWM4MzkxNjBiZTJjZjNlYzc4YzNmMjliZGMyNDA3ZTkxM2I0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzZjdlNjRmZTE5YTg2NGY1Mjk5YzY0ZGJkMjc1YzJlZDBiOGNjZTExIn0=	2018-08-09 23:44:57.524665-05
+enrt4eqxg6rzfbvdg21nqvmitndz21t8	MDNkYWM4MzkxNjBiZTJjZjNlYzc4YzNmMjliZGMyNDA3ZTkxM2I0NTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzZjdlNjRmZTE5YTg2NGY1Mjk5YzY0ZGJkMjc1YzJlZDBiOGNjZTExIn0=	2018-08-10 00:29:40.35486-05
 \.
 
 
@@ -5415,7 +5396,7 @@ SELECT pg_catalog.setval('public.cyphercore_typeability_id_seq', 203, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1644, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1645, true);
 
 
 --
