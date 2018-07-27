@@ -171,7 +171,7 @@ class Artifact(models.Model):
     level_range = models.CharField(max_length=10)
     form = models.TextField()
     effect = models.TextField()
-    depletion = models.CharField(blank=True,max_length=20)
+    depletion = models.CharField(blank=False,default='-',max_length=20)
     slug = models.SlugField(max_length=50)
     sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
     def truncated_form(self):
