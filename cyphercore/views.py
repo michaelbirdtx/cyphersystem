@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.views import generic
 
-from .models import Ability, Descriptor, Equipment, Focus, Skill, Type, Character, Cypher
+from .models import Ability, Descriptor, Equipment, Focus, Skill, Type, Character, Cypher, Artifact
 
 def index(request):
     return HttpResponse("Hello, world. You're at the cyphercore index.")
@@ -62,3 +62,11 @@ class CypherListView(generic.ListView):
 class CypherDetailView(generic.DetailView):
 	model = Cypher
 	template_name = 'cyphercore/cypher_detail.html'
+
+class ArtifactListView(generic.ListView):
+	model = Artifact
+	template_name = 'cyphercore/artifact_list.html'
+
+class ArtifactDetailView(generic.DetailView):
+	model = Artifact
+	template_name = 'cyphercore/artifact_detail.html'
