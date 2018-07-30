@@ -273,3 +273,11 @@ class CharacterArtifact(models.Model):
     level = models.IntegerField(default=1)
     def __str__(self):
         return self.artifact.name
+
+class Attack(models.Model):
+    class Meta:
+        ordering = ['name']
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    modifier = models.IntegerField(default=0)
+    damage = models.IntegerField(default=0)

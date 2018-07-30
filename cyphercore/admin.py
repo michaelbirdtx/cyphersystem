@@ -5,7 +5,7 @@ admin.site.site_title = 'Cypher System'
 admin.site.index_title = 'Admin'
 
 # Register your models here.
-from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact
+from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack
 
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name', 'enabled')
@@ -90,6 +90,10 @@ class ArtifactAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+class AttackInline(admin.TabularInline):
+    model = Attack
+    extra = 0
+
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
@@ -118,7 +122,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ('ABILITIES', {'fields': ['abilities']})
     ]
     filter_horizontal = ('abilities',)
-    inlines = [CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline]
+    inlines = [CharacterSkillsInline, AttackInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline]
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']

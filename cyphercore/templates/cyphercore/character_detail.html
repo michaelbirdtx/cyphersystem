@@ -14,6 +14,7 @@
             #portrait-background { display: none; }
             #stat-pools { display: none; }
             #other-stats { display: none; }
+            #attacks { display: none; }
             #recovery-damage { display: none; }
             #equipment { display: none; }
             #cyphers { display: none; }
@@ -184,6 +185,16 @@
                         </div>
                         <hr />
                     </section>
+                    <!-- Attacks -->
+                    <section id="attacks" class="avoid-break">
+                        <h2>Attacks</h2>
+                        <div class="row">
+                        {% for item in character.attack_set.all %}
+                            <span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>
+                        {% endfor %}
+                        </div>
+                        <hr />
+                    </section>
                     <!-- Base Abilities and Characteristics -->
                     <section id="base-abilities" class="avoid-break">
                         <h2>Base Abiliites &amp; Characteristics</h2>
@@ -203,6 +214,16 @@
                         <div class="row">
                         {% for item in character.characterskill_set.all %}
                             <span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>
+                        {% endfor %}
+                        </div>
+                        <hr />
+                    </section>
+                    <!-- Attacks -->
+                    <section id="attacks" class="avoid-break">
+                        <h2>Attacks</h2>
+                        <div class="row">
+                        {% for item in character.attack_set.all %}
+                            <span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>
                         {% endfor %}
                         </div>
                         <hr />
