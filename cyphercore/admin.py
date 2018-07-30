@@ -122,7 +122,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ('ABILITIES', {'fields': ['abilities']})
     ]
     filter_horizontal = ('abilities',)
-    inlines = [CharacterSkillsInline, AttackInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline]
+    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline]
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
