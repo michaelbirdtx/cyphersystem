@@ -20,6 +20,9 @@
             #cyphers { display: none; }
             #artifacts { display: none; }
             {% endif %}
+            {% if not character.portrait_link %}
+            #picture-frame { display: none; }
+            {% endif %}
         </style>
     </head>
     <body>
@@ -37,11 +40,9 @@
                     <!-- Character Portrait & Background -->
                     <section id="portrait-background" class="avoid-break">
                         <div class="row">
-                            <div class="three columns">
-                                <img class="character-portrait" src="{{ character.portrait_link }}" />
-                            </div>
-                            <div class="nine columns compact character-background">
-                                {{ character.background|linebreaks }}
+                            <div class="twelve columns">
+                                <a href="{{ character.portrait_link }}"><img class="character-portrait"  id="picture-frame" src="{{ character.portrait_link }}" /></a>
+                                <div class="indent">{{ character.background|linebreaks }}</div>
                             </div>
                         </div>
                         <hr />

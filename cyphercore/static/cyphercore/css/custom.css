@@ -90,8 +90,11 @@ ul {
     border: solid 2px #000;
     border-radius: 4px;
     display: block;
-    max-width: 100%;
-    margin-top: .5rem;
+    float: left;
+    margin-right: 2.5rem;
+    margin-top: .3rem;
+    max-height: 30rem;
+    max-width: 30rem;
 }
 
 .character-sentence {
