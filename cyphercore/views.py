@@ -1,72 +1,94 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
 
 from .models import Ability, Descriptor, Equipment, Focus, Skill, Type, Character, Cypher, Artifact
 
+BASE_LOGIN_URL = '/admin/login/'
+
+@login_required(login_url=BASE_LOGIN_URL)
 def index(request):
-    return HttpResponse("Hello, world. You're at the cyphercore index.")
+    return render(request, 'cyphercore/index.html')
 
-class AbilityDetailView(generic.DetailView):
-	model = Ability
-	template_name = 'cyphercore/ability_detail.html'
+class AbilityDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Ability
+    template_name = 'cyphercore/ability_detail.html'
 
-class AbilityListView(generic.ListView):
-	model = Ability
-	template_name = 'cyphercore/ability_list.html'
+class AbilityListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Ability
+    template_name = 'cyphercore/ability_list.html'
 
-class DescriptorDetailView(generic.DetailView):
-	model = Descriptor
-	template_name = 'cyphercore/descriptor_detail.html'
+class DescriptorDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Descriptor
+    template_name = 'cyphercore/descriptor_detail.html'
 
-class DescriptorListView(generic.ListView):
-	model = Descriptor
-	template_name = 'cyphercore/descriptor_list.html'
+class DescriptorListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Descriptor
+    template_name = 'cyphercore/descriptor_list.html'
 
-class EquipmentListView(generic.ListView):
-	model = Equipment
-	template_name = 'cyphercore/equipment_list.html'
+class EquipmentListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Equipment
+    template_name = 'cyphercore/equipment_list.html'
 
-class FocusListView(generic.ListView):
-	model = Focus
-	template_name = 'cyphercore/focus_list.html'
+class FocusListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Focus
+    template_name = 'cyphercore/focus_list.html'
 
-class FocusDetailView(generic.DetailView):
-	model = Focus
-	template_name = 'cyphercore/focus_detail.html'
+class FocusDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Focus
+    template_name = 'cyphercore/focus_detail.html'
 
-class SkillListView(generic.ListView):
-	model = Skill
-	template_name = 'cyphercore/skill_list.html'
+class SkillListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Skill
+    template_name = 'cyphercore/skill_list.html'
 
-class TypeListView(generic.ListView):
-	model = Type
-	template_name = 'cyphercore/type_list.html'
+class TypeListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Type
+    template_name = 'cyphercore/type_list.html'
 
-class TypeDetailView(generic.DetailView):
-	model = Type
-	template_name = 'cyphercore/type_detail.html'
+class TypeDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Type
+    template_name = 'cyphercore/type_detail.html'
 
-class CharacterListView(generic.ListView):
-	model = Character
-	template_name = 'cyphercore/character_list.html'
+class CharacterListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Character
+    template_name = 'cyphercore/character_list.html'
 
-class CharacterDetailView(generic.DetailView):
-	model = Character
-	template_name = 'cyphercore/character_detail.html'
+class CharacterDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Character
+    template_name = 'cyphercore/character_detail.html'
 
-class CypherListView(generic.ListView):
-	model = Cypher
-	template_name = 'cyphercore/cypher_list.html'
+class CypherListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Cypher
+    template_name = 'cyphercore/cypher_list.html'
 
-class CypherDetailView(generic.DetailView):
-	model = Cypher
-	template_name = 'cyphercore/cypher_detail.html'
+class CypherDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Cypher
+    template_name = 'cyphercore/cypher_detail.html'
 
-class ArtifactListView(generic.ListView):
-	model = Artifact
-	template_name = 'cyphercore/artifact_list.html'
+class ArtifactListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Artifact
+    template_name = 'cyphercore/artifact_list.html'
 
-class ArtifactDetailView(generic.DetailView):
-	model = Artifact
-	template_name = 'cyphercore/artifact_detail.html'
+class ArtifactDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Artifact
+    template_name = 'cyphercore/artifact_detail.html'
