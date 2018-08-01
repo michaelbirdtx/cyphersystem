@@ -7,17 +7,26 @@ def truncate_to(length, data):
 
 # Create your models here.
 
-class Sourcebook(models.Model):
+class baseSourcebook(models.Model):
     class Meta:
+        abstract = True
         ordering = ['name']
+        verbose_name = 'Sourcebook'
+        verbose_name_plural = 'Sourcebooks'
     name = models.CharField('sourcebook', max_length=100, unique=True)
     enabled = models.BooleanField(default=True)
     def __str__(self):
         return self.name
 
-class Descriptor(models.Model):
+class Sourcebook(baseSourcebook):
+    pass
+
+class baseDescriptor(models.Model):
     class Meta:
+        abstract = True
         ordering = ['name']
+        verbose_name = 'Descriptor'
+        verbose_name_plural = 'Descriptors'
     name = models.CharField('descriptor name', max_length=50, unique=True)
     prefix = models.CharField(max_length=5, default='a')
     description = models.TextField(blank=True)
@@ -31,9 +40,14 @@ class Descriptor(models.Model):
     def __str__(self):
         return self.name
 
-class Ability(models.Model):
+class Descriptor(baseDescriptor):
+    pass
+
+class baseAbility(models.Model):
     class Meta:
+        abstract = True
         ordering = ['name']
+        verbose_name = 'Ability'
         verbose_name_plural = 'Abilities'
     name = models.CharField(max_length=50,unique=True)
     ACTION = 'Action'
@@ -58,9 +72,14 @@ class Ability(models.Model):
     def __str__(self):
         return self.name
 
+class Ability(baseAbility):
+    pass
+
 class Type(models.Model):
     class Meta:
         ordering = ['name']
+        verbose_name = 'Type'
+        verbose_name_plural = 'Type'
     name = models.CharField('type name', max_length=20, unique=True)
     might_pool = models.IntegerField(default=10)
     might_edge = models.IntegerField(default=0)
@@ -85,6 +104,7 @@ class Type(models.Model):
 class TypeAbility(models.Model):
     class Meta:
         ordering = ['tier', 'ability__name']
+        verbose_name = 'Type Ability'
         verbose_name_plural = 'Type Abilities'
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
@@ -95,6 +115,7 @@ class TypeAbility(models.Model):
 class Focus(models.Model):
     class Meta:
         ordering = ['name']
+        verbose_name = 'Focus'
         verbose_name_plural = 'Foci'
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True)
@@ -112,6 +133,7 @@ class Focus(models.Model):
 class FocusAbility(models.Model):
     class Meta:
         ordering = ['tier', 'ability__name']
+        verbose_name = 'Focus Ability'
         verbose_name_plural = 'Focus Abilities'
     focus = models.ForeignKey(Focus, on_delete=models.CASCADE)
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
@@ -119,17 +141,25 @@ class FocusAbility(models.Model):
     def __str__(self):
         return self.ability.name
 
-class Skill(models.Model):
+class baseSkill(models.Model):
     class Meta:
+        abstract = True
         ordering = ['name']
+        verbose_name = 'Skill'
+        verbose_name_plural = 'Skills'
     name = models.CharField(max_length=100, unique=True)
     def __str__(self):
         return self.name
 
-class Equipment(models.Model):
+class Skill(baseSkill):
+    pass
+
+class baseEquipment(models.Model):
     class Meta:
+        abstract = True
         ordering = ['name']
         verbose_name_plural = 'Equipment'
+        verbose_name = 'Equipment'
     name = models.CharField(max_length=50,unique=True)
     ARMOR = 'Armor'
     WEAPON = 'Weapon'
@@ -150,9 +180,14 @@ class Equipment(models.Model):
     def __str__(self):
         return self.name
 
+class Equipment(baseEquipment):
+    pass
+
 class Cypher(models.Model):
     class Meta:
         ordering = ['name']
+        verbose_name = 'Cypher'
+        verbose_name_plural = 'Cyphers'
     name = models.CharField(max_length=50,unique=True)
     level_range = models.CharField(max_length=10)
     effect = models.TextField()
@@ -167,6 +202,8 @@ class Cypher(models.Model):
 class Artifact(models.Model):
     class Meta:
         ordering = ['name']
+        verbose_name = 'Artifact'
+        verbose_name_plural = 'Artifacts'
     name = models.CharField(max_length=50,unique=True)
     level_range = models.CharField(max_length=10)
     form = models.TextField()
@@ -186,6 +223,8 @@ class Artifact(models.Model):
 class Character(models.Model):
     class Meta:
         ordering = ['name']
+        verbose_name = 'Character'
+        verbose_name_plural = 'Characters'
     name = models.CharField(max_length=100,unique=True)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
@@ -227,6 +266,7 @@ class Character(models.Model):
 class CharacterSkill(models.Model):
     class Meta:
         ordering = ['-skill_level', 'skill__name']
+        verbose_name = 'Skill'
         verbose_name_plural = 'Skills'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
@@ -245,6 +285,7 @@ class CharacterSkill(models.Model):
 class CharacterEquipment(models.Model):
     class Meta:
         ordering = ['equipment__name']
+        verbose_name = 'Equipment'
         verbose_name_plural = 'Equipment'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
@@ -256,6 +297,7 @@ class CharacterEquipment(models.Model):
 class CharacterCypher(models.Model):
     class Meta:
         ordering = ['cypher__name']
+        verbose_name = 'Cypher'
         verbose_name_plural = 'Cyphers'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     cypher = models.ForeignKey(Cypher, on_delete=models.CASCADE)
@@ -267,6 +309,7 @@ class CharacterCypher(models.Model):
 class CharacterArtifact(models.Model):
     class Meta:
         ordering = ['artifact__name']
+        verbose_name = 'Artifact'
         verbose_name_plural = 'Artifacts'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     artifact = models.ForeignKey(Artifact, on_delete=models.CASCADE)
@@ -277,6 +320,8 @@ class CharacterArtifact(models.Model):
 class Attack(models.Model):
     class Meta:
         ordering = ['name']
+        verbose_name = 'Attack'
+        verbose_name_plural = 'Attacks'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     modifier = models.IntegerField(default=0)
