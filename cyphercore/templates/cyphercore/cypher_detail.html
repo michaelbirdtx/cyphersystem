@@ -1,27 +1,10 @@
-{% load static %}
-<html>
-    </head>
-        <title>Cypher Core: {{ cypher.name }}</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
-        <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="twelve columns">
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
-                    <h1>Cypher: {{ cypher.name }}</h1>
-                    <h2>Level Range: {{ cypher.level_range }}</h2>
-                    <div>{{ cypher.effect|linebreaks }}</div>
-                    <hr />
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}{{ cypher.name }}{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
+    <h1>Cypher: {{ cypher.name }}</h1>
+    <h2>Level Range: {{ cypher.level_range }}</h2>
+    <div>{{ cypher.effect|linebreaks }}</div>
+    <hr />
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
+{% endblock %}

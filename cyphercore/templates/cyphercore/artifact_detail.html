@@ -1,28 +1,11 @@
-{% load static %}
-<html>
-    </head>
-        <title>Cypher Core: {{ artifact.name }}</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
-        <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="twelve columns">
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Artifact List</a> | {{ artifact.name }}</span>
-                    <h1>Cypher: {{ artifact.name }}</h1>
-                    <h2>Level Range: {{ artifact.level_range }}</h2>
-                    <div>{{ artifact.form|linebreaks }}</div>
-                    <div>{{ artifact.effect|linebreaks }}</div>
-                    <hr />
-                    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Artifact List</a> | {{ artifact.name }}</span>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}{{ artifact.name }}{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Artifact List</a> | {{ artifact.name }}</span>
+    <h1>Cypher: {{ artifact.name }}</h1>
+    <h2>Level Range: {{ artifact.level_range }}</h2>
+    <div>{{ artifact.form|linebreaks }}</div>
+    <div>{{ artifact.effect|linebreaks }}</div>
+    <hr />
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Artifact List</a> | {{ artifact.name }}</span>
+{% endblock %}

@@ -1,41 +1,24 @@
-{% load static %}
-<html>
-    </head>
-        <title>Cypher Core: Equipment</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
-        <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="twelve columns">
-                    <span class="breadcrumbs"><a href="../">Index</a> | Equipment List</span>
-                    <h1>Cypher Core: Equipment</h1>
-                    <hr/>
-                    <table>
-                        <tr>
-                            <th>Item Name</th>
-                            <th>Type</th>
-                            <th>Base Cost</th>
-                            <th>Notes</th>
-                        </tr>
-                        {% for equipment in equipment_list %}
-                        <tr>
-                            <td>{{ equipment.name }}</td>
-                            <td>{{ equipment.type }}</td>
-                            <td>{{ equipment.base_cost }}</td>
-                            <td>{{ equipment.notes }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    <span class="breadcrumbs"><a href="../">Index</a> | Equipment List</span>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}Equipment{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Equipment List</span>
+    <h1>Cypher Core: Equipment</h1>
+    <hr/>
+    <table>
+        <tr>
+            <th>Item Name</th>
+            <th>Type</th>
+            <th>Base Cost</th>
+            <th>Notes</th>
+        </tr>
+        {% for equipment in equipment_list %}
+        <tr>
+            <td>{{ equipment.name }}</td>
+            <td>{{ equipment.type }}</td>
+            <td>{{ equipment.base_cost }}</td>
+            <td>{{ equipment.notes }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <span class="breadcrumbs"><a href="../">Index</a> | Equipment List</span>
+{% endblock %}
