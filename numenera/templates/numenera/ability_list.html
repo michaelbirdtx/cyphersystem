@@ -1,0 +1,14 @@
+{% extends "numenera/base.html" %}
+{% block subtitle %}Abilities{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Ability List</span>
+    <h1>Numenera: Abilities</h1>
+    <hr/>
+    <ul>
+        {% for ability in ability_list %}
+        <li><a href="{{ ability.slug }}">{{ ability.name }}</a> ({{ ability.usage }}, Cost: {{ ability.cost }})</li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Ability List</span>
+{% endblock %}

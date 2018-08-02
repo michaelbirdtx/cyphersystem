@@ -5,7 +5,6 @@ from . import views
 
 app_name = 'cyphercore'
 urlpatterns = [
-    #path('', TemplateView.as_view(template_name='cyphercore/index.html'), name='index'),
     path('', views.index, name='index'),
     path('abilities/', views.AbilityListView.as_view(), name='ability_list'),
     path('abilities/<slug:slug>/', views.AbilityDetailView.as_view(), name='ability_detail'),

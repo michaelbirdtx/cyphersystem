@@ -1,32 +1,13 @@
-{% load static %}
-<html>
-    </head>
-        <title>Cypher Core: Abilities</title>
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
-        <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="twelve columns">
-                    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
-                    <h1>Cypher Core: Characters</h1>
-                    <ul>
-                        {% for character in character_list %}
-                        <li><a href="{{ character.slug }}">{{ character.name }}</a> is {{ character.descriptor.prefix}} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}</li>
-                        {% endfor %}
-                    </ul>
-                    <hr />
-                    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}Characters{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
+    <h1>Cypher Core: Characters</h1>
+    <ul>
+        {% for character in character_list %}
+        <li><a href="{{ character.slug }}">{{ character.name }}</a> is {{ character.descriptor.prefix}} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}</li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
+{% endblock %}

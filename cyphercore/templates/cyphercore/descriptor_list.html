@@ -1,32 +1,13 @@
-{% load static %}
-<html>
-    </head>
-        <title>Cypher Core: Descriptors</title>
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
-        <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="twelve columns">
-                    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
-                    <h1>Cypher Core: Descriptors</h1>
-                    <ul>
-                        {% for descriptor in descriptor_list %}
-                        <li><a href="{{ descriptor.slug }}">{{ descriptor.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                    <hr />
-                    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}Descriptor{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
+    <h1>Cypher Core: Descriptors</h1>
+    <ul>
+        {% for descriptor in descriptor_list %}
+        <li><a href="{{ descriptor.slug }}">{{ descriptor.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
+{% endblock %}

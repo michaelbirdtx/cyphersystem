@@ -8,8 +8,7 @@ admin.site.index_title = 'Admin'
 from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack
 
 class SourcebookAdmin(admin.ModelAdmin):
-    list_display = ('name', 'enabled')
-    list_editable = ('enabled',)
+    list_display = ('name',)
     search_fields = ['name']
 
 class DescriptorAdmin(admin.ModelAdmin):
