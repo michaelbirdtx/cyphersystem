@@ -1,0 +1,13 @@
+{% extends "numenera/base.html" %}
+{% block subtitle %}Types{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Type List</span>
+    <h1>Numenera: Types</h1>
+    <ul>
+        {% for type in type_list %}
+        <li><a href="{{ type.slug }}">{{ type.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Type List</span>
+{% endblock %}

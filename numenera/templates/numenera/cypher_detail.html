@@ -1,0 +1,10 @@
+{% extends "numenera/base.html" %}
+{% block subtitle %}{{ cypher.name }}{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
+    <h1>Cypher: {{ cypher.name }}</h1>
+    <h2>Level Range: {{ cypher.level_range }}</h2>
+    <div>{{ cypher.effect|linebreaks }}</div>
+    <hr />
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
+{% endblock %}
