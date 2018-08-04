@@ -66,6 +66,16 @@ class CharacterEquipment(baseCharacterEquipment):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
+class Oddity(models.Model):
+    class Meta:
+        ordering = ['description']
+        verbose_name = 'Oddity'
+        verbose_name_plural = 'Oddities'
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    description = models.TextField()
+    def __str__(self):
+        return self.description
+
 class CharacterSkill(baseCharacterSkill):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
