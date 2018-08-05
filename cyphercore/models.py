@@ -290,7 +290,7 @@ class baseType(models.Model):
         abstract = True
         ordering = ['name']
         verbose_name = 'Type'
-        verbose_name_plural = 'Type'
+        verbose_name_plural = 'Types'
     name = models.CharField('type name', max_length=20, unique=True)
     might_pool = models.IntegerField(default=10)
     might_edge = models.IntegerField(default=0)
