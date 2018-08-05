@@ -183,6 +183,16 @@
         </div>
         <hr />
     </section>
+    <!-- Equipment -->
+    <section id="equipment" class="avoid-break">
+        <h2>Equipment</h2>
+        <div class="row">
+        {% for item in character.characterequipment_set.all %}
+            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}})</span>
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
     <!-- Base Abilities and Characteristics -->
     <section id="base-abilities" class="avoid-break">
         <h2>Base Abiliites &amp; Characteristics</h2>
@@ -215,16 +225,6 @@
                 <h3>{{ item.name }} ({{ item.usage }}; Cost: {{ item.cost }})</h3>
                 <div class="compact indent">{{ item.description|linebreaks }}</div>
             </div>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Equipment -->
-    <section id="equipment" class="avoid-break">
-        <h2>Equipment</h2>
-        <div class="row">
-        {% for item in character.characterequipment_set.all %}
-            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}})</span>
         {% endfor %}
         </div>
         <hr />
