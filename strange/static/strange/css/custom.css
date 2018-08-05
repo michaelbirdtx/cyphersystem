@@ -158,6 +158,9 @@ ul {
     .breadcrumbs {
         display: none;
     }
+    .character-recursion {
+        page-break-before: always;
+    }
     .compact {
         font-size: smaller;
     }
