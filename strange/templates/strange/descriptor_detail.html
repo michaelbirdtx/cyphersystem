@@ -1,0 +1,17 @@
+{% extends "strange/base.html" %}
+{% block subtitle %}{{ descriptor.name }}{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Descriptor List</a> | {{ descriptor.name }}</span>
+    <h1>Descriptor: {{ descriptor.name }}</h1>
+    <div>{{ descriptor.description|linebreaks }}</div>
+    <hr/>
+
+    <h2>Characteristics</h2>
+    <div class="indent">{{ descriptor.characteristics|linebreaks }}</div>
+    <hr/>
+
+    <h2>Starting Link</h2>
+    <div class="indent">{{ descriptor.starting_link|linebreaks }}</div>
+    <hr />
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Descriptor List</a> | {{ descriptor.name }}</span>
+{% endblock %}

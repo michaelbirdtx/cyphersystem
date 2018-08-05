@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'cyphercore.apps.CyphercoreConfig',
     'numenera.apps.NumeneraConfig',
+    'strange.apps.StrangeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'cyphersystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cyphersystem_v1_1',
+        'NAME': 'cyphersystem_v1_2',
         'USER': 'postgres',
         'PASSWORD': 'blackbox',
         'HOST': '192.168.1.201',

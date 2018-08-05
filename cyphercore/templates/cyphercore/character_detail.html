@@ -206,16 +206,6 @@
         </div>
         <hr />
     </section>
-    <!-- Attacks -->
-    <section id="attacks" class="avoid-break">
-        <h2>Attacks</h2>
-        <div class="row">
-        {% for item in character.attack_set.all %}
-            <span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
     <!-- Special Abilities -->
     <section id="special-abilities">
         <h2>Special Abilities</h2>

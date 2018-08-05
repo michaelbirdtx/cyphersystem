@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Bitter');
 body {
     font-size: 1.5em;
     line-height: 1.5;
@@ -6,8 +6,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: darkorange;
-    font-family: 'Josefin Sans', sans-serif;
+    color: #3399ff;
+    font-family: 'Bitter', sans-serif;
     font-variant: small-caps;
     font-weight: bold;
 }

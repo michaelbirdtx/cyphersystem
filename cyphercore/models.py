@@ -79,7 +79,7 @@ class baseCharacter(models.Model):
     #descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     #type = models.ForeignKey(Type, on_delete=models.PROTECT)
     #focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
-    portrait_link = models.URLField(max_length=200,blank=True)
+    portrait_link = models.URLField(max_length=1000,blank=True)
     background = models.TextField(blank=True)
     notes = models.TextField(blank=True)
     tier = models.IntegerField(default=1)

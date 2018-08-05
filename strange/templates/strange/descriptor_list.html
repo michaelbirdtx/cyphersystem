@@ -1,0 +1,13 @@
+{% extends "strange/base.html" %}
+{% block subtitle %}Descriptor{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
+    <h1>The Strange: Descriptors</h1>
+    <ul>
+        {% for descriptor in descriptor_list %}
+        <li><a href="{{ descriptor.slug }}">{{ descriptor.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
+{% endblock %}

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 
 # Register your models here.
-from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Oddity
+from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Recursion
 
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -79,6 +79,7 @@ class EquipmentAdmin(admin.ModelAdmin):
     search_fields = ['name', 'type', 'base_cost']
 
 class CypherAdmin(admin.ModelAdmin):
+    fields = ('name', 'level_range', 'effect', 'form', 'slug', 'sourcebook')
     list_display = ('name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
@@ -91,46 +92,52 @@ class ArtifactAdmin(admin.ModelAdmin):
 class AttackInline(admin.TabularInline):
     model = Attack
     extra = 0
-    fields = ('name', 'modifier', 'damage')
-
-class OddityInline(admin.TabularInline):
-    model = Oddity
-    extra = 0
+    fields = ('name', 'modifier', 'damage', 'recursion')
 
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
     extra = 0
-    fields = ('equipment', 'quantity', 'cost')
+    fields = ('equipment', 'quantity', 'cost', 'recursion')
 
 class CharacterSkillsInline(admin.TabularInline):
     model = CharacterSkill
     autocomplete_fields = ['skill']
     extra = 0
-    fields = ('skill', 'skill_level')
+    fields = ('skill', 'skill_level', 'recursion')
 
 class CharacterCyphersInline(admin.TabularInline):
     model = CharacterCypher
     autocomplete_fields = ['cypher']
     extra = 0
-    fields = ('cypher', 'level', 'appearance')
+    fields = ('cypher', 'level')
 
 class CharacterArtifactsInline(admin.TabularInline):
     model = CharacterArtifact
     autocomplete_fields = ['artifact']
     extra = 0
-    fields = ('artifact', 'level')
+    fields = ('artifact', 'level', 'recursion')
+
+class RecursionsInline(admin.StackedInline):
+    model = Recursion
+    extra = 0
+    fieldsets = [
+        ('Recursion Definition', {'fields': [('name', 'focus'), ('armor', 'money')]}),
+        ('Recursion Stats', {'fields': [('might_pool_adjust', 'speed_pool_adjust', 'intellect_pool_adjust'), ('might_edge_adjust', 'speed_edge_adjust', 'intellect_edge_adjust')]}),
+        ('Recursion Abilities', {'fields': ['abilities']})
+    ]
+    filter_horizontal = ('abilities',)
 
 class CharacterAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), 'descriptor', 'type', 'focus', ('cypher_limit', 'effort', 'tier'), ('armor', 'money', 'xp'), 'background', 'notes', 'portrait_link']}),
+        ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), 'descriptor', 'type', ('cypher_limit', 'effort', 'tier'), ('armor', 'money', 'xp'), 'background', 'notes', 'portrait_link']}),
         ('STATS', {'fields': [('might_pool', 'might_current', 'might_edge'), ('speed_pool', 'speed_current', 'speed_edge'), ('intellect_pool', 'intellect_current', 'intellect_edge')]}),
         ('DAMAGE TRACK', {'fields': [('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')]}),
-        ('ABILITIES', {'fields': ['abilities']})
+        ('GLOBAL ABILITIES', {'fields': ['abilities']})
     ]
     filter_horizontal = ('abilities',)
-    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline, OddityInline]
-    list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
+    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline, RecursionsInline]
+    list_display = ('name', 'descriptor', 'type', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
