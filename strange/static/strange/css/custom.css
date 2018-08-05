@@ -56,7 +56,9 @@ a:hover {
 }
 
 br {
-    margin: 1.8rem;
+    content: "";
+    display: block;
+    margin-bottom: 1rem;
 }
 
 hr {
