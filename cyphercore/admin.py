@@ -92,26 +92,31 @@ class ArtifactAdmin(admin.ModelAdmin):
 class AttackInline(admin.TabularInline):
     model = Attack
     extra = 0
+    fields = ('name', 'modifier', 'damage')
 
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
     extra = 0
+    fields = ('equipment', 'quantity', 'cost')
 
 class CharacterSkillsInline(admin.TabularInline):
     model = CharacterSkill
     autocomplete_fields = ['skill']
     extra = 0
+    fields = ('skill', 'skill_level')
 
 class CharacterCyphersInline(admin.TabularInline):
     model = CharacterCypher
     autocomplete_fields = ['cypher']
     extra = 0
+    fields = ('cypher', 'level', 'appearance')
 
 class CharacterArtifactsInline(admin.TabularInline):
     model = CharacterArtifact
     autocomplete_fields = ['artifact']
     extra = 0
+    fields = ('artifact', 'level')
 
 class CharacterAdmin(admin.ModelAdmin):
     fieldsets = [

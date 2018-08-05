@@ -1,0 +1,24 @@
+{% extends "strange/base.html" %}
+{% block subtitle %}Equipment{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Equipment List</span>
+    <h1>The Strange: Equipment</h1>
+    <hr/>
+    <table>
+        <tr>
+            <th>Item Name</th>
+            <th>Type</th>
+            <th>Base Cost</th>
+            <th>Notes</th>
+        </tr>
+        {% for equipment in equipment_list %}
+        <tr>
+            <td>{{ equipment.name }}</td>
+            <td>{{ equipment.type }}</td>
+            <td>{{ equipment.base_cost }}</td>
+            <td>{{ equipment.notes }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <span class="breadcrumbs"><a href="../">Index</a> | Equipment List</span>
+{% endblock %}

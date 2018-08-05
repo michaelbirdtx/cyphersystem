@@ -5,30 +5,27 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    color: darkred;
+    font-variant: small-caps;
     font-weight: bold;
 }
 
 h1 {
     font-size: 2.5rem;
     line-height: 1;
-    letter-spacing: -.1rem
     margin-bottom: 1rem;
     margin-top: 1rem;
-    color: darkred;
 }
 
 h2 {
-    color: darkred;
     font-size: 1.8rem;
     line-height: 1;
-    letter-spacing: -.1rem;
     margin-bottom: .8rem;
 }
 
 h3 {
     font-size: 1.6rem;
     line-height: 1;
-    letter-spacing: -.1rem;
     margin-bottom: .3rem;
     margin-top: 1rem;
 }
@@ -36,19 +33,16 @@ h3 {
 h4 {
     font-size: 1.6rem;
     line-height: 1;
-    letter-spacing: -.08rem;
 }
 
 h5 {
     font-size: 1.6rem;
     line-height: 1;
-    letter-spacing: -.05rem;
 }
 
 h6 {
     font-size: 1.6rem;
     line-height: 1;
-    letter-spacing: 0;
 }
 
 a {
@@ -98,7 +92,7 @@ ul {
 }
 
 .character-sentence {
-    margin-top: -1.5rem;
+    margin-top: -1rem;
 }
 
 .indent {

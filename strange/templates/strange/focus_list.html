@@ -1,0 +1,13 @@
+{% extends "strange/base.html" %}
+{% block subtitle %}Foci{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Focus List</span>
+    <h1>The Strange: Foci</h1>
+    <ul>
+        {% for focus in focus_list %}
+        <li><a href="{{ focus.slug }}">{{ focus.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Focus List</span>
+{% endblock %}
