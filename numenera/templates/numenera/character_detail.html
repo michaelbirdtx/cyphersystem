@@ -10,6 +10,7 @@
     #equipment { display: none; }
     #cyphers { display: none; }
     #artifacts { display: none; }
+    #oddities { display: none; }
     {% endif %}
     {% if not character.portrait_link %}
     #picture-frame { display: none; }
@@ -251,6 +252,16 @@
             <div class="compact indent">
                 {{ item.artifact.form }} {{ item.artifact.effect }}
             </div>
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    <!-- Oddities -->
+    <section id="oddities" class="avoid-break">
+        <h2>Oddities</h2>
+        <div class="row">
+        {% for item in character.oddity_set.all %}
+            <span class="bubble-item">{{ item.description }}</span>
         {% endfor %}
         </div>
         <hr />

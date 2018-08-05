@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 
 # Register your models here.
-from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack
+from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Oddity
 
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -93,6 +93,10 @@ class AttackInline(admin.TabularInline):
     extra = 0
     fields = ('name', 'modifier', 'damage')
 
+class OddityInline(admin.TabularInline):
+    model = Oddity
+    extra = 0
+
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
@@ -125,7 +129,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ('ABILITIES', {'fields': ['abilities']})
     ]
     filter_horizontal = ('abilities',)
-    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline]
+    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline, OddityInline]
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
