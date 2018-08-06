@@ -215,12 +215,26 @@ class baseEquipment(models.Model):
         verbose_name = 'Equipment'
     name = models.CharField(max_length=50,unique=True)
     ARMOR = 'Armor'
+    ARMOR_LIGHT = 'Armor - Light'
+    ARMOR_MEDIUM = 'Armor - Medium'
+    ARMOR_HEAVY = 'Armor - Heavy'
     WEAPON = 'Weapon'
-    OTHER = 'Other'
+    WEAPON_LIGHT = 'Weapon - Light'
+    WEAPON_MEDIUM = 'Weapon - Medium'
+    WEAPON_HEAVY = 'Weapon - Heavy'
+    OTHER = 'Other',
+    SPECIAL = 'Special'
     EQUIPMENT_TYPE_CHOICES = (
         (ARMOR, 'Armor'),
+        (ARMOR_LIGHT, 'Armor - Light'),
+        (ARMOR_MEDIUM, 'Armor - Medium'),
+        (ARMOR_HEAVY, 'Armor - Heavy'),
         (WEAPON, 'Weapon'),
+        (WEAPON_LIGHT, 'Weapon - Light'),
+        (WEAPON_MEDIUM, 'Weapon - Medium'),
+        (WEAPON_HEAVY, 'Weapon - Heavy'),
         (OTHER, 'Other'),
+        (SPECIAL, 'Special'),
     )
     type = models.CharField(max_length=30,choices=EQUIPMENT_TYPE_CHOICES)
     base_cost = models.CharField(blank=True, max_length=30)
