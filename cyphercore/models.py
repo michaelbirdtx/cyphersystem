@@ -222,7 +222,7 @@ class baseEquipment(models.Model):
     WEAPON_LIGHT = 'Weapon - Light'
     WEAPON_MEDIUM = 'Weapon - Medium'
     WEAPON_HEAVY = 'Weapon - Heavy'
-    OTHER = 'Other',
+    OTHER = 'Other'
     SPECIAL = 'Special'
     EQUIPMENT_TYPE_CHOICES = (
         (ARMOR, 'Armor'),
