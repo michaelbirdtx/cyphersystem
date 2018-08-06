@@ -99,10 +99,10 @@
     <section id="other-stats" class="avoid-break">
         <div class="row compact">
             <div class="two columns">
-                <strong>Armor:</strong>
+                <strong>Cypher Limit:</strong>
             </div>
             <div class="two columns">
-                {{ character.armor }}
+                {{ character.cypher_limit }}
             </div>
             <div class="two columns">
                 <strong>Tier:</strong>
@@ -115,26 +115,6 @@
             </div>
             <div class="two columns">
                 {{ character.effort }}
-            </div>
-        </div>
-        <div class="row compact">
-            <div class="two columns">
-                <strong>Cyper Limit:</strong>
-            </div>
-            <div class="two columns">
-                {{ character.cypher_limit }}
-            </div>
-            <div class="two columns">
-                <strong>Money:</strong>
-            </div>
-            <div class="two columns">
-                {{ character.money }}
-            </div>
-            <div class="two columns">
-                <strong>XP:</strong>
-            </div>
-            <div class="two columns">
-                {{ character.xp }}
             </div>
         </div>
         <hr />
@@ -235,7 +215,7 @@
         {% for item in character.charactercypher_set.all %}
             <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
             <div class="compact indent">
-                {{ item.appearance }} {{ item.cypher.effect }}
+                {{ item.cypher.form }} {{ item.cypher.effect }}
             </div>
         {% endfor %}
         </div>

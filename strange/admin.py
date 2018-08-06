@@ -130,7 +130,7 @@ class RecursionsInline(admin.StackedInline):
 
 class CharacterAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), 'descriptor', 'type', ('cypher_limit', 'effort', 'tier'), ('armor', 'money', 'xp'), 'background', 'notes', 'portrait_link']}),
+        ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), ('descriptor', 'type'), ('cypher_limit', 'effort', 'tier'), 'background', 'notes', 'portrait_link']}),
         ('STATS', {'fields': [('might_pool', 'might_current', 'might_edge'), ('speed_pool', 'speed_current', 'speed_edge'), ('intellect_pool', 'intellect_current', 'intellect_edge')]}),
         ('DAMAGE TRACK', {'fields': [('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')]}),
         ('GLOBAL ABILITIES', {'fields': ['abilities']})
