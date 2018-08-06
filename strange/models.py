@@ -65,7 +65,7 @@ class Recursion(models.Model):
     speed_edge_adjust = models.IntegerField(default=0)
     intellect_pool_adjust = models.IntegerField(default=0)
     intellect_edge_adjust = models.IntegerField(default=0)
-    abilities = models.ManyToManyField(Ability)
+    abilities = models.ManyToManyField(Ability, blank=True)
     #skills = models.ManyToManyField(Skill, through='CharacterSkill')
     #equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
     #artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
