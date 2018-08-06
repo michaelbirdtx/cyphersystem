@@ -271,13 +271,13 @@
                         Pool:
                     </div>
                     <div class="two columns">
-                        {{ character.speed_pool }} ({{ character.speed_current }}*)
+                        {{ character.speed_pool|add:item.speed_pool_adjust }} ({{ character.speed_current|add:item.speed_pool_adjust }}*)
                     </div>
                     <div class="two columns">
                         Pool:
                     </div>
                     <div class="two columns">
-                        {{ character.intellect_pool }} ({{ character.intellect_current }}*)
+                        {{ character.intellect_pool|add:item.intellect_pool_adjust }} ({{ character.intellect_current|add:item.intellect_pool_adjust }}*)
                     </div>
                 </div>
                 <div class="row compact">
@@ -285,19 +285,19 @@
                         Edge:
                     </div>
                     <div class="two columns">
-                        {{ character.might_edge }}
+                        {{ character.might_edge|add:item.might_edge_adjust }}
                     </div>
                     <div class="two columns">
                         Edge:
                     </div>
                     <div class="two columns">
-                        {{ character.speed_edge }}
+                        {{ character.speed_edge|add:item.speed_edge_adjust }}
                     </div>
                     <div class="two columns">
                         Edge:
                     </div>
                     <div class="two columns">
-                        {{ character.intellect_edge }}
+                        {{ character.intellect_edge|add:item.intellect_edge_adjust }}
                     </div>
                 </div>
                 <div class="row compact">
