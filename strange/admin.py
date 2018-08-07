@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from django.urls import resolve
 
 # Register your models here.
 from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Recursion
@@ -94,17 +95,50 @@ class AttackInline(admin.TabularInline):
     extra = 0
     fields = ('name', 'modifier', 'damage', 'recursion')
 
+    def get_formset(self, request, obj=None, **kwargs):
+        self.parent_obj = obj
+        return super(AttackInline, self).get_formset(request, obj, **kwargs)
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "recursion":
+            if self.parent_obj:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = self.parent_obj.id)
+            else:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
     extra = 0
     fields = ('equipment', 'quantity', 'cost', 'recursion')
 
+    def get_formset(self, request, obj=None, **kwargs):
+        self.parent_obj = obj
+        return super(CharacterEquipmentInline, self).get_formset(request, obj, **kwargs)
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "recursion":
+            if self.parent_obj:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = self.parent_obj.id)
+            else:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 class CharacterSkillsInline(admin.TabularInline):
     model = CharacterSkill
     autocomplete_fields = ['skill']
     extra = 0
     fields = ('skill', 'skill_level', 'recursion')
+
+    def get_formset(self, request, obj=None, **kwargs):
+        self.parent_obj = obj
+        return super(CharacterSkillsInline, self).get_formset(request, obj, **kwargs)
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "recursion":
+            if self.parent_obj:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = self.parent_obj.id)
+            else:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 class CharacterCyphersInline(admin.TabularInline):
     model = CharacterCypher
@@ -117,6 +151,17 @@ class CharacterArtifactsInline(admin.TabularInline):
     autocomplete_fields = ['artifact']
     extra = 0
     fields = ('artifact', 'level', 'recursion')
+
+    def get_formset(self, request, obj=None, **kwargs):
+        self.parent_obj = obj
+        return super(CharacterArtifactsInline, self).get_formset(request, obj, **kwargs)
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "recursion":
+            if self.parent_obj:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = self.parent_obj.id)
+            else:
+                kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 class RecursionsInline(admin.StackedInline):
     model = Recursion
