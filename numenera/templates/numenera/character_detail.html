@@ -194,6 +194,16 @@
         </div>
         <hr />
     </section>
+    <!-- Skills -->
+    <section id="skills" class="avoid-break">
+        <h2>Skills</h2>
+        <div class="row">
+        {% for item in character.characterskill_set.all %}
+            <span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
     <!-- Base Abilities and Characteristics -->
     <section id="base-abilities" class="avoid-break">
         <h2>Base Abiliites &amp; Characteristics</h2>
@@ -204,16 +214,6 @@
             <div class="indent">{{ character.descriptor.characteristics|linebreaks }}</div>
             <h3>Focus:</h3>
             <div class="indent">{{ character.focus.other_details|linebreaks }}</div>
-        </div>
-        <hr />
-    </section>
-    <!-- Skills -->
-    <section id="skills" class="avoid-break">
-        <h2>Skills</h2>
-        <div class="row">
-        {% for item in character.characterskill_set.all %}
-            <span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>
-        {% endfor %}
         </div>
         <hr />
     </section>
