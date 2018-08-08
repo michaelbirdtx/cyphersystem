@@ -189,7 +189,7 @@
         <h2>Equipment</h2>
         <div class="row">
         {% for item in character.characterequipment_set.all %}
-            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}})</span>
+            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>
         {% endfor %}
         </div>
         <hr />

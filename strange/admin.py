@@ -110,7 +110,7 @@ class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
     extra = 0
-    fields = ('equipment', 'quantity', 'cost', 'recursion')
+    fields = ('equipment', 'quantity', 'brief_note', 'recursion')
 
     def get_formset(self, request, obj=None, **kwargs):
         self.parent_obj = obj

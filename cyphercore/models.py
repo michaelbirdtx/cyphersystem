@@ -147,7 +147,7 @@ class baseCharacterEquipment(models.Model):
     #character = models.ForeignKey(Character, on_delete=models.CASCADE)
     #equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     #quantity = models.IntegerField(default=1)
-    cost = models.CharField(max_length=20, blank=True)
+    brief_note = models.CharField(max_length=50, blank=True)
     def __str__(self):
         return self.equipment.name
 

@@ -101,7 +101,7 @@ class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
     extra = 0
-    fields = ('equipment', 'quantity', 'cost')
+    fields = ('equipment', 'quantity', 'brief_note')
 
 class CharacterSkillsInline(admin.TabularInline):
     model = CharacterSkill

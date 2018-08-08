@@ -169,7 +169,7 @@
         <h2>Equipment</h2>
         <div class="row">
         {% for item in character.characterequipment_set.all %}
-            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>
+            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity }}) <em>{{item.brief_note }}</em> <strong>{{ item.recursion.name|default:"---" }}</strong></span>
         {% endfor %}
         </div>
         <hr />
