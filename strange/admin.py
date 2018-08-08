@@ -80,7 +80,7 @@ class EquipmentAdmin(admin.ModelAdmin):
     search_fields = ['name', 'type', 'base_cost']
 
 class CypherAdmin(admin.ModelAdmin):
-    fields = ('name', 'level_range', 'effect', 'form', 'slug', 'sourcebook')
+    fields = ('name', 'level_range', 'form', 'effect', 'slug', 'sourcebook')
     list_display = ('name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
