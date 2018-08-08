@@ -18,9 +18,9 @@
 {% endblock %}
 {% block content %}
     {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | <a href="../">{{ character.name }}</a> | Summary</span>
+    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | <a href="/strange/characters/{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
     {% else %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | {{ character.name }} | <a href="/strange/characters/{{ character.slug }}/summary/">Summary</a></span>
     {% endif %}
     <h1>{{ character.name }}</h1>
     <p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}}</strong></p>
@@ -235,7 +235,7 @@
         <hr />
     </section>
     <!-- Notes -->
-    <section id="notes">
+    <section id="notes" class="avoid-break">
         <div class="row">
             <h2>Notes</h2>
             <div class="compact indent">{{ character.notes|linebreaks }}</div>
@@ -309,7 +309,7 @@
             </div>
         </section>
         <h2>Focus: {{ item.focus.name }}</h2>
-        <div class="indent">{{ item.focus.other_details|linebreaks }}</div>
+        <div class="compact indent">{{ item.focus.other_details|linebreaks }}</div>
         <!-- Recursion Special Abilities -->
         <section class="recursion-special-abilities">
             <h2>Special Abilities</h2>
@@ -326,8 +326,8 @@
         {% endfor %}
     </section>
     {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | <a href="../">{{ character.name }}</a> | Summary</span>
+    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | <a href="/strange/characters/{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
     {% else %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | {{ character.name }} | <a href="/strange/characters/{{ character.slug }}/summary/">Summary</a></span>
     {% endif %}
 {% endblock %}

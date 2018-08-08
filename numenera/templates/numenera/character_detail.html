@@ -18,9 +18,9 @@
 {% endblock %}
 {% block content %}
     {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | <a href="../">{{ character.name }}</a> | Summary</span>
+    <span class="breadcrumbs"><a href="/numenera/">Index</a> | <a href="/numenera/characters/">Character List</a> | <a href="/numenera/characters/{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
     {% else %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+    <span class="breadcrumbs"><a href="/numenera/">Index</a> | <a href="/numenera/characters/">Character List</a> | {{ character.name }} | <a href="/numenera/characters/{{ character.slug }}/summary/">Summary</a></span>
     {% endif %}
     <h1>{{ character.name }}</h1>
     <p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}} who {{ character.focus }}</strong></p>
@@ -275,8 +275,8 @@
         <hr class="no-print" />
     </section>
     {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | <a href="../">{{ character.name }}</a> | Summary</span>
+    <span class="breadcrumbs"><a href="/numenera/">Index</a> | <a href="/numenera/characters/">Character List</a> | <a href="/numenera/characters/{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
     {% else %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+    <span class="breadcrumbs"><a href="/numenera/">Index</a> | <a href="/numenera/characters/">Character List</a> | {{ character.name }} | <a href="/numenera/characters/{{ character.slug }}/summary/">Summary</a></span>
     {% endif %}
 {% endblock %}
