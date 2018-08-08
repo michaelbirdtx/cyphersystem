@@ -92,6 +92,27 @@ ul {
     padding-top: 1rem;
 }
 
+.breakbefore {
+    break-before: always;
+    page-break-before: always;
+}
+
+.breakafter {
+    break-after: always;
+    page-break-after: always;
+}
+
+.bubble-item {
+    background-color: lightgray;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-size: 1.3rem;
+    line-height: 2.5rem;
+    margin: 0 .5rem;
+    padding: .2rem 1rem;
+    white-space: nowrap;
+}
+
 .character-background {
     padding-right: 5%;
 }
@@ -111,37 +132,17 @@ ul {
     margin-top: -1rem;
 }
 
+.highlighted {
+    color: #fff;
+    background-color: #c51313;
+}
+
 .indent {
     padding: 0 5%;
 }
 
 .inability {
     font-style: italic;
-}
-
-.breakbefore {
-    break-before: always;
-    page-break-before: always;
-}
-
-.breakafter {
-    break-after: always;
-    page-break-after: always;
-}
-
-.bubble-item {
-    background-color: lightgray;
-    border: 1px solid black;
-    border-radius: 3px;
-    line-height: 3rem;
-    margin: 0 .5rem;
-    padding: .2rem 1.5rem;
-    white-space: nowrap;
-}
-
-.highlighted {
-    color: #fff;
-    background-color: #c51313;
 }
 
 .row-odd {
