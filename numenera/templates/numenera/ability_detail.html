@@ -1,10 +1,5 @@
-{% extends "numenera/base.html" %}
+{% extends "cyphercore/base_ability_detail.html" %}
+{% load static %}
+{% block title %}Numenera{% endblock %}
 {% block subtitle %}{{ ability.name }}{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Ability List</a> | {{ ability.name }}</span>
-    <h1>Ability: {{ ability.name }}</h1>
-    <h2>{{ ability.usage }}, Cost: {{ ability.cost }}</h2>
-    <div>{{ ability.description|linebreaks }}</div>
-    <hr />
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Ability List</a> | {{ ability.name }}</span>
-{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'numenera/css/custom.css' %}" />{% endblock %}

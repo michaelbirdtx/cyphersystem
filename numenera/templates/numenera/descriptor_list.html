@@ -1,13 +1,6 @@
-{% extends "numenera/base.html" %}
-{% block subtitle %}Descriptor{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
-    <h1>Numenera: Descriptors</h1>
-    <ul>
-        {% for descriptor in descriptor_list %}
-        <li><a href="{{ descriptor.slug }}">{{ descriptor.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <hr />
-    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
-{% endblock %}
+{% extends "cyphercore/base_descriptor_list.html" %}
+{% load static %}
+{% block title %}Numenera{% endblock %}
+{% block subtitle %}Descriptors{% endblock %}
+{% block header_text %}Numenera: Descriptors{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'numenera/css/custom.css' %}" />{% endblock %}

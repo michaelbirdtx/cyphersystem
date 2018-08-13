@@ -1,14 +1,6 @@
-{% extends "strange/base.html" %}
+{% extends "cyphercore/base_cypher_list.html" %}
+{% load static %}
+{% block title %}The Strange{% endblock %}
 {% block subtitle %}Cyphers{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../">Index</a> | Cypher List</span>
-    <h1>The Strange: Cyphers</h1>
-    <hr/>
-    <ul>
-        {% for cypher in cypher_list %}
-        <li><a href="{{ cypher.slug }}">{{ cypher.name }}</a> (Level Range: {{ cypher.level_range }})</li>
-        {% endfor %}
-    </ul>
-    <hr />
-    <span class="breadcrumbs"><a href="../">Index</a> | Cypher List</span>
-{% endblock %}
+{% block header_text %}The Strange: Abilities{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'strange/css/custom.css' %}" />{% endblock %}

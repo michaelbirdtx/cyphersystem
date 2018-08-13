@@ -1,349 +1,110 @@
-{% extends "strange/base.html" %}
+{% extends "cyphercore/base_character_detail.html" %}
+{% load static %}
+{% block title %}The Strange{% endblock %}
 {% block subtitle %}{{ character.name }}{% endblock %}
-{% block pagestyles %}
-    {% if "summary" in request.path %}
-    .recursion-stat-pools { display: none; }
-    #portrait-background { display: none; }
-    #stat-pools { display: none; }
-    #other-stats { display: none; }
-    #attacks { display: none; }
-    #recovery-damage { display: none; }
-    #equipment { display: none; }
-    #cyphers { display: none; }
-    #artifacts { display: none; }
-    {% endif %}
-    {% if not character.portrait_link %}
-    #picture-frame { display: none; }
-    {% endif %}
-{% endblock %}
-{% block content %}
-    {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | <a href="/strange/characters/{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
-    {% else %}
-    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | {{ character.name }} | <a href="/strange/characters/{{ character.slug }}/summary/">Summary</a></span>
-    {% endif %}
-    <h1>{{ character.name }}</h1>
-    <p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}}</strong></p>
-    <hr />
-    <!-- Character Portrait & Background -->
-    <section id="portrait-background" class="avoid-break">
-        <div class="row">
-            <div class="twelve columns">
-                <a href="{{ character.portrait_link }}"><img class="character-portrait"  id="picture-frame" src="{{ character.portrait_link }}" /></a>
-                <div class="indent">{{ character.background|linebreaks }}</div>
-            </div>
-        </div>
-        <hr />
-    </section>
-    <!-- Stat Pools -->
-    <section id="stat-pools" class="avoid-break">
-        <div class="row compact">
-            <div class="four columns">
-                <strong>Might</strong>
-            </div>
-            <div class="four columns">
-                <strong>Speed</strong>
-            </div>
-            <div class="four columns">
-                <strong>Intellect</strong>
-            </div>
-        </div>
-        <div class="row compact">
-            <div class="two columns">
-                Pool:
-            </div>
-            <div class="two columns">
-                {{ character.might_pool }} ({{ character.might_current }}*)
-            </div>
-            <div class="two columns">
-                Pool:
-            </div>
-            <div class="two columns">
-                {{ character.speed_pool }} ({{ character.speed_current }}*)
-            </div>
-            <div class="two columns">
-                Pool:
-            </div>
-            <div class="two columns">
-                {{ character.intellect_pool }} ({{ character.intellect_current }}*)
-            </div>
-        </div>
-        <div class="row compact">
-            <div class="two columns">
-                Edge:
-            </div>
-            <div class="two columns">
-                {{ character.might_edge }}
-            </div>
-            <div class="two columns">
-                Edge:
-            </div>
-            <div class="two columns">
-                {{ character.speed_edge }}
-            </div>
-            <div class="two columns">
-                Edge:
-            </div>
-            <div class="two columns">
-                {{ character.intellect_edge }}
-            </div>
-        </div>
-        <div class="row compact">
-            <div class="twelve columns compact">
-                *Adjusted value based on Equipment and other factors
-            </div>
-        </div>
-        <hr />
-    </section>
-    <!-- Other Stats -->
-    <section id="other-stats" class="avoid-break">
-        <div class="row compact">
-            <div class="two columns">
-                <strong>Cypher Limit:</strong>
-            </div>
-            <div class="two columns">
-                {{ character.cypher_limit }}
-            </div>
-            <div class="two columns">
-                <strong>Tier:</strong>
-            </div>
-            <div class="two columns">
-                {{ character.tier }}
-            </div>
-            <div class="two columns">
-                <strong>Effort:</strong>
-            </div>
-            <div class="two columns">
-                {{ character.effort }}
-            </div>
-        </div>
-        <hr />
-    </section>
-    <!-- Recovery & Damage Track -->
-    <section id="recovery-damage" class="avoid-break">
-        <div class="row compact">
-            <div class="two columns">
-                <strong>Recovery:</strong>
-            </div>
-            <div class="two columns">
-                1D6 + {{ character.recovery_roll }}
-            </div>
-            <div class="two columns">
-                <span {% if character.one_action %}class="strikethrough"{% endif %}>1 Action</span>
-            </div>
-            <div class="two columns">
-                <span {% if character.ten_minutes %}class="strikethrough"{% endif %}>10 Min</span>
-            </div>
-            <div class="two columns">
-                <span {% if character.one_hour %}class="strikethrough"{% endif %}>1 Hr</span>
-            </div>
-            <div class="two columns">
-                <span {% if character.ten_hours %}class="strikethrough"{% endif %}>10 Hr</span>
-            </div>
-        </div>
-        <div class="row compact">
-            <div class="two columns">
-                <strong>Dmg. Track:</strong>
-            </div>
-            <div class="two columns">
-                <span {% if character.impaired %}class="highlighted"{% endif %}>Impaired</span>
-            </div>
-            <div class="two columns">
-                <span {% if character.debilitated %}class="highlighted"{% endif %}>Debilitated</span>
-            </div>
-        </div>
-        <hr />
-    </section>
-    <!-- Attacks -->
-    <section id="attacks" class="avoid-break">
-        <h2>Attacks</h2>
-        <div class="row">
-        {% for item in character.attack_set.all %}
-            <span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Equipment -->
-    <section id="equipment" class="avoid-break">
-        <h2>Equipment</h2>
-        <div class="row">
-        {% for item in character.characterequipment_set.all %}
-            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity }}) <em>{{item.brief_note }}</em> <strong>{{ item.recursion.name|default:"---" }}</strong></span>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Skills -->
-    <section id="skills" class="avoid-break">
-        <h2>Skills</h2>
-        <div class="row">
-        {% for item in character.characterskill_set.all %}
-            <span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Base Abilities and Characteristics -->
-    <section id="base-abilities" class="avoid-break">
-        <h2>Base Abiliites &amp; Characteristics</h2>
-        <div class="compact">
-            <h3>Type:</h3>
-            <div class="indent">{{ character.type.base_abilities|linebreaks }}</div>
-            <h3>Descriptor:</h3>
-            <div class="indent">{{ character.descriptor.characteristics|linebreaks }}</div>
-        </div>
-        <hr />
-    </section>
-    <!-- Special Abilities -->
-    <section id="special-abilities">
-        <h2>Special Abilities</h2>
-        <div class="row">
-        {% for item in character.abilities.all %}
-            <div class="avoid-break">
-                <h3>{{ item.name }} ({{ item.usage }}; Cost: {{ item.cost }})</h3>
-                <div class="compact indent">{{ item.description|linebreaks }}</div>
-            </div>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Cyphers -->
-    <section id="cyphers" class="avoid-break">
-        <h2>Cyphers</h2>
-        <div class="row avoid-break">
-        {% for item in character.charactercypher_set.all %}
-            <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
-            <div class="compact indent">
-                {{ item.cypher.form }} {{ item.cypher.effect }}
-            </div>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Artifacts -->
-    <section id="artifacts" class="avoid-break">
-        <h2>Artifacts</h2>
-        <div class="row avoid-break">
-        {% for item in character.characterartifact_set.all %}
-            <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }}, Recursion: {{ item.recursion.name|default:"---" }})</h3>
-            <div class="compact indent">
-                {{ item.artifact.form }} {{ item.artifact.effect }}
-            </div>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Notes -->
-    <section id="notes" class="avoid-break">
-        <div class="row">
-            <h2>Notes</h2>
-            <div class="compact indent">{{ character.notes|linebreaks }}</div>
-        </div>
-        <hr class="no-print" />
-    </section>
-    <!-- Character Recursions -->
-    <section id="recursions">
-        {% for item in character.recursion_set.all %}
-        <div class="breakbefore row">
-            <h1>Recursion: {{ item.name }}</h1>
-            <!-- Recursion Stat Pools -->
-            <section class="recursion-stat-pools avoid-break">
-                <div class="row compact">
-                    <div class="four columns">
-                        <strong>Might</strong>
-                    </div>
-                    <div class="four columns">
-                        <strong>Speed</strong>
-                    </div>
-                    <div class="four columns">
-                        <strong>Intellect</strong>
-                    </div>
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'strange/css/custom.css' %}" />{% endblock %}
+{% block recursable_stats %}{% endblock %}
+{% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
+{% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity }}) <em>{{item.brief_note }}</em> <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
+{% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
+{% block recursions %}
+<!-- Character Recursions -->
+<section id="recursions">
+    {% for item in character.recursion_set.all %}
+    <div class="breakbefore row">
+        <h1>Recursion: {{ item.name }}</h1>
+        <!-- Recursion Stat Pools -->
+        <section class="stat-pools avoid-break">
+            <div class="row compact">
+                <div class="four columns">
+                    <strong>Might</strong>
                 </div>
-                <div class="row compact">
-                    <div class="two columns">
-                        Pool:
-                    </div>
-                    <div class="two columns">
-                        {{ character.might_pool|add:item.might_pool_adjust }} ({{ character.might_current|add:item.might_pool_adjust }}*)
-                    </div>
-                    <div class="two columns">
-                        Pool:
-                    </div>
-                    <div class="two columns">
-                        {{ character.speed_pool|add:item.speed_pool_adjust }} ({{ character.speed_current|add:item.speed_pool_adjust }}*)
-                    </div>
-                    <div class="two columns">
-                        Pool:
-                    </div>
-                    <div class="two columns">
-                        {{ character.intellect_pool|add:item.intellect_pool_adjust }} ({{ character.intellect_current|add:item.intellect_pool_adjust }}*)
-                    </div>
+                <div class="four columns">
+                    <strong>Speed</strong>
                 </div>
-                <div class="row compact">
-                    <div class="two columns">
-                        Edge:
-                    </div>
-                    <div class="two columns">
-                        {{ character.might_edge|add:item.might_edge_adjust }}
-                    </div>
-                    <div class="two columns">
-                        Edge:
-                    </div>
-                    <div class="two columns">
-                        {{ character.speed_edge|add:item.speed_edge_adjust }}
-                    </div>
-                    <div class="two columns">
-                        Edge:
-                    </div>
-                    <div class="two columns">
-                        {{ character.intellect_edge|add:item.intellect_edge_adjust }}
-                    </div>
+                <div class="four columns">
+                    <strong>Intellect</strong>
                 </div>
-                <div class="row compact">
-                    <div class="twelve columns compact">
-                        *Adjusted value based on Equipment and other factors
-                    </div>
-                </div>
-                <hr />
-                <!-- Recursion Other Stats -->
-                <div class="row compact">
-                    <div class="two columns">
-                        <strong>Armor:</strong>
-                    </div>
-                    <div class="two columns">
-                        {{ item.armor }}
-                    </div>
-                    <div class="two columns">
-                        <strong>Money:</strong>
-                    </div>
-                    <div class="two columns">
-                        {{ item.money }}
-                    </div>
-                </div>
-                <hr />
             </div>
-        </section>
-        <h2>Focus: {{ item.focus.name }}</h2>
-        <div class="compact indent">{{ item.focus.other_details|linebreaks }}</div>
-        <!-- Recursion Special Abilities -->
-        <section class="recursion-special-abilities">
-            <h2>Special Abilities</h2>
-            <div class="row">
-            {% for ability in item.abilities.all %}
-                <div class="avoid-break">
-                    <h3>{{ ability.name }} ({{ ability.usage }}; Cost: {{ ability.cost }})</h3>
-                    <div class="compact indent">{{ ability.description|linebreaks }}</div>
+            <div class="row compact">
+                <div class="two columns">
+                    Pool:
                 </div>
-            {% endfor %}
+                <div class="two columns">
+                    {{ character.might_pool|add:item.might_pool_adjust }} ({{ character.might_current|add:item.might_pool_adjust }}*)
+                </div>
+                <div class="two columns">
+                    Pool:
+                </div>
+                <div class="two columns">
+                    {{ character.speed_pool|add:item.speed_pool_adjust }} ({{ character.speed_current|add:item.speed_pool_adjust }}*)
+                </div>
+                <div class="two columns">
+                    Pool:
+                </div>
+                <div class="two columns">
+                    {{ character.intellect_pool|add:item.intellect_pool_adjust }} ({{ character.intellect_current|add:item.intellect_pool_adjust }}*)
+                </div>
+            </div>
+            <div class="row compact">
+                <div class="two columns">
+                    Edge:
+                </div>
+                <div class="two columns">
+                    {{ character.might_edge|add:item.might_edge_adjust }}
+                </div>
+                <div class="two columns">
+                    Edge:
+                </div>
+                <div class="two columns">
+                    {{ character.speed_edge|add:item.speed_edge_adjust }}
+                </div>
+                <div class="two columns">
+                    Edge:
+                </div>
+                <div class="two columns">
+                    {{ character.intellect_edge|add:item.intellect_edge_adjust }}
+                </div>
+            </div>
+            <div class="row compact">
+                <div class="twelve columns compact">
+                    *Adjusted value based on Equipment and other factors
+                </div>
             </div>
             <hr />
-        </section>
-        {% endfor %}
+            <!-- Recursion Other Stats -->
+            <div class="row compact">
+                <div class="two columns">
+                    <strong>Armor:</strong>
+                </div>
+                <div class="two columns">
+                    {{ item.armor }}
+                </div>
+                <div class="two columns">
+                    <strong>Money:</strong>
+                </div>
+                <div class="two columns">
+                    {{ item.money }}
+                </div>
+            </div>
+            <hr />
+        </div>
     </section>
-    {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | <a href="/strange/characters/{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
-    {% else %}
-    <span class="breadcrumbs"><a href="/strange/">Index</a> | <a href="/strange/characters/">Character List</a> | {{ character.name }} | <a href="/strange/characters/{{ character.slug }}/summary/">Summary</a></span>
-    {% endif %}
+    <h2>Focus: {{ item.focus.name }}</h2>
+    <div class="compact indent">{{ item.focus.other_details|linebreaks }}</div>
+    <!-- Recursion Special Abilities -->
+    <section class="recursion-special-abilities">
+        <h2>Special Abilities</h2>
+        <div class="row">
+        {% for ability in item.abilities.all %}
+            <div class="avoid-break">
+                <h3>{{ ability.name }} ({{ ability.usage }}; Cost: {{ ability.cost }})</h3>
+                <div class="compact indent">{{ ability.description|linebreaks }}</div>
+            </div>
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    {% endfor %}
+</section>
 {% endblock %}

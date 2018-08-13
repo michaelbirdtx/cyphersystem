@@ -1,13 +1,6 @@
-{% extends "strange/base.html" %}
-{% block subtitle %}Descriptor{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
-    <h1>The Strange: Descriptors</h1>
-    <ul>
-        {% for descriptor in descriptor_list %}
-        <li><a href="{{ descriptor.slug }}">{{ descriptor.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <hr />
-    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
-{% endblock %}
+{% extends "cyphercore/base_descriptor_list.html" %}
+{% load static %}
+{% block title %}The Strange{% endblock %}
+{% block subtitle %}Descriptors{% endblock %}
+{% block header_text %}The Strange: Descriptors{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'strange/css/custom.css' %}" />{% endblock %}

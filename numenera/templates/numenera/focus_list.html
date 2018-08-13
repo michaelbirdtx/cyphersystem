@@ -1,13 +1,6 @@
-{% extends "numenera/base.html" %}
+{% extends "cyphercore/base_focus_list.html" %}
+{% load static %}
+{% block title %}Numenera{% endblock %}
 {% block subtitle %}Foci{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../">Index</a> | Focus List</span>
-    <h1>Numenera: Foci</h1>
-    <ul>
-        {% for focus in focus_list %}
-        <li><a href="{{ focus.slug }}">{{ focus.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <hr />
-    <span class="breadcrumbs"><a href="../">Index</a> | Focus List</span>
-{% endblock %}
+{% block header_text %}Numenera: Foci{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'numenera/css/custom.css' %}" />{% endblock %}

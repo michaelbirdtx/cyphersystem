@@ -1,13 +1,6 @@
-{% extends "numenera/base.html" %}
+{% extends "cyphercore/base_skill_list.html" %}
+{% load static %}
+{% block title %}Numenera{% endblock %}
 {% block subtitle %}Skills{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../">Index</a> | Skill List</span>
-    <h1>Numenera: Skills</h1>
-    <ul>
-        {% for skill in skill_list %}
-        <li>{{ skill.name }}</li>
-        {% endfor %}
-    </ul>
-    <hr />
-    <span class="breadcrumbs"><a href="../">Index</a> | Skill List</span>
-{% endblock %}
+{% block header_text %}Numenera: Skills{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'numenera/css/custom.css' %}" />{% endblock %}

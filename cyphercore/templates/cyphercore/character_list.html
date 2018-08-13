@@ -1,13 +1,6 @@
-{% extends "cyphercore/base.html" %}
+{% extends "cyphercore/base_character_list.html" %}
+{% load static %}
+{% block title %}Cypher Core{% endblock %}
 {% block subtitle %}Characters{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
-    <h1>Cypher Core: Characters</h1>
-    <ul>
-        {% for character in character_list %}
-        <li><a href="{{ character.slug }}">{{ character.name }}</a> is {{ character.descriptor.prefix}} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}</li>
-        {% endfor %}
-    </ul>
-    <hr />
-    <span class="breadcrumbs"><a href="../">Index</a> | Character List</span>
-{% endblock %}
+{% block header_text %}Cypher Core: Characters{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
