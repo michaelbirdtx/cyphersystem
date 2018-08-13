@@ -1,43 +1,5 @@
-{% extends "numenera/base.html" %}
+{% extends "cyphercore/base_type_detail.html" %}
+{% load static %}
+{% block title %}Numenera{% endblock %}
 {% block subtitle %}{{ type.name }}{% endblock %}
-{% block content %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}</span>
-    <h1>Type: {{ type.name }}</h1>
-    {{ type.description|linebreaks }}
-    <hr/>
-
-    <div>{{ type.base_abilities|linebreaks }}</div>
-    <hr/>
-    <h2>Base Stats (+{{ type.pool_points }} Points to Spend)</h2>
-    <table class="avoid-break">
-        <tr>
-            <td>Might Pool:</td>
-            <td>{{ type.might_pool }}</td>
-            <td>Might Edge:</td>
-            <td>{{ type.might_edge }}</td>
-        </tr>
-        <tr>
-            <td>Speed Pool:</td>
-            <td>{{ type.speed_pool }}</td>
-            <td>Speed Edge:</td>
-            <td>{{ type.speed_edge }}</td>
-        </tr>
-        <tr>
-            <td>Intellect Pool:</td>
-            <td>{{ type.intellect_pool }}</td>
-            <td>Intellect Edge:</td>
-            <td>{{ type.intellect_edge }}</td>
-        </tr>
-    </table>
-
-    <h2>Available Abilities</h2>
-    {% for item in type.typeability_set.all %}
-        <h3>Tier {{ item.tier }}:
-        {{ item.ability.name }}
-        ({{ item.ability.usage }};
-        Cost: {{ item.ability.cost }})</h3>
-        <div class="indent">{{ item.ability.description|linebreaks }}</div>
-    {% endfor %}
-    <hr />
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Type List</a> | {{ type.name }}</span>
-{% endblock %}
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'numenera/css/custom.css' %}" />{% endblock %}
