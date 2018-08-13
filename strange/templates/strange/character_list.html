@@ -4,3 +4,4 @@
 {% block subtitle %}Characters{% endblock %}
 {% block header_text %}The Strange: Characters{% endblock %}
 {% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'strange/css/custom.css' %}" />{% endblock %}
+{% block character_item %}<li><a href="{{ character.slug }}">{{ character.name }}</a> is {{ character.descriptor.prefix}} {{ character.descriptor }} {{ character.type }}</li>{% endblock %}
