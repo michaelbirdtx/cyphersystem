@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/normalize.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/skeleton.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/shared.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />
+        {% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
         <link rel="icon" type="image/png" href="{% static 'cyphercore/images/favicon.png' %}" />
         <style>{% block pagestyles %}{% endblock %}</style>
     </head>
