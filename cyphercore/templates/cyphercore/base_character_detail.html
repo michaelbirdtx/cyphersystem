@@ -3,7 +3,7 @@
 {% block pagestyles %}
     {% if "summary" in request.path %}
     #portrait-background { display: none; }
-    #stat-pools { display: none; }
+    .stat-pools { display: none; }
     #other-stats { display: none; }
     #attacks { display: none; }
     #recovery-damage { display: none; }
@@ -35,7 +35,7 @@
         <hr />
     </section>
     <!-- Stat Pools -->
-    <section id="stat-pools" class="avoid-break">
+    <section class="stat-pools" class="avoid-break">
         <div class="row compact">
             <div class="four columns">
                 <strong>Might</strong>
@@ -98,16 +98,10 @@
     <section id="other-stats" class="avoid-break">
         <div class="row compact">
             <div class="two columns">
-                <strong>Armor:</strong>
+                <strong>Cyper Limit:</strong>
             </div>
             <div class="two columns">
-                {{ character.armor }}
-            </div>
-            <div class="two columns">
-                <strong>Tier:</strong>
-            </div>
-            <div class="two columns">
-                {{ character.tier }}
+                {{ character.cypher_limit }}
             </div>
             <div class="two columns">
                 <strong>Effort:</strong>
@@ -115,13 +109,20 @@
             <div class="two columns">
                 {{ character.effort }}
             </div>
-        </div>
-        <div class="row compact">
             <div class="two columns">
-                <strong>Cyper Limit:</strong>
+                <strong>Tier:</strong>
             </div>
             <div class="two columns">
-                {{ character.cypher_limit }}
+                {{ character.tier }}
+            </div>
+        </div>
+        {% block recursable_stats %}
+        <div class="row compact">
+            <div class="two columns">
+                <strong>Armor:</strong>
+            </div>
+            <div class="two columns">
+                {{ character.armor }}
             </div>
             <div class="two columns">
                 <strong>Money:</strong>
@@ -136,6 +137,7 @@
                 {{ character.xp }}
             </div>
         </div>
+        {% endblock %}
         <hr />
     </section>
     <!-- Recovery & Damage Track -->
@@ -178,7 +180,7 @@
         <h2>Attacks</h2>
         <div class="row">
         {% for item in character.attack_set.all %}
-            <span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>
+            {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>{% endblock %}
         {% endfor %}
         </div>
         <hr />
@@ -188,7 +190,7 @@
         <h2>Equipment</h2>
         <div class="row">
         {% for item in character.characterequipment_set.all %}
-            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>
+            {% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>{% endblock %}
         {% endfor %}
         </div>
         <hr />
@@ -198,7 +200,7 @@
         <h2>Skills</h2>
         <div class="row">
         {% for item in character.characterskill_set.all %}
-            <span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>
+            {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>{% endblock %}
         {% endfor %}
         </div>
         <hr />
@@ -213,16 +215,6 @@
             <div class="indent">{{ character.descriptor.characteristics|linebreaks }}</div>
             <h3>Focus:</h3>
             <div class="indent">{{ character.focus.other_details|linebreaks }}</div>
-        </div>
-        <hr />
-    </section>
-    <!-- Skills -->
-    <section id="skills" class="avoid-break">
-        <h2>Skills</h2>
-        <div class="row">
-        {% for item in character.characterskill_set.all %}
-            <span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>
-        {% endfor %}
         </div>
         <hr />
     </section>
@@ -273,6 +265,8 @@
         </div>
         <hr class="no-print" />
     </section>
+    {% block recursions %}
+    {% endblock %}
     {% if "summary" in request.path %}
     <span class="breadcrumbs"><a href="../../../">Index</a> | <a href="../../">Character List</a> | <a href="../../{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
     {% else %}
