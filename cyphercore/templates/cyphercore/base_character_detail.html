@@ -179,6 +179,98 @@
         </div>
         <hr />
     </section>
+    <!-- Attacks -->
+    <section id="attacks" class="avoid-break">
+        <h2>Attacks</h2>
+        <div class="row">
+        {% for item in character.attack_set.all %}
+            {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>{% endblock %}
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    <!-- Equipment -->
+    <section id="equipment" class="avoid-break">
+        <h2>Equipment</h2>
+        <div class="row">
+        {% for item in character.characterequipment_set.all %}
+            {% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>{% endblock %}
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    <!-- Skills -->
+    <section id="skills" class="avoid-break">
+        <h2>Skills</h2>
+        <div class="row">
+        {% for item in character.characterskill_set.all %}
+            {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>{% endblock %}
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    <!-- Base Abilities and Characteristics -->
+    <section id="base-abilities" class="avoid-break">
+        <h2>Base Abiliites &amp; Characteristics</h2>
+        <div>
+            <h3>Type:</h3>
+            <div class="indent">{{ character.type.base_abilities|linebreaks }}</div>
+            <h3>Descriptor:</h3>
+            <div class="indent">{{ character.descriptor.characteristics|linebreaks }}</div>
+            {% block focus_abilities %}
+            <h3>Focus:</h3>
+            <div class="indent">{{ character.focus.other_details|linebreaks }}</div>
+            {% endblock %}
+        </div>
+        <hr />
+    </section>
+    <!-- Special Abilities -->
+    <section id="special-abilities">
+        <h2>Special Abilities</h2>
+        <div class="row">
+        {% for item in character.abilities.all %}
+            <div class="avoid-break">
+                <h3>{{ item.name }} ({{ item.usage }}; Cost: {{ item.cost }})</h3>
+                <div class="indent">{{ item.description|linebreaks }}</div>
+            </div>
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    <!-- Cyphers -->
+    <section id="cyphers" class="avoid-break">
+        <h2>Cyphers</h2>
+        <div class="row">
+        {% for item in character.charactercypher_set.all %}
+            <div class="avoid-break">
+                <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
+                <div class="indent">{{ item.appearance }} {{ item.cypher.effect }}</div>
+            </div>
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    <!-- Artifacts -->
+    <section id="artifacts" class="avoid-break">
+        <h2>Artifacts</h2>
+        <div class="row">
+        {% for item in character.characterartifact_set.all %}
+            <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }})</h3>
+            <div class="indent">
+                {{ item.artifact.form }} {{ item.artifact.effect }}
+            </div>
+        {% endfor %}
+        </div>
+        <hr />
+    </section>
+    <!-- Notes -->
+    <section id="notes" class="avoid-break">
+        <div class="row">
+            <h2>Notes</h2>
+            <div class="indent">{{ character.notes|linebreaks }}</div>
+        </div>
+        <hr />
+    </section>
     <!-- Advancement -->
     <section id="advancement" class="avoid-break">
         <h3>Advancement:</h3>
@@ -312,98 +404,6 @@
             </div>
         </div>
         {% endif %}
-        <hr />
-    </section>
-    <!-- Attacks -->
-    <section id="attacks" class="avoid-break">
-        <h2>Attacks</h2>
-        <div class="row">
-        {% for item in character.attack_set.all %}
-            {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>{% endblock %}
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Equipment -->
-    <section id="equipment" class="avoid-break">
-        <h2>Equipment</h2>
-        <div class="row">
-        {% for item in character.characterequipment_set.all %}
-            {% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>{% endblock %}
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Skills -->
-    <section id="skills" class="avoid-break">
-        <h2>Skills</h2>
-        <div class="row">
-        {% for item in character.characterskill_set.all %}
-            {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>{% endblock %}
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Base Abilities and Characteristics -->
-    <section id="base-abilities" class="avoid-break">
-        <h2>Base Abiliites &amp; Characteristics</h2>
-        <div>
-            <h3>Type:</h3>
-            <div class="indent">{{ character.type.base_abilities|linebreaks }}</div>
-            <h3>Descriptor:</h3>
-            <div class="indent">{{ character.descriptor.characteristics|linebreaks }}</div>
-            {% block focus_abilities %}
-            <h3>Focus:</h3>
-            <div class="indent">{{ character.focus.other_details|linebreaks }}</div>
-            {% endblock %}
-        </div>
-        <hr />
-    </section>
-    <!-- Special Abilities -->
-    <section id="special-abilities">
-        <h2>Special Abilities</h2>
-        <div class="row">
-        {% for item in character.abilities.all %}
-            <div class="avoid-break">
-                <h3>{{ item.name }} ({{ item.usage }}; Cost: {{ item.cost }})</h3>
-                <div class="indent">{{ item.description|linebreaks }}</div>
-            </div>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Cyphers -->
-    <section id="cyphers" class="avoid-break">
-        <h2>Cyphers</h2>
-        <div class="row">
-        {% for item in character.charactercypher_set.all %}
-            <div class="avoid-break">
-                <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
-                <div class="indent">{{ item.appearance }} {{ item.cypher.effect }}</div>
-            </div>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Artifacts -->
-    <section id="artifacts" class="avoid-break">
-        <h2>Artifacts</h2>
-        <div class="row">
-        {% for item in character.characterartifact_set.all %}
-            <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }})</h3>
-            <div class="indent">
-                {{ item.artifact.form }} {{ item.artifact.effect }}
-            </div>
-        {% endfor %}
-        </div>
-        <hr />
-    </section>
-    <!-- Notes -->
-    <section id="notes" class="avoid-break">
-        <div class="row">
-            <h2>Notes</h2>
-            <div class="indent">{{ character.notes|linebreaks }}</div>
-        </div>
         <hr />
     </section>
     {% block recursions %}
