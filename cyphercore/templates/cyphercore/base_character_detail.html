@@ -352,8 +352,10 @@
             <div class="indent">{{ character.type.base_abilities|linebreaks }}</div>
             <h3>Descriptor:</h3>
             <div class="indent">{{ character.descriptor.characteristics|linebreaks }}</div>
+            {% block focus_abilities %}
             <h3>Focus:</h3>
             <div class="indent">{{ character.focus.other_details|linebreaks }}</div>
+            {% endblock %}
         </div>
         <hr />
     </section>
