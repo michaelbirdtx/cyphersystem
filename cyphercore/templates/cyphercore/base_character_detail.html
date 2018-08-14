@@ -10,6 +10,9 @@
     #equipment { display: none; }
     #cyphers { display: none; }
     #artifacts { display: none; }
+    #recursion { break-before: avoid; page-break-before: avoid; }
+    {% else %}
+    .recursion { break-before: always; page-break-before: always; }
     {% endif %}
     {% if not character.portrait_link %}
     #picture-frame { display: none; }
@@ -36,7 +39,7 @@
     </section>
     <!-- Stat Pools -->
     <section class="stat-pools" class="avoid-break">
-        <div class="row compact">
+        <div class="row">
             <div class="four columns">
                 <strong>Might</strong>
             </div>
@@ -47,7 +50,7 @@
                 <strong>Intellect</strong>
             </div>
         </div>
-        <div class="row compact">
+        <div class="row">
             <div class="two columns">
                 Pool:
             </div>
@@ -67,7 +70,7 @@
                 {{ character.intellect_pool }} ({{ character.intellect_current }}*)
             </div>
         </div>
-        <div class="row compact">
+        <div class="row">
             <div class="two columns">
                 Edge:
             </div>
@@ -87,8 +90,8 @@
                 {{ character.intellect_edge }}
             </div>
         </div>
-        <div class="row compact">
-            <div class="twelve columns compact">
+        <div class="row">
+            <div class="twelve columns">
                 *Adjusted value based on Equipment and other factors
             </div>
         </div>
@@ -96,7 +99,7 @@
     </section>
     <!-- Other Stats -->
     <section id="other-stats" class="avoid-break">
-        <div class="row compact">
+        <div class="row">
             <div class="two columns">
                 <strong>Cyper Limit:</strong>
             </div>
@@ -117,7 +120,7 @@
             </div>
         </div>
         {% block recursable_stats %}
-        <div class="row compact">
+        <div class="row">
             <div class="two columns">
                 <strong>Armor:</strong>
             </div>
@@ -142,7 +145,7 @@
     </section>
     <!-- Recovery & Damage Track -->
     <section id="recovery-damage" class="avoid-break">
-        <div class="row compact">
+        <div class="row">
             <div class="two columns">
                 <strong>Recovery:</strong>
             </div>
@@ -162,7 +165,7 @@
                 <span {% if character.ten_hours %}class="strikethrough"{% endif %}>10 Hr</span>
             </div>
         </div>
-        <div class="row compact">
+        <div class="row">
             <div class="two columns">
                 <strong>Dmg. Track:</strong>
             </div>
@@ -208,7 +211,7 @@
     <!-- Base Abilities and Characteristics -->
     <section id="base-abilities" class="avoid-break">
         <h2>Base Abiliites &amp; Characteristics</h2>
-        <div class="compact">
+        <div>
             <h3>Type:</h3>
             <div class="indent">{{ character.type.base_abilities|linebreaks }}</div>
             <h3>Descriptor:</h3>
@@ -225,32 +228,32 @@
         {% for item in character.abilities.all %}
             <div class="avoid-break">
                 <h3>{{ item.name }} ({{ item.usage }}; Cost: {{ item.cost }})</h3>
-                <div class="compact indent">{{ item.description|linebreaks }}</div>
+                <div class="indent">{{ item.description|linebreaks }}</div>
             </div>
         {% endfor %}
         </div>
         <hr />
     </section>
     <!-- Cyphers -->
-    <section id="cyphers">
+    <section id="cyphers" class="avoid-break">
         <h2>Cyphers</h2>
         <div class="row">
         {% for item in character.charactercypher_set.all %}
-            <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
-            <div class="compact indent">
-                {{ item.appearance }} {{ item.cypher.effect }}
+            <div class="avoid-break">
+                <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
+                <div class="indent">{{ item.appearance }} {{ item.cypher.effect }}</div>
             </div>
         {% endfor %}
         </div>
         <hr />
     </section>
     <!-- Artifacts -->
-    <section id="artifacts">
+    <section id="artifacts" class="avoid-break">
         <h2>Artifacts</h2>
         <div class="row">
         {% for item in character.characterartifact_set.all %}
             <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }})</h3>
-            <div class="compact indent">
+            <div class="indent">
                 {{ item.artifact.form }} {{ item.artifact.effect }}
             </div>
         {% endfor %}
@@ -258,12 +261,12 @@
         <hr />
     </section>
     <!-- Notes -->
-    <section id="notes">
+    <section id="notes" class="avoid-break">
         <div class="row">
             <h2>Notes</h2>
-            <div class="compact indent">{{ character.notes|linebreaks }}</div>
+            <div class="indent">{{ character.notes|linebreaks }}</div>
         </div>
-        <hr class="no-print" />
+        <hr />
     </section>
     {% block recursions %}
     {% endblock %}

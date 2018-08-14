@@ -12,11 +12,11 @@
 <!-- Character Recursions -->
 <section id="recursions">
     {% for item in character.recursion_set.all %}
-    <div class="breakbefore row">
+    <div class="recursion row">
         <h1>Recursion: {{ item.name }}</h1>
         <!-- Recursion Stat Pools -->
         <section class="stat-pools avoid-break">
-            <div class="row compact">
+            <div class="row">
                 <div class="four columns">
                     <strong>Might</strong>
                 </div>
@@ -27,7 +27,7 @@
                     <strong>Intellect</strong>
                 </div>
             </div>
-            <div class="row compact">
+            <div class="row">
                 <div class="two columns">
                     Pool:
                 </div>
@@ -47,7 +47,7 @@
                     {{ character.intellect_pool|add:item.intellect_pool_adjust }} ({{ character.intellect_current|add:item.intellect_pool_adjust }}*)
                 </div>
             </div>
-            <div class="row compact">
+            <div class="row">
                 <div class="two columns">
                     Edge:
                 </div>
@@ -67,14 +67,14 @@
                     {{ character.intellect_edge|add:item.intellect_edge_adjust }}
                 </div>
             </div>
-            <div class="row compact">
-                <div class="twelve columns compact">
+            <div class="row">
+                <div class="twelve columns">
                     *Adjusted value based on Equipment and other factors
                 </div>
             </div>
             <hr />
             <!-- Recursion Other Stats -->
-            <div class="row compact">
+            <div class="row">
                 <div class="two columns">
                     <strong>Armor:</strong>
                 </div>
@@ -92,7 +92,7 @@
         </div>
     </section>
     <h2>Focus: {{ item.focus.name }}</h2>
-    <div class="compact indent">{{ item.focus.other_details|linebreaks }}</div>
+    <div class="indent">{{ item.focus.other_details|linebreaks }}</div>
     <!-- Recursion Special Abilities -->
     <section class="recursion-special-abilities">
         <h2>Special Abilities</h2>
@@ -100,7 +100,7 @@
         {% for ability in item.abilities.all %}
             <div class="avoid-break">
                 <h3>{{ ability.name }} ({{ ability.usage }}; Cost: {{ ability.cost }})</h3>
-                <div class="compact indent">{{ ability.description|linebreaks }}</div>
+                <div class="indent">{{ ability.description|linebreaks }}</div>
             </div>
         {% endfor %}
         </div>
