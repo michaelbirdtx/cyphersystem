@@ -126,6 +126,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), 'descriptor', 'type', 'focus', ('cypher_limit', 'effort', 'tier'), ('armor', 'money', 'xp'), 'background', 'notes', 'portrait_link']}),
         ('STATS', {'fields': [('might_pool', 'might_current', 'might_edge'), ('speed_pool', 'speed_current', 'speed_edge'), ('intellect_pool', 'intellect_current', 'intellect_edge')]}),
         ('DAMAGE TRACK', {'fields': [('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')]}),
+        ('ADVANCEMENT', {'fields': [('tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other', 'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'), ('tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other', 'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'), ('tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other', 'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other')]}),
         ('ABILITIES', {'fields': ['abilities']})
     ]
     filter_horizontal = ('abilities',)

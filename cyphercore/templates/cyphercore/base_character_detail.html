@@ -178,6 +178,141 @@
         </div>
         <hr />
     </section>
+    <!-- Advancement -->
+    <section id="advancement" class="avoid-break">
+        <h3>Advancement:</h3>
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 1:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% if character.tier > 1 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 2:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 2 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 3:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 3 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 4:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 4 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 5:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 5 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 6:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        <hr />
+    </section>
     <!-- Attacks -->
     <section id="attacks" class="avoid-break">
         <h2>Attacks</h2>
