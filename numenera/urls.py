@@ -14,6 +14,7 @@ urlpatterns = [
     path('characters/<slug:slug>/', views.CharacterDetailView.as_view(), name='character_detail'),
     path('characters/<slug:slug>/summary/', views.CharacterDetailView.as_view(), name='character_detail'),
     path('cyphers/', views.CypherListView.as_view(), name='cypher_list'),
+    path('cyphers/cards/', views.CypherCardsView.as_view(), name='cypher_cards'),
     path('cyphers/<slug:slug>/', views.CypherDetailView.as_view(), name='cypher_detail'),
     path('descriptors/', views.DescriptorListView.as_view(), name='descriptor_list'),
     path('descriptors/<slug:slug>/', views.DescriptorDetailView.as_view(), name='descriptor_detail'),

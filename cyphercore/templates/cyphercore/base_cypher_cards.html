@@ -1,0 +1,11 @@
+{% extends "cyphercore/base.html" %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | Cypher Cards</span>
+    {% for cypher in cypher_list %}
+    <h1>{% block header_text %}Cypher: {{ cypher.name }}{% endblock %}</h1>
+    <h2>Level Range: {{ cypher.level_range }}</h2>
+    <div>{% block cypher_form %}{% endblock %}{{ cypher.effect|linebreaks }}</div>
+    <hr class="breakafter" />
+    {% endfor %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | Cypher Cards</span>
+{% endblock %}

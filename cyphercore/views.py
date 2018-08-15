@@ -78,6 +78,11 @@ class CypherListView(LoginRequiredMixin, generic.ListView):
     model = Cypher
     template_name = 'cyphercore/cypher_list.html'
 
+class CypherCardsView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Cypher
+    template_name = 'cyphercore/cypher_cards.html'
+
 class CypherDetailView(LoginRequiredMixin, generic.DetailView):
     login_url = BASE_LOGIN_URL
     model = Cypher
