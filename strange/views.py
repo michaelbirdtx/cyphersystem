@@ -93,6 +93,11 @@ class ArtifactListView(LoginRequiredMixin, generic.ListView):
     model = Artifact
     template_name = 'strange/artifact_list.html'
 
+class ArtifactCardsView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Artifact
+    template_name = 'strange/artifact_cards.html'
+
 class ArtifactDetailView(LoginRequiredMixin, generic.DetailView):
     login_url = BASE_LOGIN_URL
     model = Artifact

@@ -9,6 +9,7 @@ urlpatterns = [
     path('abilities/', views.AbilityListView.as_view(), name='ability_list'),
     path('abilities/<slug:slug>/', views.AbilityDetailView.as_view(), name='ability_detail'),
     path('artifacts/', views.ArtifactListView.as_view(), name='artifact_list'),
+    path('artifacts/cards/', views.ArtifactCardsView.as_view(), name='artifact_cards'),
     path('artifacts/<slug:slug>/', views.ArtifactDetailView.as_view(), name='artifact_detail'),
     path('characters/', views.CharacterListView.as_view(), name='character_list'),
     path('characters/<slug:slug>/', views.CharacterDetailView.as_view(), name='character_detail'),
