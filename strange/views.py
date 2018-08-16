@@ -18,6 +18,11 @@ class AbilityDetailView(LoginRequiredMixin, generic.DetailView):
     model = Ability
     template_name = 'strange/ability_detail.html'
 
+class AbilityCardsView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Ability
+    template_name = 'strange/ability_cards.html'
+
 class AbilityListView(LoginRequiredMixin, generic.ListView):
     login_url = BASE_LOGIN_URL
     model = Ability

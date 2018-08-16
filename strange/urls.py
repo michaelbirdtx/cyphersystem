@@ -7,6 +7,7 @@ app_name = 'strange'
 urlpatterns = [
     path('', views.index, name='index'),
     path('abilities/', views.AbilityListView.as_view(), name='ability_list'),
+    path('abilities/cards/', views.AbilityCardsView.as_view(), name='ability_cards'),
     path('abilities/<slug:slug>/', views.AbilityDetailView.as_view(), name='ability_detail'),
     path('artifacts/', views.ArtifactListView.as_view(), name='artifact_list'),
     path('artifacts/cards/', views.ArtifactCardsView.as_view(), name='artifact_cards'),
