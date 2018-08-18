@@ -182,31 +182,25 @@
     <!-- Attacks -->
     <section id="attacks" class="avoid-break">
         <h2>Attacks</h2>
-        <div class="row">
         {% for item in character.attack_set.all %}
             {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>{% endblock %}
         {% endfor %}
-        </div>
         <hr />
     </section>
     <!-- Equipment -->
     <section id="equipment" class="avoid-break">
         <h2>Equipment</h2>
-        <div class="row">
         {% for item in character.characterequipment_set.all %}
             {% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>{% endblock %}
         {% endfor %}
-        </div>
         <hr />
     </section>
     <!-- Skills -->
     <section id="skills" class="avoid-break">
         <h2>Skills</h2>
-        <div class="row">
         {% for item in character.characterskill_set.all %}
             {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>{% endblock %}
         {% endfor %}
-        </div>
         <hr />
     </section>
     <!-- Base Abilities and Characteristics -->
