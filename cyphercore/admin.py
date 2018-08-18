@@ -5,7 +5,7 @@ admin.site.site_title = 'Cypher System'
 admin.site.index_title = 'Admin'
 
 # Register your models here.
-from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack
+from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher, CharacterArtifact, Attack
 
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -33,6 +33,16 @@ class TypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
+
+class CharacterAbilitiesInline(admin.TabularInline):
+    model = CharacterAbility
+    autocomplete_fields = ['ability']
+    extra = 0
+    fields = ('ability', 'note')
+    def get_queryset(self, request):
+        qs = super(CharacterAbilitiesInline, self).get_queryset(request)
+        qs = qs.prefetch_related('ability')
+        return qs
 
 class FocusAbilitiesInline(admin.TabularInline):
     model = FocusAbility
@@ -123,11 +133,9 @@ class CharacterAdmin(admin.ModelAdmin):
         ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), 'descriptor', 'type', 'focus', ('cypher_limit', 'effort', 'tier'), ('armor', 'money', 'xp'), 'background', 'notes', 'portrait_link']}),
         ('STATS', {'fields': [('might_pool', 'might_current', 'might_edge'), ('speed_pool', 'speed_current', 'speed_edge'), ('intellect_pool', 'intellect_current', 'intellect_edge')]}),
         ('DAMAGE TRACK', {'fields': [('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')]}),
-        ('ADVANCEMENT', {'fields': [('tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other', 'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'), ('tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other', 'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'), ('tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other', 'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other')]}),
-        ('ABILITIES', {'fields': ['abilities']})
+        ('ADVANCEMENT', {'fields': [('tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other', 'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'), ('tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other', 'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'), ('tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other', 'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other')]})
     ]
-    filter_horizontal = ('abilities',)
-    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline]
+    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterAbilitiesInline, CharacterCyphersInline, CharacterArtifactsInline]
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']

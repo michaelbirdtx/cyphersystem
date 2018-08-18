@@ -375,10 +375,15 @@
     <section id="special-abilities">
         <h2>Special Abilities</h2>
         <div class="row">
-        {% for item in character.abilities.all %}
+        {% for item in character.characterability_set.all %}
             <div class="avoid-break">
-                <h3>{{ item.name }} ({{ item.usage }}; Cost: {{ item.cost }})</h3>
-                <div class="indent">{{ item.description|linebreaks }}</div>
+                <h3>{{ item.ability.name }} ({{ item.ability.usage }}; Cost: {{ item.ability.cost }})</h3>
+                <div class="indent">
+                    {{ item.ability.description|linebreaks }}
+                    {% if item.note %}
+                    <em>{{ item.note|linebreaks }}</em>
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
         </div>

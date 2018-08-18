@@ -134,7 +134,7 @@ class baseCharacter(models.Model):
     tier_6_pools = models.BooleanField(default=False)
     tier_6_skills = models.BooleanField(default=False)
     tier_6_other = models.BooleanField(default=False)
-    #abilities = models.ManyToManyField(Ability)
+    #abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     #skills = models.ManyToManyField(Skill, through='CharacterSkill')
     #equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
     #cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
@@ -142,6 +142,18 @@ class baseCharacter(models.Model):
     slug = models.SlugField(max_length=100)
     def __str__(self):
         return self.name
+
+class baseCharacterAbility(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ['ability__name']
+        verbose_name = 'Ability'
+        verbose_name_plural = 'Abilities'
+    #character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    #equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    note = models.TextField(blank=True)
+    def __str__(self):
+        return self.ability.name
 
 class baseCharacterArtifact(models.Model):
     class Meta:
@@ -411,11 +423,16 @@ class Character(baseCharacter):
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
-    abilities = models.ManyToManyField(Ability, blank=True)
+    #abilities = models.ManyToManyField(Ability, blank=True)
+    abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
     equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
+
+class CharacterAbility(baseCharacterAbility):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 
 class CharacterArtifact(baseCharacterArtifact):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
