@@ -53,7 +53,7 @@ a:hover {
 br {
     content: "";
     display: block;
-    margin-bottom: .6rem;
+    margin-bottom: .4rem;
 }
 
 hr {
@@ -89,7 +89,7 @@ ul {
     border-radius: 3px;
     display: inline-block;
     line-height: 2.5rem;
-    margin: .2rem;
+    margin: .2rem 0;
     padding: 0 1rem;
     white-space: nowrap;
 }
@@ -142,6 +142,7 @@ ul {
 }
 
 .strikethrough {
+    color: gray;
     text-decoration: line-through;
 }
 
@@ -159,6 +160,7 @@ ul {
 
     html {
         font-size: 50%;
+        line-height: 1.2;
     }
 
     .avoid-break {
