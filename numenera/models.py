@@ -1,5 +1,5 @@
 from django.db import models
-from cyphercore.models import baseSourcebook, baseAbility, baseArtifact, baseCypher, baseDescriptor, baseEquipment, baseFocus, baseFocusAbility, baseSkill, baseType, baseTypeAbility, baseCharacter, baseCharacterArtifact, baseAttack, baseCharacterCypher, baseCharacterEquipment, baseCharacterSkill
+from cyphercore.models import baseSourcebook, baseAbility, baseArtifact, baseCypher, baseDescriptor, baseEquipment, baseFocus, baseFocusAbility, baseSkill, baseType, baseTypeAbility, baseCharacter, baseCharacterAbility, baseCharacterArtifact, baseAttack, baseCharacterCypher, baseCharacterEquipment, baseCharacterSkill
 
 # Inherited models
 
@@ -44,11 +44,15 @@ class Character(baseCharacter):
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
-    abilities = models.ManyToManyField(Ability, blank=True)
+    abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
     equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
+
+class CharacterAbility(baseCharacterAbility):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 
 class CharacterArtifact(baseCharacterArtifact):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)

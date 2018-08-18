@@ -423,7 +423,6 @@ class Character(baseCharacter):
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
-    #abilities = models.ManyToManyField(Ability, blank=True)
     abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
     equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
