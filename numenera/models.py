@@ -50,7 +50,7 @@ class Character(baseCharacter):
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
     def get_absolute_url(self):
-        return "/strange/characters/%s/" % self.slug
+        return "/numenera/characters/%s/" % self.slug
 
 class CharacterAbility(baseCharacterAbility):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
