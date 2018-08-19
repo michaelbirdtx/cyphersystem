@@ -88,7 +88,7 @@ ul {
     border: 1px solid black;
     border-radius: 3px;
     display: inline-block;
-    line-height: 2.5rem;
+    line-height: 2rem;
     margin: .2rem 0;
     padding: 0 1rem;
     white-space: nowrap;
@@ -159,7 +159,7 @@ ul {
     }
 
     html {
-        font-size: 50%;
+        font-size: 45%;
         line-height: 1.2;
     }
 
