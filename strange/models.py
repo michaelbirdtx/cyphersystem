@@ -49,6 +49,10 @@ class Character(baseCharacter):
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
 
 class CharacterAbility(baseCharacterAbility):
+    class Meta:
+        ordering = ['ability__name']
+        verbose_name = 'Global Ability'
+        verbose_name_plural = 'Global Abilities'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 

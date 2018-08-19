@@ -373,7 +373,7 @@
     </section>
     <!-- Special Abilities -->
     <section id="special-abilities">
-        <h2>Special Abilities</h2>
+        {% block abilities_header %}<h2>Special Abilities</h2>{% endblock %}
         {% for item in character.characterability_set.all %}
         <div class="avoid-break">
             <h3>{{ item.ability.name }} ({{ item.ability.usage }}; Cost: {{ item.ability.cost }})</h3>

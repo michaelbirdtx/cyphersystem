@@ -6,6 +6,7 @@
 {% block character_sentence %}<p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}}</strong></p>{% endblock %}
 {% block recursable_stats %}{% endblock %}
 {% block focus_abilities %}{% endblock %}
+{% block abilities_header %}<h2>Global Abilities</h2>{% endblock %}
 {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
 {% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity }}) <em>{{item.brief_note }}</em> <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
 {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
