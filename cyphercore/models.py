@@ -151,7 +151,7 @@ class baseCharacterAbility(models.Model):
         verbose_name_plural = 'Abilities'
     #character = models.ForeignKey(Character, on_delete=models.CASCADE)
     #equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    note = models.TextField(blank=True)
+    note = models.CharField(max_length=100, blank=True)
     def __str__(self):
         return self.ability.name
 
