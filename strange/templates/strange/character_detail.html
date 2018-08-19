@@ -4,18 +4,29 @@
 {% block subtitle %}{{ character.name }}{% endblock %}
 {% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'strange/css/custom.css' %}" />{% endblock %}
 {% block character_sentence %}<p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}}</strong></p>{% endblock %}
+{% block stat_pools_header %}
+<div class="row">
+    <div class="four columns">
+        <strong>Base Might</strong>
+    </div>
+    <div class="four columns">
+        <strong>Base Speed</strong>
+    </div>
+    <div class="four columns">
+        <strong>Base Intellect</strong>
+    </div>
+</div>
+{% endblock %}
 {% block recursable_stats %}{% endblock %}
 {% block focus_abilities %}{% endblock %}
 {% block abilities_header %}<h2>Global Abilities</h2>{% endblock %}
-{% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
-{% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity }}) <em>{{item.brief_note }}</em> <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
-{% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}}) <strong>{{ item.recursion.name|default:"---" }}</strong></span>{% endblock %}
+{% block skills_header %}<h2>Global Skills</h2>{% endblock %}
 {% block recursions %}
 <!-- Character Recursions -->
 <section id="recursions">
-    {% for item in character.recursion_set.all %}
+    {% for recursion in character.recursion_set.all %}
     <div class="recursion row">
-        <h1>Recursion: {{ item.name }}</h1>
+        <h1>Recursion: {{ recursion.name }}</h1>
         <!-- Recursion Stat Pools -->
         <section class="stat-pools avoid-break">
             <div class="row">
@@ -34,19 +45,19 @@
                     Pool:
                 </div>
                 <div class="two columns">
-                    {{ character.might_pool|add:item.might_pool_adjust }} ({{ character.might_current|add:item.might_pool_adjust }}*)
+                    {{ character.might_pool|add:recursion.might_pool_adjust }}
                 </div>
                 <div class="two columns">
                     Pool:
                 </div>
                 <div class="two columns">
-                    {{ character.speed_pool|add:item.speed_pool_adjust }} ({{ character.speed_current|add:item.speed_pool_adjust }}*)
+                    {{ character.speed_pool|add:recursion.speed_pool_adjust }}
                 </div>
                 <div class="two columns">
                     Pool:
                 </div>
                 <div class="two columns">
-                    {{ character.intellect_pool|add:item.intellect_pool_adjust }} ({{ character.intellect_current|add:item.intellect_pool_adjust }}*)
+                    {{ character.intellect_pool|add:recursion.intellect_pool_adjust }}
                 </div>
             </div>
             <div class="row">
@@ -54,24 +65,19 @@
                     Edge:
                 </div>
                 <div class="two columns">
-                    {{ character.might_edge|add:item.might_edge_adjust }}
+                    {{ character.might_edge|add:recursion.might_edge_adjust }}
                 </div>
                 <div class="two columns">
                     Edge:
                 </div>
                 <div class="two columns">
-                    {{ character.speed_edge|add:item.speed_edge_adjust }}
+                    {{ character.speed_edge|add:recursion.speed_edge_adjust }}
                 </div>
                 <div class="two columns">
                     Edge:
                 </div>
                 <div class="two columns">
-                    {{ character.intellect_edge|add:item.intellect_edge_adjust }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="twelve columns">
-                    *Adjusted value based on Equipment and other factors
+                    {{ character.intellect_edge|add:recursion.intellect_edge_adjust }}
                 </div>
             </div>
             <hr />
@@ -81,28 +87,55 @@
                     <strong>Armor:</strong>
                 </div>
                 <div class="two columns">
-                    {{ item.armor }}
+                    {{ recursion.armor }}
                 </div>
                 <div class="two columns">
                     <strong>Money:</strong>
                 </div>
                 <div class="two columns">
-                    {{ item.money }}
+                    {{ recursion.money }}
                 </div>
             </div>
             <hr />
         </div>
     </section>
-    <h2>Focus: {{ item.focus.name }}</h2>
-    <div class="indent">{{ item.focus.other_details|linebreaks }}</div>
+    {% if recursion.attack_set.all %}
+    <section class="recursion-attacks" class="avoid-break">
+        <h2>Attacks</h2>
+        {% for item in recursion.attack_set.all %}
+            {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>{% endblock %}
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    {% if recursion.characterequipment_set.all %}
+    <section class="recursion-equipment" class="avoid-break">
+        <h2>Equipment</h2>
+        {% for item in recursion.characterequipment_set.all %}
+            <span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    {% if recursion.recursionskill_set.all %}
+    <section class="recursion-skills" class="avoid-break">
+        <h2>Skills</h2>
+        {% for item in recursion.recursionskill_set.all %}
+            <span class="bubble-item skill-{{ item.skill_level }}">{{ item.skill.name }} ({{ item.skill_level }})</span>
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    <h2>Focus: {{ recursion.focus.name }}</h2>
+    <div class="indent">{{ recursion.focus.other_details|linebreaks }}</div>
     <!-- Recursion Special Abilities -->
     <section class="recursion-special-abilities">
         <h2>Special Abilities</h2>
-        {% for ability in item.recursionability_set.all %}
+        {% for item in recursion.recursionability_set.all %}
         <div class="avoid-break">
-            <h3>{{ ability.ability.name }} ({{ ability.ability.usage }}; Cost: {{ ability.ability.cost }})</h3>
+            <h3>{{ item.ability.name }} ({{ item.ability.usage }}; Cost: {{ item.ability.cost }})</h3>
             <div class="indent">
-                {{ ability.ability.description|linebreaks }}
+                {{ item.ability.description|linebreaks }}
                 {% if ability.note %}
                 <em>{{ ability.note|linebreaks }}</em>
                 {% endif %}
@@ -110,11 +143,23 @@
         </div>
         {% endfor %}
     </section>
+    {% if recursion.characterartifact_set.all %}
+    <hr />
+    <section class="recursion-artifacts" class="avoid-break">
+        <h2>Artifacts</h2>
+        {% for item in recursion.characterartifact_set.all %}
+        <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }})</h3>
+        <div class="indent">
+            {{ item.artifact.form }} {{ item.artifact.effect }}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
     <!-- Notes -->
-    {% if item.notes %}
+    {% if recursion.notes %}
     <section class="recursion-notes" class="avoid-break">
         <h2>Notes</h2>
-        <div class="indent">{{ item.notes|linebreaks }}</div>
+        <div class="indent">{{ recursion.notes|linebreaks }}</div>
     </section>
     {% endif %}
     <hr class="recursion-break" />

@@ -21,21 +21,6 @@
     {% if not character.notes %}
         #notes { display: none; }
     {% endif %}
-    {% if not character.attack_set.all %}
-        #attacks { display: none; }
-    {% endif %}
-    {% if not character.characterequipment_set.all %}
-        #equipment { display: none; }
-    {% endif %}
-    {% if not character.characterskill_set.all %}
-        #skills { display: none; }
-    {% endif %}
-    {% if not character.characterartifact_set.all %}
-        #artifacts { display: none; }
-    {% endif %}
-    {% if not character.charactercypher_set.all %}
-        #cyphers { display: none; }
-    {% endif %}
 {% endblock %}
 {% block content %}
     {% if "summary" in request.path %}
@@ -58,6 +43,7 @@
     </section>
     <!-- Stat Pools -->
     <section class="stat-pools" class="avoid-break">
+        {% block stat_pools_header %}
         <div class="row">
             <div class="four columns">
                 <strong>Might</strong>
@@ -69,24 +55,25 @@
                 <strong>Intellect</strong>
             </div>
         </div>
+        {% endblock %}
         <div class="row">
             <div class="two columns">
                 Pool:
             </div>
             <div class="two columns">
-                {{ character.might_pool }} ({{ character.might_current }}*)
+                {{ character.might_pool }}
             </div>
             <div class="two columns">
                 Pool:
             </div>
             <div class="two columns">
-                {{ character.speed_pool }} ({{ character.speed_current }}*)
+                {{ character.speed_pool }}
             </div>
             <div class="two columns">
                 Pool:
             </div>
             <div class="two columns">
-                {{ character.intellect_pool }} ({{ character.intellect_current }}*)
+                {{ character.intellect_pool }}
             </div>
         </div>
         <div class="row">
@@ -107,11 +94,6 @@
             </div>
             <div class="two columns">
                 {{ character.intellect_edge }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="twelve columns">
-                *Adjusted value based on Equipment and other factors
             </div>
         </div>
         <hr />
@@ -333,6 +315,7 @@
         <hr />
     </section>
     <!-- Attacks -->
+    {% if character.attack_set.all %}
     <section id="attacks" class="avoid-break">
         <h2>Attacks</h2>
         {% for item in character.attack_set.all %}
@@ -340,7 +323,9 @@
         {% endfor %}
         <hr />
     </section>
+    {% endif %}
     <!-- Equipment -->
+    {% if character.characterequipment_set.all %}
     <section id="equipment" class="avoid-break">
         <h2>Equipment</h2>
         {% for item in character.characterequipment_set.all %}
@@ -348,14 +333,17 @@
         {% endfor %}
         <hr />
     </section>
+    {% endif %}
     <!-- Skills -->
+    {% if character.characterskill_set.all %}
     <section id="skills" class="avoid-break">
-        <h2>Skills</h2>
+        {% block skills_header %}<h2>Skills</h2>{% endblock %}
         {% for item in character.characterskill_set.all %}
-            {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level}}">{{ item.skill.name }} ({{ item.skill_level}})</span>{% endblock %}
+            {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level }}">{{ item.skill.name }} ({{ item.skill_level }})</span>{% endblock %}
         {% endfor %}
         <hr />
     </section>
+    {% endif %}
     <!-- Base Abilities and Characteristics -->
     <section id="base-abilities" class="avoid-break">
         <h2>Base Abiliites &amp; Characteristics</h2>
@@ -388,6 +376,7 @@
         <hr />
     </section>
     <!-- Cyphers -->
+    {% if character.charactercypher_set.all %}
     <section id="cyphers" class="avoid-break">
         <h2>Cyphers</h2>
         {% for item in character.charactercypher_set.all %}
@@ -398,7 +387,9 @@
         {% endfor %}
         <hr />
     </section>
+    {% endif %}
     <!-- Artifacts -->
+    {% if character.characterartifact_set.all %}
     <section id="artifacts" class="avoid-break">
         <h2>Artifacts</h2>
         {% for item in character.characterartifact_set.all %}
@@ -409,6 +400,7 @@
         {% endfor %}
         <hr />
     </section>
+    {% endif %}
     <!-- Notes -->
     <section id="notes" class="avoid-break">
         <h2>Notes</h2>

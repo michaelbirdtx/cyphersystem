@@ -74,6 +74,8 @@ class Recursion(models.Model):
     intellect_pool_adjust = models.IntegerField(default=0)
     intellect_edge_adjust = models.IntegerField(default=0)
     abilities = models.ManyToManyField(Ability, through='RecursionAbility')
+    equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
+    skills = models.ManyToManyField(Skill, through='RecursionSkill')
     notes = models.TextField(blank=True)
     def __str__(self):
         return self.name
@@ -84,18 +86,16 @@ class RecursionAbility(baseCharacterAbility):
 
 class CharacterArtifact(baseCharacterArtifact):
     class Meta:
-        ordering = ['recursion__name', 'artifact__name']
+        ordering = ['artifact__name']
         verbose_name = 'Artifact'
         verbose_name_plural = 'Artifacts'
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    recursion = models.ForeignKey(Recursion, on_delete=models.CASCADE)
     artifact = models.ForeignKey(Artifact, on_delete=models.CASCADE)
-    recursion = models.ForeignKey(Recursion, blank=True, null=True, on_delete=models.CASCADE)
 
 class Attack(baseAttack):
     class Meta:
         ordering = ['recursion__name', 'name']
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    recursion = models.ForeignKey(Recursion, blank=True, null=True, on_delete=models.CASCADE)
+    recursion = models.ForeignKey(Recursion, on_delete=models.CASCADE)
 
 class CharacterCypher(baseCharacterCypher):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
@@ -106,16 +106,22 @@ class CharacterEquipment(baseCharacterEquipment):
         ordering = ['recursion__name', 'equipment__name']
         verbose_name = 'Equipment'
         verbose_name_plural = 'Equipment'
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    recursion = models.ForeignKey(Recursion, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    recursion = models.ForeignKey(Recursion, blank=True, null=True, on_delete=models.CASCADE)
 
 class CharacterSkill(baseCharacterSkill):
     class Meta:
-        ordering = ['recursion__name', '-skill_level']
-        verbose_name = 'Skill'
-        verbose_name_plural = 'Skills'
+        ordering = ['-skill_level']
+        verbose_name = 'Global Skill'
+        verbose_name_plural = 'Global Skills'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    recursion = models.ForeignKey(Recursion, blank=True, null=True, on_delete=models.CASCADE)
+
+class RecursionSkill(baseCharacterSkill):
+    class Meta:
+        ordering = ['-skill_level']
+        verbose_name = 'Skill'
+        verbose_name_plural = 'Skills'
+    recursion = models.ForeignKey(Recursion, on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)

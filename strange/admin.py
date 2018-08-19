@@ -13,7 +13,7 @@ class EditLinkToInlineObject(object):
         else:
             return ''
 
-from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterAbility, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Recursion, RecursionAbility
+from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterAbility, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Recursion, RecursionAbility, RecursionSkill
 
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -113,52 +113,19 @@ class ArtifactAdmin(admin.ModelAdmin):
 class AttackInline(admin.TabularInline):
     model = Attack
     extra = 0
-    fields = ('name', 'modifier', 'damage', 'recursion')
-
-    def get_formset(self, request, obj=None, **kwargs):
-        self.parent_obj = obj
-        return super(AttackInline, self).get_formset(request, obj, **kwargs)
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "recursion":
-            if self.parent_obj:
-                kwargs["queryset"] = Recursion.objects.filter(character_id = self.parent_obj.id)
-            else:
-                kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    fields = ('name', 'modifier', 'damage')
 
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
     extra = 0
-    fields = ('equipment', 'quantity', 'brief_note', 'recursion')
-
-    def get_formset(self, request, obj=None, **kwargs):
-        self.parent_obj = obj
-        return super(CharacterEquipmentInline, self).get_formset(request, obj, **kwargs)
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "recursion":
-            if self.parent_obj:
-                kwargs["queryset"] = Recursion.objects.filter(character_id = self.parent_obj.id)
-            else:
-                kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    fields = ('equipment', 'quantity', 'brief_note')
 
 class CharacterSkillsInline(admin.TabularInline):
     model = CharacterSkill
     autocomplete_fields = ['skill']
     extra = 0
-    fields = ('skill', 'skill_level', 'recursion')
-
-    def get_formset(self, request, obj=None, **kwargs):
-        self.parent_obj = obj
-        return super(CharacterSkillsInline, self).get_formset(request, obj, **kwargs)
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "recursion":
-            if self.parent_obj:
-                kwargs["queryset"] = Recursion.objects.filter(character_id = self.parent_obj.id)
-            else:
-                kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    fields = ('skill', 'skill_level')
 
 class CharacterCyphersInline(admin.TabularInline):
     model = CharacterCypher
@@ -183,6 +150,12 @@ class CharacterArtifactsInline(admin.TabularInline):
                 kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+class RecursionSkillsInline(admin.TabularInline):
+    model = RecursionSkill
+    autocomplete_fields = ['skill']
+    extra = 0
+    fields = ('skill', 'skill_level')
+
 class RecursionsInline(EditLinkToInlineObject, admin.TabularInline):
     model = Recursion
     extra = 0
@@ -196,7 +169,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ('DAMAGE TRACK', {'fields': [('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')]}),
         ('ADVANCEMENT', {'fields': [('tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other', 'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'), ('tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other', 'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'), ('tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other', 'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other')]}),
     ]
-    inlines = [CharacterAbilitiesInline, AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline, RecursionsInline]
+    inlines = [CharacterAbilitiesInline, CharacterSkillsInline, CharacterCyphersInline, RecursionsInline]
     list_display = ('name', 'descriptor', 'type', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
@@ -216,7 +189,7 @@ class RecursionAdmin(admin.ModelAdmin):
         ('RECURSION DEFINITION', {'fields': [('name', 'character', 'focus'), 'notes']}),
         ('STATS', {'fields': [('armor', 'money'), ('might_pool_adjust', 'might_edge_adjust'), ('speed_pool_adjust', 'speed_edge_adjust'), ('intellect_pool_adjust', 'intellect_edge_adjust')]}),
     ]
-    inlines = [RecursionAbilitiesInline]
+    inlines = [RecursionAbilitiesInline, AttackInline, CharacterEquipmentInline, RecursionSkillsInline, CharacterArtifactsInline]
     list_display = ('character', 'name')
     readonly_fields = ('name', 'character', 'focus', )
     search_fields = ['name', 'character']
