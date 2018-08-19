@@ -47,6 +47,8 @@ class Character(baseCharacter):
     abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
+    def get_absolute_url(self):
+        return "/strange/characters/%s/" % self.slug
 
 class CharacterAbility(baseCharacterAbility):
     class Meta:
@@ -94,7 +96,14 @@ class CharacterArtifact(baseCharacterArtifact):
 
 class Attack(baseAttack):
     class Meta:
-        ordering = ['recursion__name', 'name']
+        ordering = ['name']
+        verbose_name = 'Global Attack'
+        verbose_name_plural = 'Global Attacks'
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+
+class RecursionAttack(baseAttack):
+    class Meta:
+        ordering = ['name']
     recursion = models.ForeignKey(Recursion, on_delete=models.CASCADE)
 
 class CharacterCypher(baseCharacterCypher):

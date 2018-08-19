@@ -317,7 +317,7 @@
     <!-- Attacks -->
     {% if character.attack_set.all %}
     <section id="attacks" class="avoid-break">
-        <h2>Attacks</h2>
+        {% block attacks_header %}<h2>Attacks</h2>{% endblock %}
         {% for item in character.attack_set.all %}
             {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>{% endblock %}
         {% endfor %}

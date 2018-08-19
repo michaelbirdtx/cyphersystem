@@ -4,6 +4,10 @@
         <title>Cypher System</title>
         <meta charset="utf-8">
         <style>
+            a {
+                color: darkgray;
+                text-decoration: none;
+            }
             hr {
                 border-top: 1px solid #E1E1E1;
                 width: 80%;
@@ -12,6 +16,15 @@
                 display: block;
                 margin: 50px auto;
                 max-width: 500px;
+            }
+            #admin {
+                display: block;
+                font-family: monospace;
+                font-size: 2em;
+                margin: 0 auto;
+                text-align: center;
+                text-transform: uppercase;
+                width: 100%;
             }
         </style>
     </head>
@@ -22,5 +35,6 @@
         <hr />
         <a href="strange/"><img src="{% static 'strange/images/logo.jpg' %}" alt="Strange" class="center" /></a>
         <hr />
+        <div id="admin"><a href="admin/">Admin</a></div>
     </body>
 </html>
