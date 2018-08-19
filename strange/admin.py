@@ -1,9 +1,19 @@
 from django import forms
 from django.contrib import admin
-from django.urls import resolve
+from django.http import HttpResponse
+from django.urls import resolve, reverse
+from django.utils.safestring import mark_safe
 
-# Register your models here.
-from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Recursion
+class EditLinkToInlineObject(object):
+    def edit_link(self, instance):
+        url = reverse('admin:%s_%s_change' % (
+            instance._meta.app_label,  instance._meta.model_name),  args=[instance.pk] )
+        if instance.pk:
+            return mark_safe(u'<a href="{u}" target="_blank">Edit Details</a>'.format(u=url))
+        else:
+            return ''
+
+from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterAbility, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Recursion, RecursionAbility
 
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -32,6 +42,16 @@ class TypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
+
+class CharacterAbilitiesInline(admin.TabularInline):
+    model = CharacterAbility
+    autocomplete_fields = ['ability']
+    extra = 0
+    fields = ('ability', 'note')
+    def get_queryset(self, request):
+        qs = super(CharacterAbilitiesInline, self).get_queryset(request)
+        qs = qs.prefetch_related('ability')
+        return qs
 
 class FocusAbilitiesInline(admin.TabularInline):
     model = FocusAbility
@@ -163,15 +183,11 @@ class CharacterArtifactsInline(admin.TabularInline):
                 kwargs["queryset"] = Recursion.objects.filter(character_id = 0)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-class RecursionsInline(admin.StackedInline):
+class RecursionsInline(EditLinkToInlineObject, admin.TabularInline):
     model = Recursion
     extra = 0
-    fieldsets = [
-        ('Recursion Definition', {'fields': [('name', 'focus'), ('armor', 'money')]}),
-        ('Recursion Stats', {'fields': [('might_pool_adjust', 'speed_pool_adjust', 'intellect_pool_adjust'), ('might_edge_adjust', 'speed_edge_adjust', 'intellect_edge_adjust')]}),
-        ('Recursion Abilities', {'fields': ['abilities']})
-    ]
-    filter_horizontal = ('abilities',)
+    fields = ('name', 'focus', 'edit_link')
+    readonly_fields = ('edit_link',)
 
 class CharacterAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -179,13 +195,39 @@ class CharacterAdmin(admin.ModelAdmin):
         ('STATS', {'fields': [('might_pool', 'might_current', 'might_edge'), ('speed_pool', 'speed_current', 'speed_edge'), ('intellect_pool', 'intellect_current', 'intellect_edge')]}),
         ('DAMAGE TRACK', {'fields': [('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')]}),
         ('ADVANCEMENT', {'fields': [('tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other', 'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'), ('tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other', 'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'), ('tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other', 'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other')]}),
-        ('GLOBAL ABILITIES', {'fields': ['abilities']})
     ]
-    filter_horizontal = ('abilities',)
-    inlines = [AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline, RecursionsInline]
+    inlines = [CharacterAbilitiesInline, AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline, RecursionsInline]
     list_display = ('name', 'descriptor', 'type', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
+
+class RecursionAbilitiesInline(admin.TabularInline):
+    model = RecursionAbility
+    autocomplete_fields = ['ability']
+    extra = 0
+    fields = ('ability', 'note')
+    def get_queryset(self, request):
+        qs = super(RecursionAbilitiesInline, self).get_queryset(request)
+        qs = qs.prefetch_related('ability')
+        return qs
+
+class RecursionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('RECURSION DEFINITION', {'fields': [('name', 'character', 'focus'), 'notes']}),
+        ('STATS', {'fields': [('armor', 'money'), ('might_pool_adjust', 'might_edge_adjust'), ('speed_pool_adjust', 'speed_edge_adjust'), ('intellect_pool_adjust', 'intellect_edge_adjust')]}),
+    ]
+    inlines = [RecursionAbilitiesInline]
+    list_display = ('character', 'name')
+    readonly_fields = ('name', 'character', 'focus', )
+    search_fields = ['name', 'character']
+    def get_model_perms(self, request):
+        return {}
+    def response_post_save_change(self, request, obj):
+        return HttpResponse('<script type="text/javascript">window.close()</script>')
+    def has_add_permission(self, request):
+        return False
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 admin.site.register(Descriptor, DescriptorAdmin)
 admin.site.register(Type, TypeAdmin)
@@ -197,3 +239,4 @@ admin.site.register(Artifact, ArtifactAdmin)
 admin.site.register(Sourcebook, SourcebookAdmin)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Character, CharacterAdmin)
+admin.site.register(Recursion, RecursionAdmin)

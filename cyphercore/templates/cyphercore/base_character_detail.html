@@ -374,53 +374,45 @@
     <!-- Special Abilities -->
     <section id="special-abilities">
         <h2>Special Abilities</h2>
-        <div class="row">
         {% for item in character.characterability_set.all %}
-            <div class="avoid-break">
-                <h3>{{ item.ability.name }} ({{ item.ability.usage }}; Cost: {{ item.ability.cost }})</h3>
-                <div class="indent">
-                    {{ item.ability.description|linebreaks }}
-                    {% if item.note %}
-                    <em>{{ item.note|linebreaks }}</em>
-                    {% endif %}
-                </div>
+        <div class="avoid-break">
+            <h3>{{ item.ability.name }} ({{ item.ability.usage }}; Cost: {{ item.ability.cost }})</h3>
+            <div class="indent">
+                {{ item.ability.description|linebreaks }}
+                {% if item.note %}
+                <em>{{ item.note|linebreaks }}</em>
+                {% endif %}
             </div>
-        {% endfor %}
         </div>
+        {% endfor %}
         <hr />
     </section>
     <!-- Cyphers -->
     <section id="cyphers" class="avoid-break">
         <h2>Cyphers</h2>
-        <div class="row">
         {% for item in character.charactercypher_set.all %}
-            <div class="avoid-break">
-                <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
-                <div class="indent">{{ item.appearance }} {{ item.cypher.effect }}</div>
-            </div>
-        {% endfor %}
+        <div class="avoid-break">
+            <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
+            <div class="indent">{{ item.appearance }} {{ item.cypher.effect }}</div>
         </div>
+        {% endfor %}
         <hr />
     </section>
     <!-- Artifacts -->
     <section id="artifacts" class="avoid-break">
         <h2>Artifacts</h2>
-        <div class="row">
         {% for item in character.characterartifact_set.all %}
-            <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }})</h3>
-            <div class="indent">
-                {{ item.artifact.form }} {{ item.artifact.effect }}
-            </div>
-        {% endfor %}
+        <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }})</h3>
+        <div class="indent">
+            {{ item.artifact.form }} {{ item.artifact.effect }}
         </div>
+        {% endfor %}
         <hr />
     </section>
     <!-- Notes -->
     <section id="notes" class="avoid-break">
-        <div class="row">
-            <h2>Notes</h2>
-            <div class="indent">{{ character.notes|linebreaks }}</div>
-        </div>
+        <h2>Notes</h2>
+        <div class="indent">{{ character.notes|linebreaks }}</div>
         <hr />
     </section>
     {% block recursions %}

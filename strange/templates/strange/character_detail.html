@@ -97,16 +97,26 @@
     <!-- Recursion Special Abilities -->
     <section class="recursion-special-abilities">
         <h2>Special Abilities</h2>
-        <div class="row">
-        {% for ability in item.abilities.all %}
-            <div class="avoid-break">
-                <h3>{{ ability.name }} ({{ ability.usage }}; Cost: {{ ability.cost }})</h3>
-                <div class="indent">{{ ability.description|linebreaks }}</div>
+        {% for ability in item.recursionability_set.all %}
+        <div class="avoid-break">
+            <h3>{{ ability.ability.name }} ({{ ability.ability.usage }}; Cost: {{ ability.ability.cost }})</h3>
+            <div class="indent">
+                {{ ability.ability.description|linebreaks }}
+                {% if ability.note %}
+                <em>{{ ability.note|linebreaks }}</em>
+                {% endif %}
             </div>
-        {% endfor %}
         </div>
-        <hr class="recursion-break" />
+        {% endfor %}
     </section>
+    <!-- Notes -->
+    {% if item.notes %}
+    <section class="recursion-notes" class="avoid-break">
+        <h2>Notes</h2>
+        <div class="indent">{{ item.notes|linebreaks }}</div>
+    </section>
+    {% endif %}
+    <hr class="recursion-break" />
     {% endfor %}
 </section>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.db import models
-from cyphercore.models import baseSourcebook, baseAbility, baseArtifact, baseCypher, baseDescriptor, baseEquipment, baseFocus, baseFocusAbility, baseSkill, baseType, baseTypeAbility, baseCharacter, baseCharacterArtifact, baseAttack, baseCharacterCypher, baseCharacterEquipment, baseCharacterSkill
+from cyphercore.models import baseSourcebook, baseAbility, baseArtifact, baseCypher, baseDescriptor, baseEquipment, baseFocus, baseFocusAbility, baseSkill, baseType, baseTypeAbility, baseCharacter, baseCharacterAbility, baseCharacterArtifact, baseAttack, baseCharacterCypher, baseCharacterEquipment, baseCharacterSkill
 
 # Inherited models
 
@@ -44,16 +44,20 @@ class TypeAbility(baseTypeAbility):
 class Character(baseCharacter):
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
-    abilities = models.ManyToManyField(Ability, blank=True)
+    abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
 
+class CharacterAbility(baseCharacterAbility):
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
+
 class Recursion(models.Model):
     class Meta:
-        ordering = ['name']
+        ordering = ['character', 'name']
         unique_together = ('character', 'name')
-        verbose_name = 'Character Recursion'
-        verbose_name_plural = 'Character Recursions'
+        verbose_name = 'Recursion'
+        verbose_name_plural = 'Recursions'
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     armor = models.IntegerField(default=0)
@@ -65,12 +69,14 @@ class Recursion(models.Model):
     speed_edge_adjust = models.IntegerField(default=0)
     intellect_pool_adjust = models.IntegerField(default=0)
     intellect_edge_adjust = models.IntegerField(default=0)
-    abilities = models.ManyToManyField(Ability, blank=True)
-    #skills = models.ManyToManyField(Skill, through='CharacterSkill')
-    #equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
-    #artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
+    abilities = models.ManyToManyField(Ability, through='RecursionAbility')
+    notes = models.TextField(blank=True)
     def __str__(self):
         return self.name
+
+class RecursionAbility(baseCharacterAbility):
+    recursion = models.ForeignKey(Recursion, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 
 class CharacterArtifact(baseCharacterArtifact):
     class Meta:
