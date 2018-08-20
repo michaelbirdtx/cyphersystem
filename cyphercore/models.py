@@ -68,6 +68,8 @@ class baseAttack(models.Model):
     name = models.CharField(max_length=50)
     modifier = models.IntegerField(default=0)
     damage = models.IntegerField(default=0)
+    def __str__(self):
+        return self.name
 
 class baseCharacter(models.Model):
     class Meta:
