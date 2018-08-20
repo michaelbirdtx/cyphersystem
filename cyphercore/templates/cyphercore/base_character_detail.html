@@ -2,8 +2,9 @@
 {% block subtitle %}{{ character.name }}{% endblock %}
 {% block pagestyles %}
     {% if "summary" in request.path %}
+
+        .recursion-equipment, .recursion-artifacts, .stat-pools { display: none; }
         #portrait-background { display: none; }
-        .stat-pools { display: none; }
         #other-stats { display: none; }
         #advancement { display: none; }
         #recovery-damage { display: none; }
