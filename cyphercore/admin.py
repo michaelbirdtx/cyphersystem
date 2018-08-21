@@ -138,7 +138,6 @@ class CharacterAdmin(admin.ModelAdmin):
     inlines = [CharacterAbilitiesInline, AttackInline, CharacterSkillsInline, CharacterEquipmentInline, CharacterCyphersInline, CharacterArtifactsInline]
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
-    save_as = True
     search_fields = ['name']
 
 admin.site.register(Descriptor, DescriptorAdmin)
