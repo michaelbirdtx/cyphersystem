@@ -177,6 +177,7 @@ class CharacterAdmin(admin.ModelAdmin):
     inlines = [CharacterAbilitiesInline, AttackInline, CharacterSkillsInline, CharacterCyphersInline, RecursionsInline]
     list_display = ('name', 'descriptor', 'type', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
+    save_as = True
     search_fields = ['name']
 
 class RecursionAbilitiesInline(admin.TabularInline):
