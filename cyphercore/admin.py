@@ -7,10 +7,12 @@ admin.site.index_title = 'Admin'
 # Register your models here.
 from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher, CharacterArtifact, Attack
 
+@admin.register(Sourcebook)
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name']
 
+@admin.register(Descriptor)
 class DescriptorAdmin(admin.ModelAdmin):
     list_display = ('name', 'prefix', 'truncated_description', 'slug', 'sourcebook')
     search_fields = ['name']
@@ -24,6 +26,7 @@ class TypeAbilitiesInline(admin.TabularInline):
         qs = qs.prefetch_related('ability')
         return qs
 
+@admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
     fieldsets = [
         ('TYPE DEFINITION', {'fields': [('name'), ('description'), ('base_abilities'), ('slug', 'sourcebook')]}),
@@ -53,6 +56,7 @@ class FocusAbilitiesInline(admin.TabularInline):
         qs = qs.prefetch_related('ability')
         return qs
 
+@admin.register(Focus)
 class FocusAdmin(admin.ModelAdmin):
     inlines = [FocusAbilitiesInline]
     list_display = ('name', 'truncated_description', 'slug', 'sourcebook')
@@ -74,26 +78,31 @@ class AbilityTypesInline(admin.TabularInline):
     verbose_name = "Related Type"
     verbose_name_plural = "Related Types"
 
+@admin.register(Ability)
 class AbilityAdmin(admin.ModelAdmin):
     inlines = [AbilityFociInline, AbilityTypesInline]
     list_display = ('name', 'usage', 'cost', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+@admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name']
 
+@admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'type', 'base_cost', 'truncated_notes', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'type', 'base_cost']
 
+@admin.register(Cypher)
 class CypherAdmin(admin.ModelAdmin):
     list_display = ('name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+@admin.register(Artifact)
 class ArtifactAdmin(admin.ModelAdmin):
     list_display = ('name', 'level_range', 'truncated_form', 'truncated_effect', 'depletion', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
@@ -128,6 +137,7 @@ class CharacterArtifactsInline(admin.TabularInline):
     extra = 0
     fields = ('artifact', 'level')
 
+@admin.register(Character)
 class CharacterAdmin(admin.ModelAdmin):
     fieldsets = [
         ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), 'descriptor', 'type', 'focus', ('cypher_limit', 'effort', 'tier'), ('armor', 'money', 'xp'), 'background', 'notes', 'portrait_link']}),
@@ -139,14 +149,3 @@ class CharacterAdmin(admin.ModelAdmin):
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
-
-admin.site.register(Descriptor, DescriptorAdmin)
-admin.site.register(Type, TypeAdmin)
-admin.site.register(Focus, FocusAdmin)
-admin.site.register(Ability, AbilityAdmin)
-admin.site.register(Equipment, EquipmentAdmin)
-admin.site.register(Cypher, CypherAdmin)
-admin.site.register(Artifact, ArtifactAdmin)
-admin.site.register(Sourcebook, SourcebookAdmin)
-admin.site.register(Skill, SkillAdmin)
-admin.site.register(Character, CharacterAdmin)
