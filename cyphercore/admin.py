@@ -6,9 +6,8 @@ admin.site.index_title = 'Admin'
 
 # Register your models here.
 from .models import (
-        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher,
-        Artifact, FocusAbility, TypeAbility, Character, CharacterSkill, CharacterEquipment,
-        CharacterAbility, CharacterCypher, CharacterArtifact, Attack
+        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, Attack, Character,
+        FocusAbility, TypeAbility,  CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher, CharacterArtifact
     )
 
 @admin.register(Sourcebook)
@@ -39,7 +38,8 @@ class TypeAdmin(admin.ModelAdmin):
                 ('might_pool', 'speed_pool', 'intellect_pool'),
                 ('might_edge', 'speed_edge', 'intellect_edge'),
                 ('cypher_limit', 'effort', 'pool_points')
-            ]})
+            ]}
+        )
     ]
     inlines = [TypeAbilitiesInline]
     list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool', 'truncated_description', 'slug', 'sourcebook')
@@ -153,18 +153,24 @@ class CharacterAdmin(admin.ModelAdmin):
             {'fields': [
                 ('name', 'slug'), 'descriptor', 'type', 'focus',
                 ('cypher_limit', 'effort', 'tier'),
-                ('armor', 'money', 'xp'), 'background', 'notes', 'portrait_link'
-            ]}),
+                ('armor', 'money', 'xp'),
+                'background',
+                'notes',
+                'portrait_link'
+            ]}
+        ),
         ('STATS',
             {'fields': [
                 ('might_pool', 'might_current', 'might_edge'),
                 ('speed_pool', 'speed_current', 'speed_edge'),
                 ('intellect_pool', 'intellect_current', 'intellect_edge')
-            ]}),
+            ]}
+        ),
         ('DAMAGE TRACK',
             {'fields': [
                 ('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')
-            ]}),
+            ]}
+        ),
         ('ADVANCEMENT',
             {'fields': [
                 (
@@ -179,7 +185,8 @@ class CharacterAdmin(admin.ModelAdmin):
                     'tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other',
                     'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other'
                 )
-            ]})
+            ]}
+        )
     ]
     inlines = [
         CharacterAbilitiesInline, AttackInline, CharacterSkillsInline, CharacterEquipmentInline,
