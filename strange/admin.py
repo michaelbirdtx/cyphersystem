@@ -4,6 +4,12 @@ from django.http import HttpResponse
 from django.urls import resolve, reverse
 from django.utils.safestring import mark_safe
 
+from .models import (
+        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, Character, Attack,
+        FocusAbility, TypeAbility, CharacterAbility, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact,
+        Recursion, RecursionAbility, RecursionSkill, RecursionAttack
+    )
+
 class EditLinkToInlineObject(object):
     def edit_link(self, instance):
         url = reverse('admin:%s_%s_change' % (
@@ -13,12 +19,12 @@ class EditLinkToInlineObject(object):
         else:
             return ''
 
-from .models import Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, FocusAbility, TypeAbility, Character, CharacterAbility, CharacterSkill, CharacterEquipment, CharacterCypher, CharacterArtifact, Attack, Recursion, RecursionAbility, RecursionSkill, RecursionAttack
-
+@admin.register(Sourcebook)
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name']
 
+@admin.register(Descriptor)
 class DescriptorAdmin(admin.ModelAdmin):
     list_display = ('name', 'prefix', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
@@ -33,10 +39,17 @@ class TypeAbilitiesInline(admin.TabularInline):
         qs = qs.prefetch_related('ability')
         return qs
 
+@admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
     fieldsets = [
         ('TYPE DEFINITION', {'fields': [('name'), ('description'), ('base_abilities'), ('slug', 'sourcebook')]}),
-        ('BASE STATS', {'fields': [('might_pool', 'speed_pool', 'intellect_pool'), ('might_edge', 'speed_edge', 'intellect_edge'), ('cypher_limit', 'effort', 'pool_points')]})
+        ('BASE STATS',
+            {'fields': [
+                ('might_pool', 'speed_pool', 'intellect_pool'),
+                ('might_edge', 'speed_edge', 'intellect_edge'),
+                ('cypher_limit', 'effort', 'pool_points')
+            ]}
+        )
     ]
     inlines = [TypeAbilitiesInline]
     list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool', 'truncated_description', 'slug', 'sourcebook')
@@ -62,6 +75,7 @@ class FocusAbilitiesInline(admin.TabularInline):
         qs = qs.prefetch_related('ability')
         return qs
 
+@admin.register(Focus)
 class FocusAdmin(admin.ModelAdmin):
     inlines = [FocusAbilitiesInline]
     list_display = ('name', 'truncated_description', 'slug', 'sourcebook')
@@ -84,27 +98,32 @@ class AbilityTypesInline(admin.TabularInline):
     verbose_name = "Related Type"
     verbose_name_plural = "Related Types"
 
+@admin.register(Ability)
 class AbilityAdmin(admin.ModelAdmin):
     inlines = [AbilityFociInline, AbilityTypesInline]
     list_display = ('name', 'usage', 'cost', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+@admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name']
 
+@admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'type', 'base_cost', 'truncated_notes', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'type', 'base_cost']
 
+@admin.register(Cypher)
 class CypherAdmin(admin.ModelAdmin):
     fields = ('name', 'level_range', 'form', 'effect', 'slug', 'sourcebook')
     list_display = ('name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+@admin.register(Artifact)
 class ArtifactAdmin(admin.ModelAdmin):
     list_display = ('name', 'level_range', 'truncated_form', 'truncated_effect', 'depletion', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
@@ -167,12 +186,47 @@ class RecursionsInline(EditLinkToInlineObject, admin.TabularInline):
     fields = ('name', 'focus', 'edit_link')
     readonly_fields = ('edit_link',)
 
+@admin.register(Character)
 class CharacterAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('CHARACTER DEFINITION', {'fields': [('name', 'slug'), ('descriptor', 'type'), ('cypher_limit', 'effort', 'tier'), 'background', 'notes', 'portrait_link']}),
-        ('STATS', {'fields': [('might_pool', 'might_current', 'might_edge'), ('speed_pool', 'speed_current', 'speed_edge'), ('intellect_pool', 'intellect_current', 'intellect_edge')]}),
-        ('DAMAGE TRACK', {'fields': [('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')]}),
-        ('ADVANCEMENT', {'fields': [('tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other', 'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'), ('tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other', 'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'), ('tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other', 'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other')]}),
+        ('CHARACTER DEFINITION',
+            {'fields': [
+                ('name', 'slug'),
+                ('descriptor', 'type'),
+                ('cypher_limit', 'effort', 'tier'),
+                'background',
+                'notes',
+                'portrait_link'
+            ]}
+        ),
+        ('STATS',
+            {'fields': [
+                ('might_pool', 'might_current', 'might_edge'),
+                ('speed_pool', 'speed_current', 'speed_edge'),
+                ('intellect_pool', 'intellect_current', 'intellect_edge')
+            ]}
+        ),
+        ('DAMAGE TRACK',
+            {'fields': [
+                ('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')
+            ]}
+        ),
+        ('ADVANCEMENT',
+            {'fields': [
+                (
+                    'tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other',
+                    'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'
+                ),
+                (
+                    'tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other',
+                    'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'
+                ),
+                (
+                    'tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other',
+                    'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other'
+                )
+            ]}
+        )
     ]
     inlines = [CharacterAbilitiesInline, AttackInline, CharacterSkillsInline, CharacterCyphersInline, RecursionsInline]
     list_display = ('name', 'descriptor', 'type', 'tier', 'slug')
@@ -189,12 +243,28 @@ class RecursionAbilitiesInline(admin.TabularInline):
         qs = qs.prefetch_related('ability')
         return qs
 
+@admin.register(Recursion)
 class RecursionAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('RECURSION DEFINITION', {'fields': [('name', 'character', 'focus'), 'notes']}),
-        ('STATS', {'fields': [('armor', 'money'), ('might_pool_adjust', 'might_edge_adjust'), ('speed_pool_adjust', 'speed_edge_adjust'), ('intellect_pool_adjust', 'intellect_edge_adjust')]}),
+        ('RECURSION DEFINITION',
+            {'fields': [
+                ('name', 'character', 'focus'),
+                'notes'
+            ]}
+        ),
+        ('STATS',
+            {'fields': [
+                ('armor', 'money'),
+                ('might_pool_adjust', 'might_edge_adjust'),
+                ('speed_pool_adjust', 'speed_edge_adjust'),
+                ('intellect_pool_adjust', 'intellect_edge_adjust')
+            ]}
+        ),
     ]
-    inlines = [RecursionAbilitiesInline, RecursionAttackInline, CharacterEquipmentInline, RecursionSkillsInline, CharacterArtifactsInline]
+    inlines = [
+        RecursionAbilitiesInline, RecursionAttackInline, CharacterEquipmentInline,
+        RecursionSkillsInline, CharacterArtifactsInline
+    ]
     list_display = ('character', 'name')
     readonly_fields = ('name', 'character', 'focus', )
     search_fields = ['name', 'character']
@@ -206,15 +276,3 @@ class RecursionAdmin(admin.ModelAdmin):
         return False
     def has_delete_permission(self, request, obj=None):
         return False
-
-admin.site.register(Descriptor, DescriptorAdmin)
-admin.site.register(Type, TypeAdmin)
-admin.site.register(Focus, FocusAdmin)
-admin.site.register(Ability, AbilityAdmin)
-admin.site.register(Equipment, EquipmentAdmin)
-admin.site.register(Cypher, CypherAdmin)
-admin.site.register(Artifact, ArtifactAdmin)
-admin.site.register(Sourcebook, SourcebookAdmin)
-admin.site.register(Skill, SkillAdmin)
-admin.site.register(Character, CharacterAdmin)
-admin.site.register(Recursion, RecursionAdmin)
