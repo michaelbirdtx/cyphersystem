@@ -141,7 +141,7 @@ class baseCharacter(models.Model):
     #equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
     #cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
     #artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
-    slug = models.SlugField(max_length=100)
+    slug = models.SlugField(max_length=100,unique=True)
     def __str__(self):
         return self.name
 
