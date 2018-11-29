@@ -233,7 +233,7 @@ class baseCreature(models.Model):
     motive = models.CharField(max_length=500)
     environment = models.CharField(max_length=500)
     movement = models.CharField(max_length=500)
-    description = models.TextField(blank=True)
+    description = models.TextField()
     modifications = models.TextField(blank=True)
     combat = models.TextField(blank=True)
     interaction = models.TextField(blank=True)
@@ -426,27 +426,27 @@ class Sourcebook(baseSourcebook):
     pass
 
 class Ability(baseAbility):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
 
 class Artifact(baseArtifact):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
 
 class Cypher(baseCypher):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
 
 class Descriptor(baseDescriptor):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
 
 class Equipment(baseEquipment):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
 
 class Focus(baseFocus):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
     abilities = models.ManyToManyField(Ability, through='FocusAbility')
 
@@ -458,7 +458,7 @@ class Skill(baseSkill):
     pass
 
 class Type(baseType):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
     abilities = models.ManyToManyField(Ability, through='TypeAbility')
 
@@ -479,7 +479,7 @@ class Character(baseCharacter):
         return "/cyphercore/characters/%s/" % self.slug
 
 class Creature(baseCreature):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    sourcebook = models.ForeignKey(Sourcebook, default=1,
         on_delete=models.PROTECT)
     def get_absolute_url(self):
         return "/cyphercore/creatures/%s/" % self.slug

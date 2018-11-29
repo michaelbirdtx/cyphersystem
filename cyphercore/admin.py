@@ -216,6 +216,22 @@ class CharacterAdmin(admin.ModelAdmin):
 
 @admin.register(Creature)
 class CreatureAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('CREATURE DEFINITION',
+            {'fields': [
+                ('name', 'slug'),
+                ('level', 'health', 'armor'),
+                ('damage_inflicted', 'environment'), ('motive', 'movement'),
+                ('description')
+            ]}
+        ),
+        ('DETAILS',
+            {'fields': [
+                'combat', 'interaction', 'modifications',
+                'use', 'loot', 'gm_intrusion', 'sourcebook'
+            ]}
+        )
+    ]
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
