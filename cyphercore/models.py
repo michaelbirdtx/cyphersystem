@@ -29,7 +29,8 @@ class baseAbility(models.Model):
     cost = models.CharField(blank=False,default='-',max_length=30)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    #    on_delete=models.PROTECT)
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
     truncated_description.short_description = 'Short Description'
@@ -48,7 +49,8 @@ class baseArtifact(models.Model):
     effect = models.TextField()
     depletion = models.CharField(blank=False,default='-',max_length=20)
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
+    #   on_delete=models.PROTECT)
     def truncated_form(self):
         return truncate_to(truncate_length, self.form)
     truncated_form.short_description = 'Form'
@@ -211,7 +213,38 @@ class baseCharacterSkill(models.Model):
         (SPECIALIZED, 'Specialized'),
         (INABILITY, 'Inability'),
     )
-    skill_level = models.CharField(max_length=1,choices=SKILL_LEVEL_CHOICES,default=TRAINED)
+    skill_level = models.CharField(max_length=1, choices=SKILL_LEVEL_CHOICES,
+        default=TRAINED)
+    def __str__(self):
+        return self.skill.name
+
+class baseCreature(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ['name']
+        verbose_name = 'Creature'
+        verbose_name_plural = 'Creatures'
+    name = models.CharField(max_length=100,unique=True)
+    slug = models.SlugField(max_length=100,unique=True)
+    level = models.IntegerField(default=1)
+    health = models.IntegerField(default=3)
+    damage_inflicted = models.CharField(max_length=50)
+    armor = models.IntegerField(default=0)
+    motive = models.CharField(max_length=500)
+    environment = models.CharField(max_length=500)
+    movement = models.CharField(max_length=500)
+    description = models.TextField(blank=True)
+    modifications = models.TextField(blank=True)
+    combat = models.TextField(blank=True)
+    interaction = models.TextField(blank=True)
+    use = models.TextField(blank=True)
+    loot = models.TextField(blank=True)
+    gm_intrusion = models.TextField('GM intrusion', blank=True)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    #   on_delete=models.PROTECT)
+    def truncated_description(self):
+        return truncate_to(truncate_length, self.description)
+    truncated_description.short_description = 'Description'
     def __str__(self):
         return self.skill.name
 
@@ -225,7 +258,8 @@ class baseCypher(models.Model):
     level_range = models.CharField(max_length=10)
     effect = models.TextField()
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    #   on_delete=models.PROTECT)
     def truncated_effect(self):
         return truncate_to(truncate_length, self.effect)
     truncated_effect.short_description = 'Effect'
@@ -244,7 +278,8 @@ class baseDescriptor(models.Model):
     characteristics = models.TextField(blank=True)
     starting_link = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
+    #   on_delete=models.PROTECT)
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
     truncated_description.short_description = 'Short Description'
@@ -284,7 +319,8 @@ class baseEquipment(models.Model):
     base_cost = models.CharField(blank=True, max_length=30)
     notes = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
+    #   on_delete=models.PROTECT)
     def truncated_notes(self):
         return truncate_to(truncate_length, self.notes)
     truncated_notes.short_description = 'Notes'
@@ -302,7 +338,8 @@ class baseFocus(models.Model):
     connections = models.TextField(blank=True)
     other_details = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
+    #   on_delete=models.PROTECT)
     #abilities = models.ManyToManyField(Ability, through='FocusAbility')
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -362,7 +399,8 @@ class baseType(models.Model):
     description = models.TextField(blank=True)
     base_abilities = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
+    #    on_delete=models.PROTECT)
     #abilities = models.ManyToManyField(Ability, through='TypeAbility')
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -388,22 +426,28 @@ class Sourcebook(baseSourcebook):
     pass
 
 class Ability(baseAbility):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
 
 class Artifact(baseArtifact):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
 
 class Cypher(baseCypher):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
 
 class Descriptor(baseDescriptor):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
 
 class Equipment(baseEquipment):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
 
 class Focus(baseFocus):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
     abilities = models.ManyToManyField(Ability, through='FocusAbility')
 
 class FocusAbility(baseFocusAbility):
@@ -414,7 +458,8 @@ class Skill(baseSkill):
     pass
 
 class Type(baseType):
-    sourcebook = models.ForeignKey(Sourcebook, default=1, on_delete=models.PROTECT)
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
     abilities = models.ManyToManyField(Ability, through='TypeAbility')
 
 class TypeAbility(baseTypeAbility):
@@ -432,6 +477,12 @@ class Character(baseCharacter):
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
     def get_absolute_url(self):
         return "/cyphercore/characters/%s/" % self.slug
+
+class Creature(baseCreature):
+    sourcebook = models.ForeignKey(Sourcebook, default=1, \
+        on_delete=models.PROTECT)
+    def get_absolute_url(self):
+        return "/cyphercore/creatures/%s/" % self.slug
 
 class CharacterAbility(baseCharacterAbility):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)

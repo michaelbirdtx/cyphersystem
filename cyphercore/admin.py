@@ -6,8 +6,10 @@ admin.site.index_title = 'Admin'
 
 # Register your models here.
 from .models import (
-        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment, Cypher, Artifact, Attack, Character,
-        FocusAbility, TypeAbility,  CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher, CharacterArtifact
+        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
+        Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
+        CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
+        CharacterArtifact, Creature
     )
 
 @admin.register(Sourcebook)
@@ -17,7 +19,8 @@ class SourcebookAdmin(admin.ModelAdmin):
 
 @admin.register(Descriptor)
 class DescriptorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'prefix', 'truncated_description', 'slug', 'sourcebook')
+    list_display = ('name', 'prefix', 'truncated_description', 'slug',
+        'sourcebook')
     search_fields = ['name']
 
 class TypeAbilitiesInline(admin.TabularInline):
@@ -32,7 +35,8 @@ class TypeAbilitiesInline(admin.TabularInline):
 @admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('TYPE DEFINITION', {'fields': [('name'), ('description'), ('base_abilities'), ('slug', 'sourcebook')]}),
+        ('TYPE DEFINITION', {'fields': [('name'), ('description'),
+            ('base_abilities'), ('slug', 'sourcebook')]}),
         ('BASE STATS',
             {'fields': [
                 ('might_pool', 'speed_pool', 'intellect_pool'),
@@ -42,7 +46,8 @@ class TypeAdmin(admin.ModelAdmin):
         )
     ]
     inlines = [TypeAbilitiesInline]
-    list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool', 'truncated_description', 'slug', 'sourcebook')
+    list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool',
+        'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -90,7 +95,8 @@ class AbilityTypesInline(admin.TabularInline):
 @admin.register(Ability)
 class AbilityAdmin(admin.ModelAdmin):
     inlines = [AbilityFociInline, AbilityTypesInline]
-    list_display = ('name', 'usage', 'cost', 'truncated_description', 'slug', 'sourcebook')
+    list_display = ('name', 'usage', 'cost', 'truncated_description', 'slug',
+        'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -101,19 +107,22 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'base_cost', 'truncated_notes', 'slug', 'sourcebook')
+    list_display = ('name', 'type', 'base_cost', 'truncated_notes', 'slug',
+        'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'type', 'base_cost']
 
 @admin.register(Cypher)
 class CypherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
+    list_display = ('name', 'level_range', 'truncated_effect', 'slug',
+        'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
 @admin.register(Artifact)
 class ArtifactAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level_range', 'truncated_form', 'truncated_effect', 'depletion', 'slug', 'sourcebook')
+    list_display = ('name', 'level_range', 'truncated_form', 'truncated_effect',
+        'depletion', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -168,31 +177,45 @@ class CharacterAdmin(admin.ModelAdmin):
         ),
         ('DAMAGE TRACK',
             {'fields': [
-                ('recovery_roll', 'one_action', 'ten_minutes', 'one_hour', 'ten_hours', 'impaired', 'debilitated')
+                ('recovery_roll', 'one_action', 'ten_minutes', 'one_hour',
+                    'ten_hours', 'impaired', 'debilitated')
             ]}
         ),
         ('ADVANCEMENT',
             {'fields': [
                 (
-                    'tier_1_edge', 'tier_1_effort', 'tier_1_pools', 'tier_1_skills', 'tier_1_other',
-                    'tier_2_edge', 'tier_2_effort', 'tier_2_pools', 'tier_2_skills', 'tier_2_other'
+                    'tier_1_edge', 'tier_1_effort', 'tier_1_pools',
+                        'tier_1_skills', 'tier_1_other',
+                    'tier_2_edge', 'tier_2_effort', 'tier_2_pools',
+                        'tier_2_skills', 'tier_2_other'
                 ),
                 (
-                    'tier_3_edge', 'tier_3_effort', 'tier_3_pools', 'tier_3_skills', 'tier_3_other',
-                    'tier_4_edge', 'tier_4_effort', 'tier_4_pools', 'tier_4_skills', 'tier_4_other'
+                    'tier_3_edge', 'tier_3_effort', 'tier_3_pools',
+                        'tier_3_skills', 'tier_3_other',
+                    'tier_4_edge', 'tier_4_effort', 'tier_4_pools',
+                        'tier_4_skills', 'tier_4_other'
                 ),
                 (
-                    'tier_5_edge', 'tier_5_effort', 'tier_5_pools', 'tier_5_skills', 'tier_5_other',
-                    'tier_6_edge', 'tier_6_effort', 'tier_6_pools', 'tier_6_skills', 'tier_6_other'
+                    'tier_5_edge', 'tier_5_effort', 'tier_5_pools',
+                        'tier_5_skills', 'tier_5_other',
+                    'tier_6_edge', 'tier_6_effort', 'tier_6_pools',
+                        'tier_6_skills', 'tier_6_other'
                 )
             ]}
         )
     ]
     inlines = [
-        CharacterAbilitiesInline, AttackInline, CharacterSkillsInline, CharacterEquipmentInline,
-        CharacterCyphersInline, CharacterArtifactsInline
+        CharacterAbilitiesInline, AttackInline, CharacterSkillsInline,
+        CharacterEquipmentInline, CharacterCyphersInline,
+        CharacterArtifactsInline
     ]
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+    save_as = True
+    search_fields = ['name']
+
+@admin.register(Creature)
+class CreatureAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
