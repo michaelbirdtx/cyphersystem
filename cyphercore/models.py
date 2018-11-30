@@ -29,7 +29,7 @@ class baseAbility(models.Model):
     cost = models.CharField(blank=False,default='-',max_length=30)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
     #    on_delete=models.PROTECT)
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -241,7 +241,7 @@ class baseCreature(models.Model):
     use = models.TextField(blank=True)
     loot = models.TextField(blank=True)
     gm_intrusion = models.TextField('GM intrusion', blank=True)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
     #   on_delete=models.PROTECT)
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -259,7 +259,7 @@ class baseCypher(models.Model):
     level_range = models.CharField(max_length=10)
     effect = models.TextField()
     slug = models.SlugField(max_length=50)
-    #sourcebook = models.ForeignKey(Sourcebook, default=1, \
+    #sourcebook = models.ForeignKey(Sourcebook, default=1,
     #   on_delete=models.PROTECT)
     def truncated_effect(self):
         return truncate_to(truncate_length, self.effect)

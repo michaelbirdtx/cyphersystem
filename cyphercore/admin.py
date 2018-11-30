@@ -221,7 +221,8 @@ class CreatureAdmin(admin.ModelAdmin):
             {'fields': [
                 ('name', 'slug'),
                 ('level', 'health', 'armor'),
-                ('damage_inflicted', 'environment'), ('motive', 'movement'),
+                ('damage_inflicted', 'environment'),
+                ('motive', 'movement'),
                 'description',
                 'sourcebook',
                 'portrait_link'
