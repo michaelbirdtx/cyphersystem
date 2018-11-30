@@ -19,8 +19,8 @@ class SourcebookAdmin(admin.ModelAdmin):
 
 @admin.register(Descriptor)
 class DescriptorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'prefix', 'truncated_description', 'slug',
-        'sourcebook')
+    list_display = (
+        'name', 'prefix', 'truncated_description', 'slug', 'sourcebook')
     search_fields = ['name']
 
 class TypeAbilitiesInline(admin.TabularInline):
@@ -46,7 +46,8 @@ class TypeAdmin(admin.ModelAdmin):
         )
     ]
     inlines = [TypeAbilitiesInline]
-    list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool',
+    list_display = (
+        'name', 'might_pool', 'speed_pool', 'intellect_pool',
         'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
@@ -95,8 +96,8 @@ class AbilityTypesInline(admin.TabularInline):
 @admin.register(Ability)
 class AbilityAdmin(admin.ModelAdmin):
     inlines = [AbilityFociInline, AbilityTypesInline]
-    list_display = ('name', 'usage', 'cost', 'truncated_description', 'slug',
-        'sourcebook')
+    list_display = (
+        'name', 'usage', 'cost', 'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -107,21 +108,22 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'base_cost', 'truncated_notes', 'slug',
-        'sourcebook')
+    list_display = (
+        'name', 'type', 'base_cost', 'truncated_notes', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'type', 'base_cost']
 
 @admin.register(Cypher)
 class CypherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level_range', 'truncated_effect', 'slug',
-        'sourcebook')
+    list_display = (
+        'name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
 @admin.register(Artifact)
 class ArtifactAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level_range', 'truncated_form', 'truncated_effect',
+    list_display = (
+        'name', 'level_range', 'truncated_form', 'truncated_effect',
         'depletion', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
