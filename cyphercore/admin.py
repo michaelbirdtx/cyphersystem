@@ -222,16 +222,19 @@ class CreatureAdmin(admin.ModelAdmin):
                 ('name', 'slug'),
                 ('level', 'health', 'armor'),
                 ('damage_inflicted', 'environment'), ('motive', 'movement'),
-                ('description')
+                'description',
+                'sourcebook',
+                'portrait_link'
             ]}
         ),
         ('DETAILS',
             {'fields': [
                 'combat', 'interaction', 'modifications',
-                'use', 'loot', 'gm_intrusion', 'sourcebook'
+                'use', 'loot', 'gm_intrusion'
             ]}
         )
     ]
+    list_display = ('name', 'level', 'truncated_description')
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']

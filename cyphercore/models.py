@@ -226,6 +226,7 @@ class baseCreature(models.Model):
         verbose_name_plural = 'Creatures'
     name = models.CharField(max_length=100,unique=True)
     slug = models.SlugField(max_length=100,unique=True)
+    portrait_link = models.URLField(max_length=1000,blank=True)
     level = models.IntegerField(default=1)
     health = models.IntegerField(default=3)
     damage_inflicted = models.CharField(max_length=50)
@@ -246,7 +247,7 @@ class baseCreature(models.Model):
         return truncate_to(truncate_length, self.description)
     truncated_description.short_description = 'Description'
     def __str__(self):
-        return self.skill.name
+        return self.name
 
 class baseCypher(models.Model):
     class Meta:
