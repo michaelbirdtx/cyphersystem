@@ -37,17 +37,29 @@
     </section>
     <!-- Details -->
     <section id="details">
-        <h3>Modifications</h3>
-        <div class="indent">{{ creature.modifications|linebreaks }}</div>
-        <h3>Combat</h3>
-        <div class="indent">{{ creature.combat|linebreaks }}</div>
-        <h3>Interaction</h3>
-        <div class="indent">{{ creature.interaction|linebreaks }}</div>
-        <h3>Use</h3>
-        <div class="indent">{{ creature.use|linebreaks }}</div>
-        <h3>Loot</h3>
-        <div class="indent">{{ creature.loot|linebreaks }}</div>
+        <div class="avoid-break">
+            <h3>Modifications:</h3>
+            <div class="indent">{{ creature.modifications|linebreaks }}</div>
+        </div>
+        <div class="avoid-break">
+            <h3>Combat:</h3>
+            <div class="indent">{{ creature.combat|linebreaks }}</div>
+        </div>
+        <div class="avoid-break">
+            <h3>Interaction:</h3>
+            <div class="indent">{{ creature.interaction|linebreaks }}</div>
+        </div>
+        <div class="avoid-break">
+            <h3>Use:</h3>
+            <div class="indent">{{ creature.use|linebreaks }}</div>
+        </div>
+        <div class="avoid-break">
+            <h3>Loot:</h3>
+            <div class="indent">{{ creature.loot|linebreaks }}</div>
+        </div>
         <hr />
     </section>
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">creature List</a> | {{ creature.name }}</a></span>
+    <span class="breadcrumbs">
+        <a href="../../">Index</a> | <a href="../">creature List</a> | {{ creature.name }}
+    </span>
 {% endblock %}
