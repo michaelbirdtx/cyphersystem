@@ -246,6 +246,8 @@ class baseCreature(models.Model):
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
     truncated_description.short_description = 'Description'
+    def target(self):
+        return self.level * 3
     def __str__(self):
         return self.name
 

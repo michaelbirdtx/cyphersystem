@@ -5,7 +5,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
 
-from .models import Ability, Descriptor, Equipment, Focus, Skill, Type, Character, Cypher, Artifact
+from .models import (
+        Ability, Descriptor, Equipment, Focus, Skill, Type, Character, Cypher,
+        Creature, Artifact
+    )
 
 BASE_LOGIN_URL = '/admin/login/'
 
@@ -77,6 +80,16 @@ class CharacterDetailView(LoginRequiredMixin, generic.DetailView):
     login_url = BASE_LOGIN_URL
     model = Character
     template_name = 'cyphercore/character_detail.html'
+
+class CreatureListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Creature
+    template_name = 'cyphercore/creature_list.html'
+
+class CreatureDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Creature
+    template_name = 'cyphercore/creature_detail.html'
 
 class CypherListView(LoginRequiredMixin, generic.ListView):
     login_url = BASE_LOGIN_URL
