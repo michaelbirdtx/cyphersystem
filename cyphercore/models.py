@@ -548,14 +548,6 @@ class Character(baseCharacter):
         return "/cyphercore/characters/%s/" % self.slug
 
 
-class Creature(baseCreature):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-
-    def get_absolute_url(self):
-        return "/cyphercore/creatures/%s/" % self.slug
-
-
 class CharacterAbility(baseCharacterAbility):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
@@ -584,3 +576,11 @@ class CharacterEquipment(baseCharacterEquipment):
 class CharacterSkill(baseCharacterSkill):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+
+
+class Creature(baseCreature):
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
+
+    def get_absolute_url(self):
+        return "/cyphercore/creatures/%s/" % self.slug
