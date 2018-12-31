@@ -1,0 +1,16 @@
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}Creatures{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Creature List</span>
+    <h1>{% block header_text %}Cypher Core: Creatures{% endblock %}</h1>
+    <ul>
+        {% for creature in creature_list %}
+        {% block creature_item %}
+        <li>
+            <a href="{{ creature.slug }}">{{ creature.name }}</a>
+        </li>{% endblock %}
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Creature List</span>
+{% endblock %}
