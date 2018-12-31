@@ -1,21 +1,22 @@
-from django import forms
 from django.contrib import admin
-admin.site.site_header = 'Cypher System'
-admin.site.site_title = 'Cypher System'
-admin.site.index_title = 'Admin'
-
-# Register your models here.
 from .models import (
         Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
         Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
         CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
         CharacterArtifact, Creature
     )
+admin.site.site_header = 'Cypher System'
+admin.site.site_title = 'Cypher System'
+admin.site.index_title = 'Admin'
+
+# Register your models here.
+
 
 @admin.register(Sourcebook)
 class SourcebookAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name']
+
 
 @admin.register(Descriptor)
 class DescriptorAdmin(admin.ModelAdmin):
@@ -23,26 +24,35 @@ class DescriptorAdmin(admin.ModelAdmin):
         'name', 'prefix', 'truncated_description', 'slug', 'sourcebook')
     search_fields = ['name']
 
+
 class TypeAbilitiesInline(admin.TabularInline):
     model = TypeAbility
     autocomplete_fields = ['ability']
     extra = 0
+
     def get_queryset(self, request):
         qs = super(TypeAbilitiesInline, self).get_queryset(request)
         qs = qs.prefetch_related('ability')
         return qs
 
+
 @admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('TYPE DEFINITION', {'fields': [('name'), ('description'),
-            ('base_abilities'), ('slug', 'sourcebook')]}),
-        ('BASE STATS',
-            {'fields': [
-                ('might_pool', 'speed_pool', 'intellect_pool'),
-                ('might_edge', 'speed_edge', 'intellect_edge'),
-                ('cypher_limit', 'effort', 'pool_points')
-            ]}
+        (
+            'TYPE DEFINITION', {
+                'fields': [
+                    ('name'), ('description'),
+                    ('base_abilities'), ('slug', 'sourcebook')
+                ]}
+        ),
+        (
+            'BASE STATS', {
+                'fields': [
+                    ('might_pool', 'speed_pool', 'intellect_pool'),
+                    ('might_edge', 'speed_edge', 'intellect_edge'),
+                    ('cypher_limit', 'effort', 'pool_points')
+                ]}
         )
     ]
     inlines = [TypeAbilitiesInline]
@@ -52,30 +62,36 @@ class TypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+
 class CharacterAbilitiesInline(admin.TabularInline):
     model = CharacterAbility
     autocomplete_fields = ['ability']
     extra = 0
     fields = ('ability', 'note')
+
     def get_queryset(self, request):
         qs = super(CharacterAbilitiesInline, self).get_queryset(request)
         qs = qs.prefetch_related('ability')
         return qs
 
+
 class FocusAbilitiesInline(admin.TabularInline):
     model = FocusAbility
     autocomplete_fields = ['ability']
     extra = 0
+
     def get_queryset(self, request):
         qs = super(FocusAbilitiesInline, self).get_queryset(request)
         qs = qs.prefetch_related('ability')
         return qs
+
 
 @admin.register(Focus)
 class FocusAdmin(admin.ModelAdmin):
     inlines = [FocusAbilitiesInline]
     list_display = ('name', 'truncated_description', 'slug', 'sourcebook')
     search_fields = ['name']
+
 
 class AbilityFociInline(admin.TabularInline):
     model = FocusAbility
@@ -85,6 +101,7 @@ class AbilityFociInline(admin.TabularInline):
     verbose_name = "Related Focus"
     verbose_name_plural = "Related Foci"
 
+
 class AbilityTypesInline(admin.TabularInline):
     model = TypeAbility
     autocomplete_fields = ['type']
@@ -92,6 +109,7 @@ class AbilityTypesInline(admin.TabularInline):
     ordering = ['type__name']
     verbose_name = "Related Type"
     verbose_name_plural = "Related Types"
+
 
 @admin.register(Ability)
 class AbilityAdmin(admin.ModelAdmin):
@@ -101,10 +119,12 @@ class AbilityAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name']
+
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
@@ -113,12 +133,14 @@ class EquipmentAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'type', 'base_cost']
 
+
 @admin.register(Cypher)
 class CypherAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
+
 
 @admin.register(Artifact)
 class ArtifactAdmin(admin.ModelAdmin):
@@ -128,10 +150,12 @@ class ArtifactAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
+
 class AttackInline(admin.TabularInline):
     model = Attack
     extra = 0
     fields = ('name', 'modifier', 'damage')
+
 
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
@@ -139,11 +163,13 @@ class CharacterEquipmentInline(admin.TabularInline):
     extra = 0
     fields = ('equipment', 'quantity', 'brief_note')
 
+
 class CharacterSkillsInline(admin.TabularInline):
     model = CharacterSkill
     autocomplete_fields = ['skill']
     extra = 0
     fields = ('skill', 'skill_level')
+
 
 class CharacterCyphersInline(admin.TabularInline):
     model = CharacterCypher
@@ -151,59 +177,67 @@ class CharacterCyphersInline(admin.TabularInline):
     extra = 0
     fields = ('cypher', 'level', 'appearance')
 
+
 class CharacterArtifactsInline(admin.TabularInline):
     model = CharacterArtifact
     autocomplete_fields = ['artifact']
     extra = 0
     fields = ('artifact', 'level')
 
+
 @admin.register(Character)
 class CharacterAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('CHARACTER DEFINITION',
-            {'fields': [
-                ('name', 'slug'), 'descriptor', 'type', 'focus',
-                ('cypher_limit', 'effort', 'tier'),
-                ('armor', 'money', 'xp'),
-                'background',
-                'notes',
-                'portrait_link'
-            ]}
+        (
+            'CHARACTER DEFINITION', {
+                'fields': [
+                    ('name', 'slug'), 'descriptor', 'type', 'focus',
+                    ('cypher_limit', 'effort', 'tier'),
+                    ('armor', 'money', 'xp'),
+                    'background',
+                    'notes',
+                    'portrait_link'
+                ]}
         ),
-        ('STATS',
-            {'fields': [
-                ('might_pool', 'might_current', 'might_edge'),
-                ('speed_pool', 'speed_current', 'speed_edge'),
-                ('intellect_pool', 'intellect_current', 'intellect_edge')
-            ]}
+        (
+            'STATS', {
+                'fields': [
+                    ('might_pool', 'might_current', 'might_edge'),
+                    ('speed_pool', 'speed_current', 'speed_edge'),
+                    ('intellect_pool', 'intellect_current', 'intellect_edge')
+                ]}
         ),
-        ('DAMAGE TRACK',
-            {'fields': [
-                ('recovery_roll', 'one_action', 'ten_minutes', 'one_hour',
-                    'ten_hours', 'impaired', 'debilitated')
-            ]}
+        (
+            'DAMAGE TRACK', {
+                'fields': [
+                    (
+                        'recovery_roll', 'one_action', 'ten_minutes',
+                        'one_hour', 'ten_hours', 'impaired', 'debilitated'
+                    )
+                ]}
         ),
-        ('ADVANCEMENT',
-            {'fields': [
-                (
-                    'tier_1_edge', 'tier_1_effort', 'tier_1_pools',
+        (
+            'ADVANCEMENT', {
+                'fields': [
+                    (
+                        'tier_1_edge', 'tier_1_effort', 'tier_1_pools',
                         'tier_1_skills', 'tier_1_other',
-                    'tier_2_edge', 'tier_2_effort', 'tier_2_pools',
+                        'tier_2_edge', 'tier_2_effort', 'tier_2_pools',
                         'tier_2_skills', 'tier_2_other'
-                ),
-                (
-                    'tier_3_edge', 'tier_3_effort', 'tier_3_pools',
+                    ),
+                    (
+                        'tier_3_edge', 'tier_3_effort', 'tier_3_pools',
                         'tier_3_skills', 'tier_3_other',
-                    'tier_4_edge', 'tier_4_effort', 'tier_4_pools',
+                        'tier_4_edge', 'tier_4_effort', 'tier_4_pools',
                         'tier_4_skills', 'tier_4_other'
-                ),
-                (
-                    'tier_5_edge', 'tier_5_effort', 'tier_5_pools',
+                    ),
+                    (
+                        'tier_5_edge', 'tier_5_effort', 'tier_5_pools',
                         'tier_5_skills', 'tier_5_other',
-                    'tier_6_edge', 'tier_6_effort', 'tier_6_pools',
+                        'tier_6_edge', 'tier_6_effort', 'tier_6_pools',
                         'tier_6_skills', 'tier_6_other'
-                )
-            ]}
+                    )
+                ]}
         )
     ]
     inlines = [
@@ -216,22 +250,24 @@ class CharacterAdmin(admin.ModelAdmin):
     save_as = True
     search_fields = ['name']
 
+
 @admin.register(Creature)
 class CreatureAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('CREATURE DEFINITION',
-            {'fields': [
-                ('name', 'slug'),
-                ('level', 'health', 'armor'),
-                ('damage_inflicted', 'environment'),
-                ('motive', 'movement'),
-                'description',
-                'sourcebook',
-                'portrait_link'
-            ]}
+        (
+            'CREATURE DEFINITION', {
+                'fields': [
+                    ('name', 'slug'),
+                    ('level', 'health', 'armor'),
+                    ('damage_inflicted', 'environment'),
+                    ('motive', 'movement'),
+                    'description',
+                    'sourcebook',
+                    'portrait_link'
+                ]}
         ),
-        ('DETAILS',
-            {'fields': [
+        (
+            'DETAILS', {'fields': [
                 'combat', 'interaction', 'modifications',
                 'use', 'loot', 'gm_intrusion'
             ]}
