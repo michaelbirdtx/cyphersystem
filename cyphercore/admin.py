@@ -22,6 +22,7 @@ class SourcebookAdmin(admin.ModelAdmin):
 class DescriptorAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'prefix', 'truncated_description', 'slug', 'sourcebook')
+    prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
 
@@ -90,6 +91,7 @@ class FocusAbilitiesInline(admin.TabularInline):
 class FocusAdmin(admin.ModelAdmin):
     inlines = [FocusAbilitiesInline]
     list_display = ('name', 'truncated_description', 'slug', 'sourcebook')
+    prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
 
