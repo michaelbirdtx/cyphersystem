@@ -407,6 +407,21 @@ class baseFocusAbility(models.Model):
         return self.ability.name
 
 
+class basePlayer(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ['display_name']
+        verbose_name = 'Player'
+        verbose_name_plural = 'Players'
+    display_name = models.CharField(max_length=100, unique=False)
+    email = models.CharField(max_length=254, unique=True)
+    first_name = models.CharField(max_length=100, unique=False)
+    last_name = models.CharField(max_length=100, unique=False)
+
+    def __str__(self):
+        return self.display_name
+
+
 class baseSkill(models.Model):
     class Meta:
         abstract = True
@@ -584,3 +599,7 @@ class Creature(baseCreature):
 
     def get_absolute_url(self):
         return "/cyphercore/creatures/%s/" % self.slug
+
+
+class Player(basePlayer):
+    pass
