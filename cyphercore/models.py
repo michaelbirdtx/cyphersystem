@@ -91,6 +91,7 @@ class baseCharacter(models.Model):
         verbose_name = 'Character'
         verbose_name_plural = 'Characters'
     name = models.CharField(max_length=100, unique=True)
+    # player = models.ForeignKey(Player, null=True, on_delete=models.PROTECT)
     # descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     # type = models.ForeignKey(Type, on_delete=models.PROTECT)
     # focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
@@ -549,7 +550,12 @@ class TypeAbility(baseTypeAbility):
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 
 
+class Player(basePlayer):
+    pass
+
+
 class Character(baseCharacter):
+    player = models.ForeignKey(Player, null=True, on_delete=models.PROTECT)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
@@ -599,7 +605,3 @@ class Creature(baseCreature):
 
     def get_absolute_url(self):
         return "/cyphercore/creatures/%s/" % self.slug
-
-
-class Player(basePlayer):
-    pass

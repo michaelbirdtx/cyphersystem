@@ -3,7 +3,7 @@ from .models import (
         Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
         Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
         CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
-        CharacterArtifact, Creature
+        CharacterArtifact, Creature, Player
     )
 admin.site.site_header = 'Cypher System'
 admin.site.site_title = 'Cypher System'
@@ -193,7 +193,7 @@ class CharacterAdmin(admin.ModelAdmin):
         (
             'CHARACTER DEFINITION', {
                 'fields': [
-                    ('name', 'slug'), 'descriptor', 'type', 'focus',
+                    ('name', 'player', 'slug'), 'descriptor', 'type', 'focus',
                     ('cypher_limit', 'effort', 'tier'),
                     ('armor', 'money', 'xp'),
                     'background',
@@ -247,7 +247,9 @@ class CharacterAdmin(admin.ModelAdmin):
         CharacterEquipmentInline, CharacterCyphersInline,
         CharacterArtifactsInline
     ]
-    list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
+    list_display = (
+        'name', 'descriptor', 'type', 'focus', 'tier', 'player', 'slug'
+    )
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
@@ -279,3 +281,9 @@ class CreatureAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
+
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ('display_name', 'email', 'first_name', 'last_name')
+    search_fields = ['display_name', 'first_name', 'last_name', 'email']

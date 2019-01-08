@@ -2,7 +2,6 @@
 {% block subtitle %}{{ character.name }}{% endblock %}
 {% block pagestyles %}
     {% if "summary" in request.path %}
-
         .recursion-equipment, .recursion-artifacts, .stat-pools { display: none; }
         #portrait-background { display: none; }
         #other-stats { display: none; }
@@ -30,7 +29,9 @@
     <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
     {% endif %}
     <h1>{{ character.name }}</h1>
-    {% block character_sentence %}<p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}} who {{ character.focus }}</strong></p>{% endblock %}
+    {% block character_sentence %}
+        <p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}{% if character.player %} and is played by {{ character.player }}{% endif %}</strong></p>
+    {% endblock %}
     <hr />
     <!-- Character Portrait & Background -->
     <section id="portrait-background" class="avoid-break">
