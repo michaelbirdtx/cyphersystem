@@ -3,7 +3,7 @@ from .models import (
         Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
         Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
         CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
-        CharacterArtifact, Creature, Player
+        CharacterArtifact, Creature, Player, Campaign
     )
 admin.site.site_header = 'Cypher System'
 admin.site.site_title = 'Cypher System'
@@ -287,3 +287,9 @@ class CreatureAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ('display_name', 'email', 'first_name', 'last_name')
     search_fields = ['display_name', 'first_name', 'last_name', 'email']
+
+
+@admin.register(Campaign)
+class CampaignAdmin(admin.ModelAdmin):
+    list_display = ('name', 'gm')
+    search_fields = ['name', 'gm']

@@ -84,6 +84,20 @@ class baseAttack(models.Model):
         return self.name
 
 
+class baseCampaign(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ['name']
+        verbose_name = 'Campaign'
+        verbose_name_plural = 'Campaigns'
+    name = models.CharField(max_length=100, unique=False)
+    # gm = models.ForeignKey(Player, on_delete=models.PROTECT)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class baseCharacter(models.Model):
     class Meta:
         abstract = True
@@ -555,8 +569,13 @@ class Player(basePlayer):
     pass
 
 
+class Campaign(baseCampaign):
+    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+
+
 class Character(baseCharacter):
-    player = models.ForeignKey(Player, null=True, on_delete=models.PROTECT)
+    player = models.ForeignKey(
+        Player, blank=True, null=True, on_delete=models.PROTECT)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
