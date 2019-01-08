@@ -414,10 +414,11 @@ class basePlayer(models.Model):
         ordering = ['display_name']
         verbose_name = 'Player'
         verbose_name_plural = 'Players'
-    display_name = models.CharField(max_length=100, unique=False)
+    display_name = models.CharField(max_length=100)
     email = models.CharField(max_length=254, unique=True)
-    first_name = models.CharField(max_length=100, unique=False)
-    last_name = models.CharField(max_length=100, unique=False)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    password = models.CharField(max_length=128)
 
     def __str__(self):
         return self.display_name

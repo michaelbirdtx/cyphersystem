@@ -30,15 +30,20 @@
     {% endif %}
     <h1>{{ character.name }}</h1>
     {% block character_sentence %}
-        <p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}{% if character.player %} and is played by {{ character.player }}{% endif %}</strong></p>
+        <p class="character-sentence"><strong>
+            ...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}
+        </strong></p>
     {% endblock %}
     <hr />
     <!-- Character Portrait & Background -->
     <section id="portrait-background" class="avoid-break">
         <div class="row">
             <div class="twelve columns">
-                <a href="{{ character.portrait_link }}"><img class="character-portrait"  id="picture-frame" src="{{ character.portrait_link }}" /></a>
-                <div class="indent">{{ character.background|linebreaks }}</div>
+                <a href="{{ character.portrait_link }}"><img class="character-portrait" id="picture-frame" src="{{ character.portrait_link }}" /></a>
+                <div class="indent">
+                    {% if character.player %}<strong>Player: {{ character.player }}</strong>{% endif %}
+                    {{ character.background|linebreaks }}
+                </div>
             </div>
         </div>
         <hr />
