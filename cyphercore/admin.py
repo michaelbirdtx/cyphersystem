@@ -3,7 +3,7 @@ from .models import (
         Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
         Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
         CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
-        CharacterArtifact, Creature, Player, Campaign
+        CharacterArtifact, Creature, Player, Campaign, CampaignCharacter
     )
 admin.site.site_header = 'Cypher System'
 admin.site.site_title = 'Cypher System'
@@ -289,7 +289,15 @@ class PlayerAdmin(admin.ModelAdmin):
     search_fields = ['display_name', 'first_name', 'last_name', 'email']
 
 
+class CampaignCharacterInline(admin.TabularInline):
+    model = CampaignCharacter
+    autocomplete_fields = ['character']
+    extra = 0
+    fields = ('character', 'active')
+
+
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
+    inlines = [CampaignCharacterInline]
     list_display = ('name', 'gm')
     search_fields = ['name', 'gm']
