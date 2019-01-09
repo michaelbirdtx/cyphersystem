@@ -41,7 +41,6 @@
             <div class="twelve columns">
                 <a href="{{ character.portrait_link }}"><img class="character-portrait" id="picture-frame" src="{{ character.portrait_link }}" /></a>
                 <div class="indent">
-                    {% if character.player %}<strong>Player: {{ character.player }}</strong>{% endif %}
                     {{ character.background|linebreaks }}
                 </div>
             </div>
@@ -49,6 +48,7 @@
         <hr />
     </section>
     <!-- Stat Pools -->
+    {% if character.player %}<p><strong>Player Name: {{ character.player.display_name }}</strong><p><hr />{% endif %}
     <section class="stat-pools" class="avoid-break">
         {% block stat_pools_header %}
         <div class="row">
