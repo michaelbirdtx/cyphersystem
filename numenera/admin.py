@@ -1,10 +1,10 @@
 from django.contrib import admin
 from .models import (
-        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
-        Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
-        CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
-        CharacterArtifact, Oddity, Creature
-    )
+    Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
+    Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
+    CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
+    CharacterArtifact, Oddity, Creature, Player, Campaign
+)
 
 # Register your models here.
 
@@ -200,6 +200,7 @@ class CharacterAdmin(admin.ModelAdmin):
                     ('armor', 'money', 'xp'),
                     'background',
                     'notes',
+                    ('player', 'campaign'),
                     'portrait_link'
                 ]}
         ),
@@ -249,7 +250,10 @@ class CharacterAdmin(admin.ModelAdmin):
         CharacterEquipmentInline, CharacterCyphersInline,
         CharacterArtifactsInline
     ]
-    list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'slug')
+    list_display = (
+        'name', 'descriptor', 'type', 'focus', 'tier', 'player', 'campaign',
+        'slug'
+    )
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
@@ -281,3 +285,15 @@ class CreatureAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
+
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ('display_name', 'email', 'first_name', 'last_name')
+    search_fields = ['display_name', 'first_name', 'last_name', 'email']
+
+
+@admin.register(Campaign)
+class CampaignAdmin(admin.ModelAdmin):
+    list_display = ('name', 'gm')
+    search_fields = ['name', 'gm']

@@ -18,7 +18,9 @@ from cyphercore.models import (
     baseCharacterCypher,
     baseCharacterEquipment,
     baseCharacterSkill,
-    baseCreature
+    baseCreature,
+    basePlayer,
+    baseCampaign
 )
 
 
@@ -79,7 +81,19 @@ class TypeAbility(baseTypeAbility):
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 
 
+class Player(basePlayer):
+    pass
+
+
+class Campaign(baseCampaign):
+    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+
+
 class Character(baseCharacter):
+    player = models.ForeignKey(
+        Player, blank=True, null=True, on_delete=models.PROTECT)
+    campaign = models.ForeignKey(
+        Campaign, blank=True, null=True, on_delete=models.PROTECT)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)

@@ -3,12 +3,12 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .models import (
-        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
-        Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
-        CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
-        CharacterArtifact, Creature,
-        Recursion, RecursionAbility, RecursionSkill, RecursionAttack
-    )
+    Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
+    Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
+    CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
+    CharacterArtifact, Creature, Player, Campaign,
+    Recursion, RecursionAbility, RecursionSkill, RecursionAttack
+)
 
 
 class EditLinkToInlineObject(object):
@@ -247,6 +247,7 @@ class CharacterAdmin(admin.ModelAdmin):
                     ('cypher_limit', 'effort', 'tier'),
                     'background',
                     'notes',
+                    ('player', 'campaign'),
                     'portrait_link'
                 ]}
         ),
@@ -294,8 +295,10 @@ class CharacterAdmin(admin.ModelAdmin):
     inlines = [
         CharacterAbilitiesInline, AttackInline, CharacterSkillsInline,
         CharacterCyphersInline, RecursionsInline
-        ]
-    list_display = ('name', 'descriptor', 'type', 'tier', 'slug')
+    ]
+    list_display = (
+        'name', 'descriptor', 'type', 'tier', 'player', 'campaign', 'slug'
+    )
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -382,3 +385,15 @@ class CreatureAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
+
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ('display_name', 'email', 'first_name', 'last_name')
+    search_fields = ['display_name', 'first_name', 'last_name', 'email']
+
+
+@admin.register(Campaign)
+class CampaignAdmin(admin.ModelAdmin):
+    list_display = ('name', 'gm')
+    search_fields = ['name', 'gm']
