@@ -193,11 +193,12 @@ class CharacterAdmin(admin.ModelAdmin):
         (
             'CHARACTER DEFINITION', {
                 'fields': [
-                    ('name', 'player', 'slug'), 'descriptor', 'type', 'focus',
+                    ('name', 'slug'), 'descriptor', 'type', 'focus',
                     ('cypher_limit', 'effort', 'tier'),
                     ('armor', 'money', 'xp'),
                     'background',
                     'notes',
+                    'player',
                     'portrait_link'
                 ]}
         ),

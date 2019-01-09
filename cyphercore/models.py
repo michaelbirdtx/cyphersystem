@@ -100,7 +100,7 @@ class baseCampaignCharacter(models.Model):
         verbose_name = 'Campaign Character'
         verbose_name_plural = 'Campaign Characters'
     active = models.BooleanField(default=True)
-    
+
     def __str__(self):
         return self.character.name
 
