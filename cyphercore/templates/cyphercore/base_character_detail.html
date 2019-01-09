@@ -47,8 +47,25 @@
         </div>
         <hr />
     </section>
+    <!-- Player & Campaign Info -->
+    <section id="campaign-info" class="avoid-break">
+        <div class="row">
+            <div class="one column">
+                <strong>Player:</strong>
+            </div>
+            <div class="three columns">
+                {{ character.player.display_name }}
+            </div>
+            <div class="two columns">
+                <strong>Campaign:</strong>
+            </div>
+            <div class="six columns">
+                {{ character.campaign.name }}
+            </div>
+        </div>
+        <hr />
+    </section>
     <!-- Stat Pools -->
-    {% if character.player %}<p><strong>Player Name: {{ character.player.display_name }}</strong><p><hr />{% endif %}
     <section class="stat-pools" class="avoid-break">
         {% block stat_pools_header %}
         <div class="row">

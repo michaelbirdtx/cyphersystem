@@ -3,7 +3,7 @@ from .models import (
     Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
     Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
     CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
-    CharacterArtifact, Creature, Player, Campaign, CampaignCharacter
+    CharacterArtifact, Creature, Player, Campaign
 )
 admin.site.site_header = 'Cypher System'
 admin.site.site_title = 'Cypher System'
@@ -198,7 +198,7 @@ class CharacterAdmin(admin.ModelAdmin):
                     ('armor', 'money', 'xp'),
                     'background',
                     'notes',
-                    'player',
+                    ('player', 'campaign'),
                     'portrait_link'
                 ]}
         ),
@@ -249,7 +249,8 @@ class CharacterAdmin(admin.ModelAdmin):
         CharacterArtifactsInline
     ]
     list_display = (
-        'name', 'descriptor', 'type', 'focus', 'tier', 'player', 'slug'
+        'name', 'descriptor', 'type', 'focus', 'tier',
+        'player', 'campaign', 'slug'
     )
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
@@ -290,15 +291,7 @@ class PlayerAdmin(admin.ModelAdmin):
     search_fields = ['display_name', 'first_name', 'last_name', 'email']
 
 
-class CampaignCharacterInline(admin.TabularInline):
-    model = CampaignCharacter
-    autocomplete_fields = ['character']
-    extra = 0
-    fields = ('character', 'active')
-
-
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
-    inlines = [CampaignCharacterInline]
     list_display = ('name', 'gm')
     search_fields = ['name', 'gm']

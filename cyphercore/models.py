@@ -25,9 +25,9 @@ class baseAbility(models.Model):
         (SPECIAL, 'Special'),
     )
     usage = models.CharField(
-            max_length=10,
-            choices=ABILITY_USAGE_CHOICES,
-            default='Action')
+        max_length=10,
+        choices=ABILITY_USAGE_CHOICES,
+        default='Action')
     cost = models.CharField(blank=False, default='-', max_length=30)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
@@ -91,18 +91,6 @@ class baseCampaign(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class baseCampaignCharacter(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['character__name']
-        verbose_name = 'Campaign Character'
-        verbose_name_plural = 'Campaign Characters'
-    active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.character.name
 
 
 class baseCharacter(models.Model):
@@ -240,7 +228,7 @@ class baseCharacterSkill(models.Model):
         max_length=1,
         choices=SKILL_LEVEL_CHOICES,
         default=TRAINED
-        )
+    )
 
     def __str__(self):
         return self.skill.name
@@ -536,9 +524,15 @@ class Player(basePlayer):
     pass
 
 
+class Campaign(baseCampaign):
+    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+
+
 class Character(baseCharacter):
     player = models.ForeignKey(
         Player, blank=True, null=True, on_delete=models.PROTECT)
+    campaign = models.ForeignKey(
+        Campaign, blank=True, null=True, on_delete=models.PROTECT)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
@@ -580,16 +574,6 @@ class CharacterEquipment(baseCharacterEquipment):
 class CharacterSkill(baseCharacterSkill):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-
-
-class Campaign(baseCampaign):
-    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
-    characters = models.ManyToManyField(Character, through='CampaignCharacter')
-
-
-class CampaignCharacter(baseCampaignCharacter):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
 
 
 class Creature(baseCreature):
