@@ -1,10 +1,10 @@
 from django.contrib import admin
 from .models import (
-        Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
-        Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
-        CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
-        CharacterArtifact, Creature, Player, Campaign, CampaignCharacter
-    )
+    Sourcebook, Descriptor, Type, Focus, Ability, Skill, Equipment,
+    Cypher, Artifact, Attack, Character, FocusAbility, TypeAbility,
+    CharacterSkill, CharacterEquipment, CharacterAbility, CharacterCypher,
+    CharacterArtifact, Creature, Player, Campaign, CampaignCharacter
+)
 admin.site.site_header = 'Cypher System'
 admin.site.site_title = 'Cypher System'
 admin.site.index_title = 'Admin'
