@@ -21,8 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'u_3%$l5j(744c%-u_qvs(g8d_$fg-mte_8jdiq8x7*%f3px@uh'
-SECRET_KEY = ''
+SECRET_KEY = 'u_3%$l5j(744c%-u_qvs(g8d_$fg-mte_8jdiq8x7*%f3px@uh'
+# SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -76,6 +76,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cyphersystem.wsgi.application'
+
+
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cyphersystem',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '192.168.1.201',
+        'PORT': '5432',
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
