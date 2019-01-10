@@ -391,8 +391,8 @@ class basePlayer(models.Model):
         verbose_name_plural = 'Players'
     display_name = models.CharField(max_length=100)
     email = models.CharField(max_length=254, unique=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
     password = models.CharField(max_length=128)
 
     def __str__(self):
