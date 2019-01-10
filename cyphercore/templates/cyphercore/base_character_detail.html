@@ -2,7 +2,6 @@
 {% block subtitle %}{{ character.name }}{% endblock %}
 {% block pagestyles %}
     {% if "summary" in request.path %}
-
         .recursion-equipment, .recursion-artifacts, .stat-pools { display: none; }
         #portrait-background { display: none; }
         #other-stats { display: none; }
@@ -30,14 +29,38 @@
     <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
     {% endif %}
     <h1>{{ character.name }}</h1>
-    {% block character_sentence %}<p class="character-sentence"><strong>...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type}} who {{ character.focus }}</strong></p>{% endblock %}
+    {% block character_sentence %}
+        <p class="character-sentence"><strong>
+            ...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}
+        </strong></p>
+    {% endblock %}
     <hr />
     <!-- Character Portrait & Background -->
     <section id="portrait-background" class="avoid-break">
         <div class="row">
             <div class="twelve columns">
-                <a href="{{ character.portrait_link }}"><img class="character-portrait"  id="picture-frame" src="{{ character.portrait_link }}" /></a>
-                <div class="indent">{{ character.background|linebreaks }}</div>
+                <a href="{{ character.portrait_link }}"><img class="character-portrait" id="picture-frame" src="{{ character.portrait_link }}" /></a>
+                <div class="indent">
+                    {{ character.background|linebreaks }}
+                </div>
+            </div>
+        </div>
+        <hr />
+    </section>
+    <!-- Player & Campaign Info -->
+    <section id="campaign-info" class="avoid-break">
+        <div class="row">
+            <div class="one column">
+                <strong>Player:</strong>
+            </div>
+            <div class="three columns">
+                {{ character.player.display_name }}
+            </div>
+            <div class="two columns">
+                <strong>Campaign:</strong>
+            </div>
+            <div class="six columns">
+                {{ character.campaign.name }}
             </div>
         </div>
         <hr />

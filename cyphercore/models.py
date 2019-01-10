@@ -25,14 +25,12 @@ class baseAbility(models.Model):
         (SPECIAL, 'Special'),
     )
     usage = models.CharField(
-            max_length=10,
-            choices=ABILITY_USAGE_CHOICES,
-            default='Action')
+        max_length=10,
+        choices=ABILITY_USAGE_CHOICES,
+        default='Action')
     cost = models.CharField(blank=False, default='-', max_length=30)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #    on_delete=models.PROTECT)
 
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -54,8 +52,6 @@ class baseArtifact(models.Model):
     effect = models.TextField()
     depletion = models.CharField(blank=False, default='-', max_length=20)
     slug = models.SlugField(max_length=50)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #    on_delete=models.PROTECT)
 
     def truncated_form(self):
         return truncate_to(truncate_length, self.form)
@@ -84,6 +80,19 @@ class baseAttack(models.Model):
         return self.name
 
 
+class baseCampaign(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ['name']
+        verbose_name = 'Campaign'
+        verbose_name_plural = 'Campaigns'
+    name = models.CharField(max_length=100, unique=False)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class baseCharacter(models.Model):
     class Meta:
         abstract = True
@@ -91,9 +100,6 @@ class baseCharacter(models.Model):
         verbose_name = 'Character'
         verbose_name_plural = 'Characters'
     name = models.CharField(max_length=100, unique=True)
-    # descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
-    # type = models.ForeignKey(Type, on_delete=models.PROTECT)
-    # focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
     portrait_link = models.URLField(max_length=1000, blank=True)
     background = models.TextField(blank=True)
     notes = models.TextField(blank=True)
@@ -149,12 +155,6 @@ class baseCharacter(models.Model):
     tier_6_pools = models.BooleanField(default=False)
     tier_6_skills = models.BooleanField(default=False)
     tier_6_other = models.BooleanField(default=False)
-    # abilities = models.ManyToManyField(Ability, through='CharacterAbility')
-    # skills = models.ManyToManyField(Skill, through='CharacterSkill')
-    # equipment = models.ManyToManyField(Equipment,
-    #     through='CharacterEquipment')
-    # cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
-    # artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
     slug = models.SlugField(max_length=100, unique=True)
 
     def __str__(self):
@@ -167,8 +167,6 @@ class baseCharacterAbility(models.Model):
         ordering = ['ability__name']
         verbose_name = 'Ability'
         verbose_name_plural = 'Abilities'
-    # character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    # equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     note = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
@@ -181,8 +179,6 @@ class baseCharacterArtifact(models.Model):
         ordering = ['artifact__name']
         verbose_name = 'Artifact'
         verbose_name_plural = 'Artifacts'
-    # character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    # artifact = models.ForeignKey(Artifact, on_delete=models.CASCADE)
     level = models.IntegerField(default=1)
 
     def __str__(self):
@@ -195,8 +191,6 @@ class baseCharacterCypher(models.Model):
         ordering = ['cypher__name']
         verbose_name = 'Cypher'
         verbose_name_plural = 'Cyphers'
-    # character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    # cypher = models.ForeignKey(Cypher, on_delete=models.CASCADE)
     level = models.IntegerField(default=1)
     appearance = models.TextField(blank=True)
 
@@ -210,9 +204,6 @@ class baseCharacterEquipment(models.Model):
         ordering = ['equipment__name']
         verbose_name = 'Equipment'
         verbose_name_plural = 'Equipment'
-    # character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    # equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    # quantity = models.IntegerField(default=1)
     brief_note = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
@@ -225,8 +216,6 @@ class baseCharacterSkill(models.Model):
         ordering = ['-skill_level', 'skill__name']
         verbose_name = 'Skill'
         verbose_name_plural = 'Skills'
-    # character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    # skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
     TRAINED = 'T'
     SPECIALIZED = 'S'
     INABILITY = 'I'
@@ -239,7 +228,7 @@ class baseCharacterSkill(models.Model):
         max_length=1,
         choices=SKILL_LEVEL_CHOICES,
         default=TRAINED
-        )
+    )
 
     def __str__(self):
         return self.skill.name
@@ -268,8 +257,6 @@ class baseCreature(models.Model):
     use = models.TextField(blank=True)
     loot = models.TextField(blank=True)
     gm_intrusion = models.TextField('GM intrusion', blank=True)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #    on_delete=models.PROTECT)
 
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -292,8 +279,6 @@ class baseCypher(models.Model):
     level_range = models.CharField(max_length=10)
     effect = models.TextField()
     slug = models.SlugField(max_length=50)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #    on_delete=models.PROTECT)
 
     def truncated_effect(self):
         return truncate_to(truncate_length, self.effect)
@@ -315,8 +300,6 @@ class baseDescriptor(models.Model):
     characteristics = models.TextField(blank=True)
     starting_link = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #    on_delete=models.PROTECT)
 
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -359,8 +342,6 @@ class baseEquipment(models.Model):
     base_cost = models.CharField(blank=True, max_length=30)
     notes = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #    on_delete=models.PROTECT)
 
     def truncated_notes(self):
         return truncate_to(truncate_length, self.notes)
@@ -381,9 +362,6 @@ class baseFocus(models.Model):
     connections = models.TextField(blank=True)
     other_details = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #    on_delete=models.PROTECT)
-    # abilities = models.ManyToManyField(Ability, through='FocusAbility')
 
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -399,12 +377,26 @@ class baseFocusAbility(models.Model):
         ordering = ['tier', 'ability__name']
         verbose_name = 'Focus Ability'
         verbose_name_plural = 'Focus Abilities'
-    # focus = models.ForeignKey(Focus, on_delete=models.CASCADE)
-    # ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
     tier = models.IntegerField(default=1)
 
     def __str__(self):
         return self.ability.name
+
+
+class basePlayer(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ['display_name']
+        verbose_name = 'Player'
+        verbose_name_plural = 'Players'
+    display_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=254, unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    password = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.email
 
 
 class baseSkill(models.Model):
@@ -426,7 +418,6 @@ class baseSourcebook(models.Model):
         verbose_name = 'Sourcebook'
         verbose_name_plural = 'Sourcebooks'
     name = models.CharField('sourcebook', max_length=100, unique=True)
-    # enabled = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -451,9 +442,6 @@ class baseType(models.Model):
     description = models.TextField(blank=True)
     base_abilities = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
-    # sourcebook = models.ForeignKey(Sourcebook, default=1,
-    #     on_delete=models.PROTECT)
-    # abilities = models.ManyToManyField(Ability, through='TypeAbility')
 
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -469,8 +457,6 @@ class baseTypeAbility(models.Model):
         ordering = ['tier', 'ability__name']
         verbose_name = 'Type Ability'
         verbose_name_plural = 'Type Abilities'
-    # type = models.ForeignKey(Type, on_delete=models.CASCADE)
-    # ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
     tier = models.IntegerField(default=1)
 
     def __str__(self):
@@ -534,7 +520,19 @@ class TypeAbility(baseTypeAbility):
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 
 
+class Player(basePlayer):
+    pass
+
+
+class Campaign(baseCampaign):
+    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+
+
 class Character(baseCharacter):
+    player = models.ForeignKey(
+        Player, blank=True, null=True, on_delete=models.PROTECT)
+    campaign = models.ForeignKey(
+        Campaign, blank=True, null=True, on_delete=models.PROTECT)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
