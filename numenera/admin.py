@@ -193,13 +193,14 @@ class CharacterAdmin(admin.ModelAdmin):
         (
             'CHARACTER DEFINITION', {
                 'fields': [
-                    ('name', 'slug'), 'descriptor', 'type', 'focus',
+                    'name', 'descriptor', 'type', 'focus',
                     ('cypher_limit', 'effort', 'tier'),
                     ('armor', 'money', 'xp'),
                     'background',
                     'notes',
                     ('player', 'campaign'),
-                    'portrait_link'
+                    'portrait_link',
+                    'slug'
                 ]}
         ),
         (
@@ -250,7 +251,6 @@ class CharacterAdmin(admin.ModelAdmin):
     ]
     list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'player',
                     'campaign', 'slug')
-    prepopulated_fields = {'slug': ('name',)}
     save_as = True
     search_fields = ['name']
 
@@ -285,12 +285,11 @@ class CreatureAdmin(admin.ModelAdmin):
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'is_active', 'access_token')
-    readonly_fields = ('access_token',)
+    list_display = ('name', 'email', 'is_active', 'slug')
     search_fields = ['name', 'email']
 
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
-    list_display = ('name', 'gm')
+    list_display = ('name', 'gm', 'is_active', 'slug')
     search_fields = ['name', 'gm']

@@ -4,9 +4,9 @@ from django.shortcuts import render
 from django.views import generic
 
 from .models import (
-        Ability, Descriptor, Equipment, Focus, Skill, Type, Character, Cypher,
-        Creature, Artifact
-    )
+    Ability, Descriptor, Equipment, Focus, Skill, Type, Character, Cypher,
+    Creature, Artifact, Player
+)
 
 BASE_LOGIN_URL = '/admin/login/'
 
@@ -140,3 +140,15 @@ class ArtifactDetailView(LoginRequiredMixin, generic.DetailView):
     login_url = BASE_LOGIN_URL
     model = Artifact
     template_name = 'cyphercore/artifact_detail.html'
+
+
+class PlayerDetailView(generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Player
+    template_name = 'cyphercore/player_detail.html'
+
+
+class PCDetailView(generic.DetailView):
+    login_url = BASE_LOGIN_URL
+    model = Character
+    template_name = 'cyphercore/pc_detail.html'

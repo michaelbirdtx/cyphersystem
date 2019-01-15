@@ -89,6 +89,8 @@ class baseCampaign(models.Model):
         verbose_name_plural = 'Campaigns'
     name = models.CharField(max_length=100, unique=False)
     description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    slug = models.SlugField(default=uuid.uuid4)
 
     def __str__(self):
         return self.name
@@ -156,7 +158,7 @@ class baseCharacter(models.Model):
     tier_6_pools = models.BooleanField(default=False)
     tier_6_skills = models.BooleanField(default=False)
     tier_6_other = models.BooleanField(default=False)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(default=uuid.uuid4)
 
     def __str__(self):
         return self.name
@@ -393,7 +395,7 @@ class basePlayer(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=254, unique=True)
     is_active = models.BooleanField(default=True)
-    access_token = models.UUIDField(default=uuid.uuid4)
+    slug = models.SlugField(default=uuid.uuid4)
 
     def __str__(self):
         return self.name + ' (' + self.email + ')'
@@ -525,7 +527,8 @@ class Player(basePlayer):
 
 
 class Campaign(baseCampaign):
-    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.CASCADE)
+    gm = models.ForeignKey(Player, verbose_name='GM',
+                           on_delete=models.CASCADE)
 
 
 class Character(baseCharacter):
@@ -538,7 +541,8 @@ class Character(baseCharacter):
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
     abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
-    equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
+    equipment = models.ManyToManyField(
+        Equipment, through='CharacterEquipment')
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
 

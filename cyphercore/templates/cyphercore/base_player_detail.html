@@ -1,0 +1,51 @@
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}{{ player.name }}{% endblock %}
+{% block pagestyles %}
+    {% if "summary" in request.path %}
+        .recursion-equipment, .recursion-artifacts, .stat-pools { display: none; }
+        #portrait-background { display: none; }
+        #other-stats { display: none; }
+        #advancement { display: none; }
+        #recovery-damage { display: none; }
+        #equipment { display: none; }
+        #cyphers { display: none; }
+        #artifacts { display: none; }
+        #recursions { break-before: always; page-break-before: always; }
+    {% else %}
+        .recursion { break-before: always; page-break-before: always; }
+        @media print { .recursion-break { display: none; } }
+    {% endif %}
+    {% if not character.portrait_link %}
+        #picture-frame { display: none; }
+    {% endif %}
+    {% if not character.notes %}
+        #notes { display: none; }
+    {% endif %}
+{% endblock %}
+{% block content %}
+<h1>{% block header_text %}Cypher Core{% endblock %}</h1>
+<hr />
+<h2 style="margin-top:1em;">Player: {{ player.name }} ({{ player.email }})</h2>
+<h2 style="margin-top:.7em;">Characters</h2>
+<ul>
+    {% for item in player.character_set.all %}
+        <li style="margin-top:.6em;">
+            <a href="../character/{{ item.slug }}">{{ item.name }}
+            {% block character_sentence %}is {{ item.descriptor.prefix}}
+            {{ item.descriptor }}
+            {{ item.type }} who {{ item.focus }}{% endblock %}
+            (Campaign: {{ item.campaign }})</a>
+        </li>
+    {% endfor %}
+</ul>
+{% if player.campaign_set.all %}
+<h2 style="margin-top:.7em;">Campaigns</h2>
+<ul>
+    {% for item in player.campaign_set.all %}
+        <li style="margin-top:.6em;">
+            <a href="{{ item.slug }}">{{ item.name }}
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
