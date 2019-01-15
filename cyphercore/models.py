@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 truncate_length = 80
@@ -386,16 +387,16 @@ class baseFocusAbility(models.Model):
 class basePlayer(models.Model):
     class Meta:
         abstract = True
-        ordering = ['display_name']
+        ordering = ['name']
         verbose_name = 'Player'
         verbose_name_plural = 'Players'
-    display_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=254, unique=True)
-    first_name = models.CharField(max_length=100, blank=True)
-    last_name = models.CharField(max_length=100, blank=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254, unique=True)
+    is_active = models.BooleanField(default=True)
+    access_token = models.UUIDField(default=uuid.uuid4)
 
     def __str__(self):
-        return self.email
+        return self.name + ' (' + self.email + ')'
 
 
 class baseSkill(models.Model):
@@ -524,14 +525,14 @@ class Player(basePlayer):
 
 
 class Campaign(baseCampaign):
-    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.CASCADE)
 
 
 class Character(baseCharacter):
     player = models.ForeignKey(
-        Player, blank=True, null=True, on_delete=models.PROTECT)
+        Player, blank=True, null=True, on_delete=models.CASCADE)
     campaign = models.ForeignKey(
-        Campaign, blank=True, null=True, on_delete=models.PROTECT)
+        Campaign, blank=True, null=True, on_delete=models.CASCADE)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
