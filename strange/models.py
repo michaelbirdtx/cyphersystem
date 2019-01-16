@@ -92,7 +92,7 @@ class Character(baseCharacter):
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
 
     def get_absolute_url(self):
-        return "/cyphercore/players/character/%s" % self.slug
+        return "/strange/players/character/%s" % self.slug
 
 
 class CharacterAbility(baseCharacterAbility):

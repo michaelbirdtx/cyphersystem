@@ -95,7 +95,7 @@ class Character(baseCharacter):
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
 
     def get_absolute_url(self):
-        return "/cyphercore/players/character/%s" % self.slug
+        return "/numenera/players/character/%s" % self.slug
 
 
 class CharacterAbility(baseCharacterAbility):
