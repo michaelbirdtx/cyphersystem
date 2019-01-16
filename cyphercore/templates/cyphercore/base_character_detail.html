@@ -56,13 +56,13 @@
                 <strong>Player:</strong>
             </div>
             <div class="three columns">
-                {{ character.player.display_name }}
+                {{ character.player.name|default:"Unassigned" }}
             </div>
             <div class="two columns">
                 <strong>Campaign:</strong>
             </div>
             <div class="six columns">
-                {{ character.campaign.name }}
+                {{ character.campaign.name|default:"Unassigned" }}
             </div>
         </div>
         <hr />
