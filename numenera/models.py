@@ -1,25 +1,10 @@
 from django.db import models
 from cyphercore.models import (
-    baseSourcebook,
-    baseAbility,
-    baseArtifact,
-    baseCypher,
-    baseDescriptor,
-    baseEquipment,
-    baseFocus,
-    baseFocusAbility,
-    baseSkill,
-    baseType,
-    baseTypeAbility,
-    baseCharacter,
-    baseCharacterAbility,
-    baseCharacterArtifact,
-    baseAttack,
-    baseCharacterCypher,
-    baseCharacterEquipment,
-    baseCharacterSkill,
-    baseCreature,
-    basePlayer,
+    baseSourcebook, baseAbility, baseArtifact, baseCypher, baseDescriptor,
+    baseEquipment, baseFocus, baseFocusAbility, baseSkill, baseType,
+    baseTypeAbility, baseCharacter, baseCharacterAbility,
+    baseCharacterArtifact, baseAttack, baseCharacterCypher,
+    baseCharacterEquipment, baseCharacterSkill, baseCreature, basePlayer,
     baseCampaign
 )
 
@@ -82,11 +67,16 @@ class TypeAbility(baseTypeAbility):
 
 
 class Player(basePlayer):
-    pass
+    def get_absolute_url(self):
+        return "/numenera/players/%s/" % self.slug
 
 
 class Campaign(baseCampaign):
-    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+    gm = models.ForeignKey(Player, verbose_name='GM',
+                           on_delete=models.PROTECT)
+
+    def get_absolute_url(self):
+        return "/strange/players/campaign/%s/" % self.slug
 
 
 class Character(baseCharacter):
@@ -99,12 +89,13 @@ class Character(baseCharacter):
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
     abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
-    equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
+    equipment = models.ManyToManyField(
+        Equipment, through='CharacterEquipment')
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
 
     def get_absolute_url(self):
-        return "/numenera/characters/%s/" % self.slug
+        return "/cyphercore/players/character/%s" % self.slug
 
 
 class CharacterAbility(baseCharacterAbility):

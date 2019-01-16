@@ -61,6 +61,18 @@ urlpatterns = [
         'foci/<slug:slug>/', views.FocusDetailView.as_view(),
         name='focus_detail'),
     path(
+        'players/<slug:slug>/',
+        views.PlayerDetailView.as_view(), name='player_detail)'),
+    path(
+        'players/character/<slug:slug>',
+        views.PCDetailView.as_view(), name='pc_detail)'),
+    path(
+        'players/campaign/<slug:slug>/',
+        views.CampaignDetailView.as_view(), name='campaign_detail'),
+    path(
+        'players/campaign/character/<slug:slug>',
+        views.PCDetailView.as_view(), name='pc_detail)'),
+    path(
         'skills/', views.SkillListView.as_view(),
         name='skill_list'),
     path(

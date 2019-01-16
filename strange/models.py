@@ -1,25 +1,10 @@
 from django.db import models
 from cyphercore.models import (
-    baseSourcebook,
-    baseAbility,
-    baseArtifact,
-    baseCypher,
-    baseDescriptor,
-    baseEquipment,
-    baseFocus,
-    baseFocusAbility,
-    baseSkill,
-    baseType,
-    baseTypeAbility,
-    baseCharacter,
-    baseCharacterAbility,
-    baseCharacterArtifact,
-    baseAttack,
-    baseCharacterCypher,
-    baseCharacterEquipment,
-    baseCharacterSkill,
-    baseCreature,
-    basePlayer,
+    baseSourcebook, baseAbility, baseArtifact, baseCypher, baseDescriptor,
+    baseEquipment, baseFocus, baseFocusAbility, baseSkill, baseType,
+    baseTypeAbility, baseCharacter, baseCharacterAbility,
+    baseCharacterArtifact, baseAttack, baseCharacterCypher,
+    baseCharacterEquipment, baseCharacterSkill, baseCreature, basePlayer,
     baseCampaign
 )
 
@@ -83,11 +68,16 @@ class TypeAbility(baseTypeAbility):
 
 
 class Player(basePlayer):
-    pass
+    def get_absolute_url(self):
+        return "/strange/players/%s/" % self.slug
 
 
 class Campaign(baseCampaign):
-    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+    gm = models.ForeignKey(Player, verbose_name='GM',
+                           on_delete=models.PROTECT)
+
+    def get_absolute_url(self):
+        return "/strange/players/campaign/%s/" % self.slug
 
 
 class Character(baseCharacter):
@@ -102,7 +92,7 @@ class Character(baseCharacter):
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
 
     def get_absolute_url(self):
-        return "/strange/characters/%s/" % self.slug
+        return "/cyphercore/players/character/%s" % self.slug
 
 
 class CharacterAbility(baseCharacterAbility):
@@ -132,7 +122,8 @@ class Recursion(models.Model):
     intellect_pool_adjust = models.IntegerField(default=0)
     intellect_edge_adjust = models.IntegerField(default=0)
     abilities = models.ManyToManyField(Ability, through='RecursionAbility')
-    equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
+    equipment = models.ManyToManyField(
+        Equipment, through='CharacterEquipment')
     skills = models.ManyToManyField(Skill, through='RecursionSkill')
     notes = models.TextField(blank=True)
 

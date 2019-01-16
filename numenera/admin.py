@@ -54,9 +54,8 @@ class TypeAdmin(admin.ModelAdmin):
         )
     ]
     inlines = [TypeAbilitiesInline]
-    list_display = (
-        'name', 'might_pool', 'speed_pool', 'intellect_pool',
-        'truncated_description', 'slug', 'sourcebook')
+    list_display = ('name', 'might_pool', 'speed_pool', 'intellect_pool',
+                    'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -113,8 +112,8 @@ class AbilityTypesInline(admin.TabularInline):
 @admin.register(Ability)
 class AbilityAdmin(admin.ModelAdmin):
     inlines = [AbilityFociInline, AbilityTypesInline]
-    list_display = (
-        'name', 'usage', 'cost', 'truncated_description', 'slug', 'sourcebook')
+    list_display = ('name', 'usage', 'cost',
+                    'truncated_description', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -127,25 +126,24 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = (
-        'name', 'type', 'base_cost', 'truncated_notes', 'slug', 'sourcebook')
+    list_display = ('name', 'type', 'base_cost',
+                    'truncated_notes', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'type', 'base_cost']
 
 
 @admin.register(Cypher)
 class CypherAdmin(admin.ModelAdmin):
-    list_display = (
-        'name', 'level_range', 'truncated_effect', 'slug', 'sourcebook')
+    list_display = ('name', 'level_range',
+                    'truncated_effect', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
 
 @admin.register(Artifact)
 class ArtifactAdmin(admin.ModelAdmin):
-    list_display = (
-        'name', 'level_range', 'truncated_form', 'truncated_effect',
-        'depletion', 'slug', 'sourcebook')
+    list_display = ('name', 'level_range', 'truncated_form',
+                    'truncated_effect', 'depletion', 'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
@@ -195,13 +193,14 @@ class CharacterAdmin(admin.ModelAdmin):
         (
             'CHARACTER DEFINITION', {
                 'fields': [
-                    ('name', 'slug'), 'descriptor', 'type', 'focus',
+                    'name', 'descriptor', 'type', 'focus',
                     ('cypher_limit', 'effort', 'tier'),
                     ('armor', 'money', 'xp'),
                     'background',
                     'notes',
                     ('player', 'campaign'),
-                    'portrait_link'
+                    'portrait_link',
+                    'slug'
                 ]}
         ),
         (
@@ -250,11 +249,8 @@ class CharacterAdmin(admin.ModelAdmin):
         CharacterEquipmentInline, CharacterCyphersInline,
         CharacterArtifactsInline
     ]
-    list_display = (
-        'name', 'descriptor', 'type', 'focus', 'tier', 'player', 'campaign',
-        'slug'
-    )
-    prepopulated_fields = {'slug': ('name',)}
+    list_display = ('name', 'descriptor', 'type', 'focus', 'tier', 'player',
+                    'campaign', 'slug')
     save_as = True
     search_fields = ['name']
 
@@ -289,11 +285,11 @@ class CreatureAdmin(admin.ModelAdmin):
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('display_name', 'email', 'first_name', 'last_name')
-    search_fields = ['display_name', 'first_name', 'last_name', 'email']
+    list_display = ('name', 'email', 'is_active', 'slug')
+    search_fields = ['name', 'email']
 
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
-    list_display = ('name', 'gm')
+    list_display = ('name', 'gm', 'is_active', 'slug')
     search_fields = ['name', 'gm']

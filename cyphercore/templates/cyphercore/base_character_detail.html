@@ -23,11 +23,13 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="../../../">Index</a> | <a href="../../">Character List</a> | <a href="../../{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
-    {% else %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
-    {% endif %}
+    {% block top_breadcrumbs %}
+        {% if "summary" in request.path %}
+        <span class="breadcrumbs"><a href="../../../">Index</a> | <a href="../../">Character List</a> | <a href="../../{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
+        {% else %}
+        <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+        {% endif %}
+    {% endblock %}
     <h1>{{ character.name }}</h1>
     {% block character_sentence %}
         <p class="character-sentence"><strong>
@@ -433,9 +435,11 @@
     </section>
     {% block recursions %}
     {% endblock %}
-    {% if "summary" in request.path %}
-    <span class="breadcrumbs"><a href="../../../">Index</a> | <a href="../../">Character List</a> | <a href="../../{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
-    {% else %}
-    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
-    {% endif %}
+    {% block bottom_breadcrumbs %}
+        {% if "summary" in request.path %}
+        <span class="breadcrumbs"><a href="../../../">Index</a> | <a href="../../">Character List</a> | <a href="../../{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
+        {% else %}
+        <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+        {% endif %}
+    {% endblock %}
 {% endblock %}

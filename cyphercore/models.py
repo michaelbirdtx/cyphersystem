@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 truncate_length = 80
@@ -88,6 +89,8 @@ class baseCampaign(models.Model):
         verbose_name_plural = 'Campaigns'
     name = models.CharField(max_length=100, unique=False)
     description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    slug = models.SlugField(default=uuid.uuid4)
 
     def __str__(self):
         return self.name
@@ -155,7 +158,7 @@ class baseCharacter(models.Model):
     tier_6_pools = models.BooleanField(default=False)
     tier_6_skills = models.BooleanField(default=False)
     tier_6_other = models.BooleanField(default=False)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(default=uuid.uuid4)
 
     def __str__(self):
         return self.name
@@ -386,16 +389,16 @@ class baseFocusAbility(models.Model):
 class basePlayer(models.Model):
     class Meta:
         abstract = True
-        ordering = ['display_name']
+        ordering = ['name']
         verbose_name = 'Player'
         verbose_name_plural = 'Players'
-    display_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=254, unique=True)
-    first_name = models.CharField(max_length=100, blank=True)
-    last_name = models.CharField(max_length=100, blank=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254, unique=True)
+    is_active = models.BooleanField(default=True)
+    slug = models.SlugField(default=uuid.uuid4)
 
     def __str__(self):
-        return self.email
+        return self.name + ' (' + self.email + ')'
 
 
 class baseSkill(models.Model):
@@ -520,29 +523,35 @@ class TypeAbility(baseTypeAbility):
 
 
 class Player(basePlayer):
-    pass
+    def get_absolute_url(self):
+        return "/cyphercore/players/%s/" % self.slug
 
 
 class Campaign(baseCampaign):
-    gm = models.ForeignKey(Player, verbose_name='GM', on_delete=models.PROTECT)
+    gm = models.ForeignKey(Player, verbose_name='GM',
+                           on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return "/cyphercore/players/campaign/%s/" % self.slug
 
 
 class Character(baseCharacter):
     player = models.ForeignKey(
-        Player, blank=True, null=True, on_delete=models.PROTECT)
+        Player, blank=True, null=True, on_delete=models.CASCADE)
     campaign = models.ForeignKey(
-        Campaign, blank=True, null=True, on_delete=models.PROTECT)
+        Campaign, blank=True, null=True, on_delete=models.CASCADE)
     descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
     type = models.ForeignKey(Type, on_delete=models.PROTECT)
     focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
     abilities = models.ManyToManyField(Ability, through='CharacterAbility')
     skills = models.ManyToManyField(Skill, through='CharacterSkill')
-    equipment = models.ManyToManyField(Equipment, through='CharacterEquipment')
+    equipment = models.ManyToManyField(
+        Equipment, through='CharacterEquipment')
     cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
 
     def get_absolute_url(self):
-        return "/cyphercore/characters/%s/" % self.slug
+        return "/cyphercore/players/character/%s" % self.slug
 
 
 class CharacterAbility(baseCharacterAbility):
