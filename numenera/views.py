@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
 from .models import (Ability, Descriptor, Equipment, Focus, Skill, Type,
-                     Character, Cypher, Artifact, Creature, Player)
+                     Character, Cypher, Artifact, Creature, Player, Campaign)
 
 
 BASE_LOGIN_URL = '/admin/login/'
@@ -141,12 +141,15 @@ class ArtifactDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class PlayerDetailView(generic.DetailView):
-    login_url = BASE_LOGIN_URL
     model = Player
     template_name = 'numenera/player_detail.html'
 
 
 class PCDetailView(generic.DetailView):
-    login_url = BASE_LOGIN_URL
     model = Character
     template_name = 'numenera/pc_detail.html'
+
+
+class CampaignDetailView(generic.DetailView):
+    model = Campaign
+    template_name = 'numenera/campaign_detail.html'

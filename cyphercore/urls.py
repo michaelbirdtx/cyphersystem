@@ -67,6 +67,12 @@ urlpatterns = [
         'players/character/<slug:slug>',
         views.PCDetailView.as_view(), name='pc_detail)'),
     path(
+        'players/campaign/<slug:slug>/',
+        views.CampaignDetailView.as_view(), name='campaign_detail'),
+    path(
+        'players/campaign/character/<slug:slug>',
+        views.PCDetailView.as_view(), name='pc_detail)'),
+    path(
         'skills/', views.SkillListView.as_view(),
         name='skill_list'),
     path(

@@ -523,12 +523,16 @@ class TypeAbility(baseTypeAbility):
 
 
 class Player(basePlayer):
-    pass
+    def get_absolute_url(self):
+        return "/cyphercore/players/%s/" % self.slug
 
 
 class Campaign(baseCampaign):
     gm = models.ForeignKey(Player, verbose_name='GM',
                            on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return "/cyphercore/players/campaign/%s/" % self.slug
 
 
 class Character(baseCharacter):
@@ -547,7 +551,7 @@ class Character(baseCharacter):
     artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
 
     def get_absolute_url(self):
-        return "/cyphercore/characters/%s/" % self.slug
+        return "/cyphercore/players/character/%s" % self.slug
 
 
 class CharacterAbility(baseCharacterAbility):
