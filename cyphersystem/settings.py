@@ -62,7 +62,7 @@ ROOT_URLCONF = 'cyphersystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'cyphersystem/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,6 +131,10 @@ INTERNAL_IPS = ('127.0.0.1',)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'cyphersystem/static'),
+]
+
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
