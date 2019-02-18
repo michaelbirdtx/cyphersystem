@@ -179,6 +179,7 @@ class AttackInline(admin.TabularInline):
 
 class RecursionAttackInline(admin.TabularInline):
     model = RecursionAttack
+    classes = ['collapse']
     extra = 0
     fields = ('name', 'modifier', 'damage')
 
@@ -210,6 +211,7 @@ class CharacterCyphersInline(admin.TabularInline):
 class CharacterArtifactsInline(admin.TabularInline):
     model = CharacterArtifact
     autocomplete_fields = ['artifact']
+    classes = ['collapse']
     extra = 0
     fields = ('artifact', 'level', 'recursion')
 
@@ -254,6 +256,12 @@ class CharacterAdmin(admin.ModelAdmin):
                 'fields': [
                     'name',
                     ('descriptor', 'type'),
+                ]}
+        ),
+        (
+            'DETAILS', {
+                'classes': ('collapse',),
+                'fields': [
                     ('cypher_limit', 'effort', 'tier'),
                     'background',
                     'notes',
@@ -319,6 +327,7 @@ class CharacterAdmin(admin.ModelAdmin):
 class RecursionAbilitiesInline(admin.TabularInline):
     model = RecursionAbility
     autocomplete_fields = ['ability']
+    classes = ['collapse']
     extra = 0
     fields = ('ability', 'note')
 
@@ -341,6 +350,7 @@ class RecursionAdmin(admin.ModelAdmin):
         ),
         (
             'STATS', {
+                'classes': ('collapse',),
                 'fields': [
                     ('armor', 'money'),
                     ('might_pool_adjust', 'might_edge_adjust'),

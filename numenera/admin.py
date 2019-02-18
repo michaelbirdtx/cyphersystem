@@ -160,6 +160,7 @@ class AttackInline(admin.TabularInline):
 
 
 class OddityInline(admin.TabularInline):
+    classes = ['collapse']
     model = Oddity
     extra = 0
 
