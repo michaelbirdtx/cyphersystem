@@ -1,6 +1,7 @@
 {% extends "cyphercore/base_campaign_detail.html" %}
 {% load static %}
 {% block title %}The Strange{% endblock %}
+{% block header_text %}The Strange{% endblock %}
 {% block subtitle %}{{ player.name }}{% endblock %}
 {% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'strange/css/custom.css' %}" />{% endblock %}
 {% block character_sentence %}is {{ item.descriptor.prefix}} {{ item.descriptor }} {{ item.type }}{% endblock %}
