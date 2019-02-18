@@ -29,6 +29,7 @@ class DescriptorAdmin(admin.ModelAdmin):
 class TypeAbilitiesInline(admin.TabularInline):
     model = TypeAbility
     autocomplete_fields = ['ability']
+    classes = ['collapse']
     extra = 0
 
     def get_queryset(self, request):
@@ -49,6 +50,7 @@ class TypeAdmin(admin.ModelAdmin):
         ),
         (
             'BASE STATS', {
+                'classes': ('collapse',),
                 'fields': [
                     ('might_pool', 'speed_pool', 'intellect_pool'),
                     ('might_edge', 'speed_edge', 'intellect_edge'),
@@ -66,6 +68,7 @@ class TypeAdmin(admin.ModelAdmin):
 class CharacterAbilitiesInline(admin.TabularInline):
     model = CharacterAbility
     autocomplete_fields = ['ability']
+    classes = ['collapse']
     extra = 0
     fields = ('ability', 'note')
 
@@ -78,6 +81,7 @@ class CharacterAbilitiesInline(admin.TabularInline):
 class FocusAbilitiesInline(admin.TabularInline):
     model = FocusAbility
     autocomplete_fields = ['ability']
+    classes = ['collapse']
     extra = 0
 
     def get_queryset(self, request):
@@ -153,6 +157,7 @@ class ArtifactAdmin(admin.ModelAdmin):
 
 class AttackInline(admin.TabularInline):
     model = Attack
+    classes = ['collapse']
     extra = 0
     fields = ('name', 'modifier', 'damage')
 
@@ -160,6 +165,7 @@ class AttackInline(admin.TabularInline):
 class CharacterEquipmentInline(admin.TabularInline):
     model = CharacterEquipment
     autocomplete_fields = ['equipment']
+    classes = ['collapse']
     extra = 0
     fields = ('equipment', 'quantity', 'brief_note')
 
@@ -167,6 +173,7 @@ class CharacterEquipmentInline(admin.TabularInline):
 class CharacterSkillsInline(admin.TabularInline):
     model = CharacterSkill
     autocomplete_fields = ['skill']
+    classes = ['collapse']
     extra = 0
     fields = ('skill', 'skill_level')
 
@@ -174,6 +181,7 @@ class CharacterSkillsInline(admin.TabularInline):
 class CharacterCyphersInline(admin.TabularInline):
     model = CharacterCypher
     autocomplete_fields = ['cypher']
+    classes = ['collapse']
     extra = 0
     fields = ('cypher', 'level', 'appearance')
 
@@ -181,6 +189,7 @@ class CharacterCyphersInline(admin.TabularInline):
 class CharacterArtifactsInline(admin.TabularInline):
     model = CharacterArtifact
     autocomplete_fields = ['artifact']
+    classes = ['collapse']
     extra = 0
     fields = ('artifact', 'level')
 
@@ -192,6 +201,12 @@ class CharacterAdmin(admin.ModelAdmin):
             'CHARACTER DEFINITION', {
                 'fields': [
                     'name', 'descriptor', 'type', 'focus',
+                ]}
+        ),
+        (
+            'DETAILS', {
+                'classes': ('collapse',),
+                'fields': [
                     ('cypher_limit', 'effort', 'tier'),
                     ('armor', 'money', 'xp'),
                     'background',
@@ -203,6 +218,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ),
         (
             'STATS', {
+                'classes': ('collapse',),
                 'fields': [
                     ('might_pool', 'might_current', 'might_edge'),
                     ('speed_pool', 'speed_current', 'speed_edge'),
@@ -211,6 +227,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ),
         (
             'DAMAGE TRACK', {
+                'classes': ('collapse',),
                 'fields': [
                     (
                         'recovery_roll', 'one_action', 'ten_minutes',
@@ -220,6 +237,7 @@ class CharacterAdmin(admin.ModelAdmin):
         ),
         (
             'ADVANCEMENT', {
+                'classes': ('collapse',),
                 'fields': [
                     (
                         'tier_1_edge', 'tier_1_effort', 'tier_1_pools',
