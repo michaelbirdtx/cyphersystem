@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 
@@ -148,6 +149,40 @@ class PlayerDetailView(generic.DetailView):
 class PCDetailView(generic.DetailView):
     model = Character
     template_name = 'cyphercore/pc_detail.html'
+
+
+class CampaignCreateView(generic.CreateView):
+    model = Campaign
+    template_name = 'cyphercore/campaign_edit.html'
+    fields = ['name', 'description']
+
+    def form_valid(self, form):
+        campaign = form.save(commit=False)
+        campaign.gm_id = self.kwargs['pk']
+        campaign.save()
+        return HttpResponseRedirect('/cyphercore/players/' +
+                                    self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super(CampaignCreateView, self).get_context_data(**kwargs)
+        context['player_slug'] = self.kwargs['slug']
+        return context
+
+
+class CampaignUpdateView(generic.UpdateView):
+    model = Campaign
+    template_name = 'cyphercore/campaign_edit.html'
+    fields = ['name', 'description']
+
+    def form_valid(self, form):
+        form.save()
+        return HttpResponseRedirect('/cyphercore/players/' +
+                                    self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super(CampaignUpdateView, self).get_context_data(**kwargs)
+        context['player_slug'] = self.kwargs['slug']
+        return context
 
 
 class CampaignDetailView(generic.DetailView):

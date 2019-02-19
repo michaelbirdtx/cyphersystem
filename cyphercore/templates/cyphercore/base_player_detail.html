@@ -1,7 +1,7 @@
 {% extends "cyphercore/base.html" %}
 {% block subtitle %}{{ player.name }}{% endblock %}
 {% block content %}
-<h1>{% block header_text %}Cypher Core{% endblock %}</h1>
+<h1>{% block header_text %}Cypher Core{% endblock %} &mdash; Player Detail</h1>
 <hr />
 <h2 style="margin-top:1em;">Player: {{ player.name }} ({{ player.email }})</h2>
 <h2 style="margin-top:.7em;">Characters</h2>
@@ -16,12 +16,13 @@
         </li>
     {% endfor %}
 </ul>
+<h2 style="margin-top:.7em;">Campaigns (<a href="campaign_create/{{ player.id }}">new</a>)</h2>
 {% if player.campaign_set.all %}
-<h2 style="margin-top:.7em;">Campaigns</h2>
 <ul>
     {% for item in player.campaign_set.all %}
         <li style="margin-top:.6em;">
-            <a href="../campaign/{{ item.slug }}">{{ item.name }}
+            <a href="../campaign/{{ item.slug }}">{{ item.name }}</a>
+            <a href="campaign_edit/{{ item.id }}">(edit)</a>
         </li>
     {% endfor %}
 </ul>

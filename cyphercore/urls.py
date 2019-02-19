@@ -62,7 +62,13 @@ urlpatterns = [
         name='focus_detail'),
     path(
         'players/<slug:slug>/',
-        views.PlayerDetailView.as_view(), name='player_detail)'),
+        views.PlayerDetailView.as_view(), name='player_detail'),
+    path(
+        'players/<slug:slug>/campaign_create/<int:pk>',
+        views.CampaignCreateView.as_view(), name='campaign_create'),
+    path(
+        'players/<slug:slug>/campaign_edit/<int:pk>',
+        views.CampaignUpdateView.as_view(), name='campaign_edit'),
     path(
         'players/character/<slug:slug>',
         views.PCDetailView.as_view(), name='pc_detail)'),
