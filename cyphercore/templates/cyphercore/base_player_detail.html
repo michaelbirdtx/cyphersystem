@@ -4,7 +4,9 @@
 <h1>{% block header_text %}Cypher System{% endblock %}</h1>
 <hr />
 <h2 style="margin-top:1em;">Player: {{ player.name }} ({{ player.email }})</h2>
-<h2 style="margin-top:.7em;">Characters</h2>
+<h2 style="margin-top:.7em;">
+    Characters (<a href="character_create_step_1/{{ player.id }}">create new</a>)
+</h2>
 <ul>
     {% for item in player.character_set.all %}
         <li style="margin-top:.6em;">
@@ -16,7 +18,9 @@
         </li>
     {% endfor %}
 </ul>
-<h2 style="margin-top:.7em;">Campaigns (<a href="campaign_create/{{ player.id }}">new</a>)</h2>
+<h2 style="margin-top:.7em;">
+    Campaigns (<a href="campaign_create/{{ player.id }}">create new</a>)
+</h2>
 {% if player.campaign_set.all %}
 <ul>
     {% for item in player.campaign_set.all %}

@@ -70,6 +70,13 @@ urlpatterns = [
         'players/<slug:slug>/campaign_edit/<int:pk>',
         views.CampaignUpdateView.as_view(), name='campaign_edit'),
     path(
+        'players/<slug:slug>/character_create_step_1/<int:pk>',
+        views.CharacterCreateView.as_view(),
+        name='character_create_step_1'),
+    path(
+        'players/<slug:slug>/character_create_step_2/<int:pk>',
+        views.character_create_step_2, name='character_create_step_2'),
+    path(
         'players/character/<slug:slug>',
         views.PCDetailView.as_view(), name='pc_detail)'),
     path(

@@ -1,11 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import formset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 
 from .models import (Ability, Descriptor, Equipment, Focus, Skill, Type,
-                     Character, Cypher, Creature, Artifact, Player, Campaign)
+                     Character, Cypher, Creature, Artifact, Player, Campaign,
+                     CharacterAbility, TypeAbility)
+from .forms import SelectTypeAbilityForm
 
 BASE_LOGIN_URL = '/admin/login/'
 
@@ -188,3 +191,48 @@ class CampaignUpdateView(generic.UpdateView):
 class CampaignDetailView(generic.DetailView):
     model = Campaign
     template_name = 'cyphercore/campaign_detail.html'
+
+
+class CharacterCreateView(generic.CreateView):
+    model = Character
+    template_name = 'cyphercore/character_create_step_1.html'
+    fields = ['name', 'descriptor', 'type', 'focus']
+
+    def form_valid(self, form):
+        character = form.save(commit=False)
+        character.player_id = self.kwargs['pk']
+        character.save()
+        return HttpResponseRedirect(
+            '/cyphercore/players/' + self.kwargs['slug'] +
+            '/character_create_step_2/' + str(character.id))
+
+    def get_context_data(self, **kwargs):
+        context = super(CharacterCreateView,
+                        self).get_context_data(**kwargs)
+        context['player_slug'] = self.kwargs['slug']
+        return context
+
+
+def character_create_step_2(request, slug, pk):
+    character = Character.objects.get(pk=pk)
+    AbilityFormSet = formset_factory(SelectTypeAbilityForm, extra=4)
+    if request.method == 'POST':
+        formset = AbilityFormSet(
+            request.POST, request.FILES, form_kwargs={'char_pk': pk})
+        for i in range(4):
+            insert_type_ability(character,
+                                request.POST['form-'+str(i)+'-ability'])
+        return HttpResponseRedirect(
+            '/cyphercore/players/' + slug
+            + '/character_create_step_3/' + str(pk)
+        )
+    else:
+        formset = AbilityFormSet(form_kwargs={'char_pk': pk})
+    return render(request, 'cyphercore/character_create_step_2.html',
+                  {'formset': formset, 'character': character})
+
+
+def insert_type_ability(character, ability_pk):
+    ta = TypeAbility.objects.get(pk=ability_pk)
+    cax = CharacterAbility(character=character, ability=ta.ability)
+    cax.save()

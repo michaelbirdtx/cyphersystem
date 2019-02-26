@@ -1,0 +1,15 @@
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}Create Character &mdash; Step One{% endblock %}
+{% block content %}
+<h1>{% block header_text %}Cypher System{% endblock %} &mdash; Create Character &mdash; Step One</h1>
+<hr />
+<p>Choose a Name, Descriptor, Type, and Focus for your new Character, then
+    click &ldquo;Next&rdquo;. Click &ldquo;Cancel&rdquo; if you don't want
+    to create a new Character right now.</p>
+<form class="form-list" method="post" action="">
+    {{ form.as_p }}
+    <p><input type="submit" value="Next"></p>
+    <p><a href="/cyphercore/players/{{ player_slug }}">Cancel</a>
+{% csrf_token %}
+</form>
+{% endblock %}

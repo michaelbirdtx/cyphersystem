@@ -102,7 +102,7 @@ class baseCharacter(models.Model):
         ordering = ['name']
         verbose_name = 'Character'
         verbose_name_plural = 'Characters'
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=False)
     portrait_link = models.URLField(max_length=1000, blank=True)
     background = models.TextField(blank=True)
     notes = models.TextField(blank=True)
@@ -518,8 +518,10 @@ class Type(baseType):
 
 
 class TypeAbility(baseTypeAbility):
-    type = models.ForeignKey(Type, on_delete=models.CASCADE)
-    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        Type, blank=False, null=False, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, blank=False, null=False,
+                                on_delete=models.CASCADE)
 
 
 class Player(basePlayer):
