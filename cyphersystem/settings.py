@@ -25,7 +25,7 @@ SECRET_KEY = 'u_3%$l5j(744c%-u_qvs(g8d_$fg-mte_8jdiq8x7*%f3px@uh'
 # SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'cyphersystem',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': '192.168.1.201',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -138,6 +138,8 @@ STATICFILES_DIRS = [
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# Check for local settings file
 try:
     from settings_local import *
 except ImportError as e:
