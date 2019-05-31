@@ -260,7 +260,6 @@ class CharacterAdmin(admin.ModelAdmin):
         ),
         (
             'DETAILS', {
-                'classes': ('collapse',),
                 'fields': [
                     ('cypher_limit', 'effort', 'tier'),
                     'background',
