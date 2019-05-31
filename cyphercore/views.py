@@ -144,6 +144,12 @@ class ArtifactDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'cyphercore/artifact_detail.html'
 
 
+class PlayerListView(LoginRequiredMixin, generic.ListView):
+    login_url = BASE_LOGIN_URL
+    model = Player
+    template_name = 'cyphercore/player_list.html'
+
+
 class PlayerDetailView(generic.DetailView):
     model = Player
     template_name = 'cyphercore/player_detail.html'

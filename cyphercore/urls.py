@@ -61,6 +61,9 @@ urlpatterns = [
         'foci/<slug:slug>/', views.FocusDetailView.as_view(),
         name='focus_detail'),
     path(
+        'players/', views.PlayerListView.as_view(),
+        name='player_list'),
+    path(
         'players/<slug:slug>/',
         views.PlayerDetailView.as_view(), name='player_detail'),
     path(
