@@ -1,4 +1,11 @@
-{% extends "cyphercore/base_ability_cards.html" %}
-{% load static %}
-{% block title %}Cypher Core: Ability Cards{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% extends "cyphercore/base.html" %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Ability List</a> | Ability Cards</span>
+    {% for ability in ability_list %}
+    <h1>{% block header_text %}Ability: {{ ability.name }}{% endblock %}</h1>
+    <h2>{{ ability.usage }}, Cost: {{ ability.cost }}</h2>
+    <div>{{ ability.description|linebreaks }}</div>
+    <hr class="breakafter" />
+    {% endfor %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Ability List</a> | Ability Cards</span>
+{% endblock %}

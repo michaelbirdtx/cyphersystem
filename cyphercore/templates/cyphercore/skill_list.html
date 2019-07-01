@@ -1,6 +1,13 @@
-{% extends "cyphercore/base_skill_list.html" %}
-{% load static %}
-{% block title %}Cypher Core{% endblock %}
+{% extends "cyphercore/base.html" %}
 {% block subtitle %}Skills{% endblock %}
-{% block header_text %}Cypher Core: Skills{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Skill List</span>
+    <h1>{% block header_text %}Cypher Core: Skills{% endblock %}</h1>
+    <ul>
+        {% for skill in skill_list %}
+        <li>{{ skill.name }}</li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Skill List</span>
+{% endblock %}

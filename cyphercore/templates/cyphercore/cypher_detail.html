@@ -1,5 +1,10 @@
-{% extends "cyphercore/base_cypher_detail.html" %}
-{% load static %}
-{% block title %}Cypher Core{% endblock %}
+{% extends "cyphercore/base.html" %}
 {% block subtitle %}{{ cypher.name }}{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
+    <h1>{% block header_text %}Cypher: {{ cypher.name }}{% endblock %}</h1>
+    <h2>Level Range: {{ cypher.level_range }}</h2>
+    <div>{% block cypher_form %}{% endblock %}{{ cypher.effect|linebreaks }}</div>
+    <hr />
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Cypher List</a> | {{ cypher.name }}</span>
+{% endblock %}

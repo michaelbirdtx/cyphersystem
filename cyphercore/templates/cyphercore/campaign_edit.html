@@ -1,4 +1,12 @@
-{% extends "cyphercore/base_campaign_edit.html" %}
-{% load static %}
-{% block title %}Cypher System{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}Edit Campaign{% endblock %}
+{% block content %}
+<h1>{% block header_text %}Cypher System{% endblock %} &mdash; Edit Campaign</h1>
+<hr />
+<form class="form-list" method="post" action="">
+    {{ form.as_p }}
+    <p><input type="submit" value="Save"></p>
+    <p><a href="/cyphercore/players/{{ player_slug }}">Cancel</a>
+{% csrf_token %}
+</form>
+{% endblock %}

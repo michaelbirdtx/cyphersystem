@@ -24,8 +24,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('cyphercore/', include('cyphercore.urls')),
-    path('numenera/', include('numenera.urls')),
-    path('strange/', include('strange.urls')),
 ]
 if settings.DEBUG:
     import debug_toolbar

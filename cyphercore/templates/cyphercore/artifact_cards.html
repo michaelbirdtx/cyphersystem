@@ -1,4 +1,11 @@
-{% extends "cyphercore/base_artifact_cards.html" %}
-{% load static %}
-{% block title %}Cypher Core: Artifact Cards{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% extends "cyphercore/base.html" %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Artifact List</a> | Artifact Cards</span>
+    {% for artifact in artifact_list %}
+    <h1>{% block header_text %}Artifact: {{ artifact.name }}{% endblock %}</h1>
+    <h2>Level Range: {{ artifact.level_range }}</h2>
+    <div>{{ artifact.form|linebreaks }}{{ artifact.effect|linebreaks }}</div>
+    <hr class="breakafter" />
+    {% endfor %}
+    <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Artifact List</a> | Artifact Cards</span>
+{% endblock %}

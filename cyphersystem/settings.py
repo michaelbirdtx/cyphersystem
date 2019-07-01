@@ -34,8 +34,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'cyphercore.apps.CyphercoreConfig',
-    'numenera.apps.NumeneraConfig',
-    'strange.apps.StrangeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

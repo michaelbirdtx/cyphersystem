@@ -1,4 +1,28 @@
-{% extends "cyphercore/base_campaign_detail.html" %}
-{% load static %}
-{% block title %}Cypher System{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}{{ campaign.name }}{% endblock %}
+{% block content %}
+<h1>{% block header_text %}Cypher System{% endblock %} &mdash; Campaign Detail</h1>
+<hr />
+<h2 style="margin-top:1em;">Campaign: {{ campaign.name }}</h2>
+<div class="indent">
+    <p>
+        <strong>GM:</strong>
+        <a href="../../{{ campaign.gm.slug }}">{{ campaign.gm }}</a>
+    </p>
+    <p>{{ campaign.description|linebreaks }}</p>
+</div>
+<h2 style="margin-top:.7em;">Characters</h2>
+<ul>
+    {% for item in campaign.character_set.all %}
+        <li style="margin-top:.6em;">
+            <a href="../character/{{ item.slug }}">{{ item.name }}
+            {% block character_sentence %}is {{ item.descriptor.prefix}}
+            {{ item.descriptor }}
+            {{ item.type }} who {{ item.focus }}{% endblock %}</a>
+            {% if item.player.name %}
+                (played by {{ item.player.name }})
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,6 +1,13 @@
-{% extends "cyphercore/base_descriptor_list.html" %}
-{% load static %}
-{% block title %}Cypher Core{% endblock %}
-{% block subtitle %}Descriptors{% endblock %}
-{% block header_text %}Cypher Core: Descriptors{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% extends "cyphercore/base.html" %}
+{% block subtitle %}Descriptor{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
+    <h1>{% block header_text %}Cypher Core: Descriptors{% endblock %}</h1>
+    <ul>
+        {% for descriptor in descriptor_list %}
+        <li><a href="{{ descriptor.slug }}">{{ descriptor.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Descriptor List</span>
+{% endblock %}

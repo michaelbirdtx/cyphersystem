@@ -1,5 +1,445 @@
-{% extends "cyphercore/base_character_detail.html" %}
-{% load static %}
-{% block title %}Cypher Core{% endblock %}
+{% extends "cyphercore/base.html" %}
 {% block subtitle %}{{ character.name }}{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% block pagestyles %}
+    {% if "summary" in request.path %}
+        .recursion-equipment, .recursion-artifacts, .stat-pools { display: none; }
+        #portrait-background { display: none; }
+        #other-stats { display: none; }
+        #advancement { display: none; }
+        #recovery-damage { display: none; }
+        #equipment { display: none; }
+        #cyphers { display: none; }
+        #artifacts { display: none; }
+        #recursions { break-before: always; page-break-before: always; }
+    {% else %}
+        .recursion { break-before: always; page-break-before: always; }
+        @media print { .recursion-break { display: none; } }
+    {% endif %}
+    {% if not character.portrait_link %}
+        #picture-frame { display: none; }
+    {% endif %}
+    {% if not character.notes %}
+        #notes { display: none; }
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% block top_breadcrumbs %}
+        {% if "summary" in request.path %}
+        <span class="breadcrumbs"><a href="../../../">Index</a> | <a href="../../">Character List</a> | <a href="../../{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
+        {% else %}
+        <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+        {% endif %}
+    {% endblock %}
+    <h1>{{ character.name }}</h1>
+    {% block character_sentence %}
+        <p class="character-sentence"><strong>
+            ...is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}
+        </strong></p>
+    {% endblock %}
+    <hr />
+    <!-- Character Portrait & Background -->
+    <section id="portrait-background" class="avoid-break">
+        <div class="row">
+            <div class="twelve columns">
+                <a href="{{ character.portrait_link }}"><img class="character-portrait" id="picture-frame" src="{{ character.portrait_link }}" /></a>
+                <div class="indent">
+                    {{ character.background|linebreaks }}
+                </div>
+            </div>
+        </div>
+        <hr />
+    </section>
+    <!-- Player & Campaign Info -->
+    <section id="campaign-info" class="avoid-break">
+        <div class="row">
+            <div class="one column">
+                <strong>Player:</strong>
+            </div>
+            <div class="three columns">
+                {{ character.player.name|default:"Unassigned" }}
+            </div>
+            <div class="two columns">
+                <strong>Campaign:</strong>
+            </div>
+            <div class="six columns">
+                {{ character.campaign.name|default:"Unassigned" }}
+            </div>
+        </div>
+        <hr />
+    </section>
+    <!-- Stat Pools -->
+    <section class="stat-pools" class="avoid-break">
+        {% block stat_pools_header %}
+        <div class="row">
+            <div class="four columns">
+                <strong>Might</strong>
+            </div>
+            <div class="four columns">
+                <strong>Speed</strong>
+            </div>
+            <div class="four columns">
+                <strong>Intellect</strong>
+            </div>
+        </div>
+        {% endblock %}
+        <div class="row">
+            <div class="two columns">
+                Pool:
+            </div>
+            <div class="two columns">
+                {{ character.might_pool }}
+            </div>
+            <div class="two columns">
+                Pool:
+            </div>
+            <div class="two columns">
+                {{ character.speed_pool }}
+            </div>
+            <div class="two columns">
+                Pool:
+            </div>
+            <div class="two columns">
+                {{ character.intellect_pool }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="two columns">
+                Edge:
+            </div>
+            <div class="two columns">
+                {{ character.might_edge }}
+            </div>
+            <div class="two columns">
+                Edge:
+            </div>
+            <div class="two columns">
+                {{ character.speed_edge }}
+            </div>
+            <div class="two columns">
+                Edge:
+            </div>
+            <div class="two columns">
+                {{ character.intellect_edge }}
+            </div>
+        </div>
+        <hr />
+    </section>
+    <!-- Other Stats -->
+    <section id="other-stats" class="avoid-break">
+        <div class="row">
+            <div class="two columns">
+                <strong>Cyper Limit:</strong>
+            </div>
+            <div class="two columns">
+                {{ character.cypher_limit }}
+            </div>
+            <div class="two columns">
+                <strong>Effort:</strong>
+            </div>
+            <div class="two columns">
+                {{ character.effort }}
+            </div>
+            <div class="two columns">
+                <strong>Tier:</strong>
+            </div>
+            <div class="two columns">
+                {{ character.tier }}
+            </div>
+        </div>
+        {% block recursable_stats %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Armor:</strong>
+            </div>
+            <div class="two columns">
+                {{ character.armor }}
+            </div>
+            <div class="two columns">
+                <strong>Money:</strong>
+            </div>
+            <div class="two columns">
+                {{ character.money }}
+            </div>
+            <div class="two columns">
+                <strong>XP:</strong>
+            </div>
+            <div class="two columns">
+                {{ character.xp }}
+            </div>
+        </div>
+        {% endblock %}
+        <hr />
+    </section>
+    <!-- Recovery & Damage Track -->
+    <section id="recovery-damage" class="avoid-break">
+        <div class="row">
+            <div class="two columns">
+                <strong>Recovery:</strong>
+            </div>
+            <div class="two columns">
+                1D6 + {{ character.recovery_roll }}
+            </div>
+            <div class="two columns">
+                <span {% if character.one_action %}class="strikethrough"{% endif %}>1 Action</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.ten_minutes %}class="strikethrough"{% endif %}>10 Min</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.one_hour %}class="strikethrough"{% endif %}>1 Hr</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.ten_hours %}class="strikethrough"{% endif %}>10 Hr</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="two columns">
+                <strong>Dmg. Track:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.impaired %}class="highlighted"{% endif %}>Impaired</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.debilitated %}class="highlighted"{% endif %}>Debilitated</span>
+            </div>
+        </div>
+        <hr />
+    </section>
+    <!-- Advancement -->
+    <section id="advancement" class="avoid-break">
+        <h2>Advancement</h2>
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 1:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_1_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% if character.tier > 1 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 2:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_2_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 2 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 3:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_3_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 3 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 4:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_4_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 4 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 5:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_5_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        {% if character.tier > 5 %}
+        <div class="row">
+            <div class="two columns">
+                <strong>Tier 6:</strong>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_edge %}class="strikethrough"{% endif %}>Edge</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_effort %}class="strikethrough"{% endif %}>Effort</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_pools %}class="strikethrough"{% endif %}>Pools</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_skills %}class="strikethrough"{% endif %}>Skills</span>
+            </div>
+            <div class="two columns">
+                <span {% if character.tier_6_other %}class="strikethrough"{% endif %}>Other</span>
+            </div>
+        </div>
+        {% endif %}
+        <hr />
+    </section>
+    <!-- Attacks -->
+    {% if character.attack_set.all %}
+    <section id="attacks" class="avoid-break">
+        {% block attacks_header %}<h2>Attacks</h2>{% endblock %}
+        {% for item in character.attack_set.all %}
+            {% block attack_item %}<span class="bubble-item">{{ item.name }} (Mod: {{ item.modifier }}, Dmg: {{ item.damage }})</span>{% endblock %}
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    <!-- Equipment -->
+    {% if character.characterequipment_set.all %}
+    <section id="equipment" class="avoid-break">
+        <h2>Equipment</h2>
+        {% for item in character.characterequipment_set.all %}
+            {% block equipment_item %}<span class="bubble-item">{{ item.equipment.name }} ({{ item.quantity}}) <em>{{item.brief_note }}</em></span>{% endblock %}
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    <!-- Skills -->
+    {% if character.characterskill_set.all %}
+    <section id="skills" class="avoid-break">
+        {% block skills_header %}<h2>Skills</h2>{% endblock %}
+        {% for item in character.characterskill_set.all %}
+            {% block skill_item %}<span class="bubble-item skill-{{ item.skill_level }}">{{ item.skill.name }} ({{ item.skill_level }})</span>{% endblock %}
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    <!-- Base Abilities and Characteristics -->
+    <section id="base-abilities" class="avoid-break">
+        <h2>Base Abiliites &amp; Characteristics</h2>
+        <div>
+            <h3>Type:</h3>
+            <div class="indent">{{ character.type.base_abilities|linebreaks }}</div>
+            <h3>Descriptor:</h3>
+            <div class="indent">{{ character.descriptor.characteristics|linebreaks }}</div>
+            {% block focus_abilities %}
+            <h3>Focus:</h3>
+            <div class="indent">{{ character.focus.other_details|linebreaks }}</div>
+            {% endblock %}
+        </div>
+        <hr />
+    </section>
+    <!-- Special Abilities -->
+    <section id="special-abilities">
+        {% block abilities_header %}<h2>Special Abilities</h2>{% endblock %}
+        {% for item in character.characterability_set.all %}
+        <div class="avoid-break">
+            <h3>{{ item.ability.name }} ({{ item.ability.usage }}; Cost: {{ item.ability.cost }})</h3>
+            <div class="indent">
+                {{ item.ability.description|linebreaks }}
+                {% if item.note %}
+                <em>{{ item.note|linebreaks }}</em>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        <hr />
+    </section>
+    <!-- Cyphers -->
+    {% if character.charactercypher_set.all %}
+    <section id="cyphers" class="avoid-break">
+        <h2>Cyphers</h2>
+        {% for item in character.charactercypher_set.all %}
+        <div class="avoid-break">
+            <h3>{{ item.cypher.name }} (Level {{ item.level }})</h3>
+            <div class="indent">{{ item.appearance }} {{ item.cypher.effect }}</div>
+        </div>
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    <!-- Artifacts -->
+    {% if character.characterartifact_set.all %}
+    <section id="artifacts" class="avoid-break">
+        <h2>Artifacts</h2>
+        {% for item in character.characterartifact_set.all %}
+        <h3>{{ item.artifact.name }} (Level {{ item.level }}; Depletion: {{ item.artifact.depletion }})</h3>
+        <div class="indent">
+            {{ item.artifact.form }} {{ item.artifact.effect }}
+        </div>
+        {% endfor %}
+        <hr />
+    </section>
+    {% endif %}
+    <!-- Notes -->
+    <section id="notes" class="avoid-break">
+        <h2>Notes</h2>
+        <div class="indent">{{ character.notes|linebreaks }}</div>
+        <hr />
+    </section>
+    {% block recursions %}
+    {% endblock %}
+    {% block bottom_breadcrumbs %}
+        {% if "summary" in request.path %}
+        <span class="breadcrumbs"><a href="../../../">Index</a> | <a href="../../">Character List</a> | <a href="../../{{ character.slug }}/">{{ character.name }}</a> | Summary</span>
+        {% else %}
+        <span class="breadcrumbs"><a href="../../">Index</a> | <a href="../">Character List</a> | {{ character.name }} | <a href="../{{ character.slug }}/summary/">Summary</a></span>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

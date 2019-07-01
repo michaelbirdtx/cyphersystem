@@ -1,6 +1,13 @@
-{% extends "cyphercore/base_focus_list.html" %}
-{% load static %}
-{% block title %}Cypher Core{% endblock %}
+{% extends "cyphercore/base.html" %}
 {% block subtitle %}Foci{% endblock %}
-{% block header_text %}Cypher Core: Foci{% endblock %}
-{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'cyphercore/css/custom.css' %}" />{% endblock %}
+{% block content %}
+    <span class="breadcrumbs"><a href="../">Index</a> | Focus List</span>
+    <h1>{% block header_text %}Cypher Core: Foci{% endblock %}</h1>
+    <ul>
+        {% for focus in focus_list %}
+        <li><a href="{{ focus.slug }}">{{ focus.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <hr />
+    <span class="breadcrumbs"><a href="../">Index</a> | Focus List</span>
+{% endblock %}
