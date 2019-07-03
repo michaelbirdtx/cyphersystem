@@ -7,12 +7,20 @@ truncate_length = 80
 def truncate_to(length, data):
     return (data[:length - 3] + '...') if len(data) > length else data
 
-# Base models
 
-
-class baseAbility(models.Model):
+class Sourcebook(models.Model):
     class Meta:
-        abstract = True
+        ordering = ['name']
+        verbose_name = 'Sourcebook'
+        verbose_name_plural = 'Sourcebooks'
+    name = models.CharField('sourcebook', max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Ability(models.Model):
+    class Meta:
         ordering = ['name']
         verbose_name = 'Ability'
         verbose_name_plural = 'Abilities'
@@ -32,6 +40,8 @@ class baseAbility(models.Model):
     cost = models.CharField(blank=False, default='-', max_length=30)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
 
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -41,9 +51,8 @@ class baseAbility(models.Model):
         return self.name
 
 
-class baseArtifact(models.Model):
+class Artifact(models.Model):
     class Meta:
-        abstract = True
         ordering = ['name']
         verbose_name = 'Artifact'
         verbose_name_plural = 'Artifacts'
@@ -53,6 +62,8 @@ class baseArtifact(models.Model):
     effect = models.TextField()
     depletion = models.CharField(blank=False, default='-', max_length=20)
     slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
 
     def truncated_form(self):
         return truncate_to(truncate_length, self.form)
@@ -66,24 +77,201 @@ class baseArtifact(models.Model):
         return self.name
 
 
-class baseAttack(models.Model):
+class Cypher(models.Model):
     class Meta:
-        abstract = True
         ordering = ['name']
-        verbose_name = 'Attack'
-        verbose_name_plural = 'Attacks'
-    # character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    modifier = models.IntegerField(default=0)
-    damage = models.IntegerField(default=0)
+        verbose_name = 'Cypher'
+        verbose_name_plural = 'Cyphers'
+    name = models.CharField(max_length=50, unique=True)
+    level_range = models.CharField(max_length=10)
+    effect = models.TextField()
+    slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
+
+    def truncated_effect(self):
+        return truncate_to(truncate_length, self.effect)
+    truncated_effect.short_description = 'Effect'
 
     def __str__(self):
         return self.name
 
 
-class baseCampaign(models.Model):
+class Descriptor(models.Model):
     class Meta:
-        abstract = True
+        ordering = ['name']
+        verbose_name = 'Descriptor'
+        verbose_name_plural = 'Descriptors'
+    name = models.CharField('descriptor name', max_length=50, unique=True)
+    prefix = models.CharField(max_length=5, default='a')
+    description = models.TextField(blank=True)
+    characteristics = models.TextField(blank=True)
+    starting_link = models.TextField(blank=True)
+    slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
+
+    def truncated_description(self):
+        return truncate_to(truncate_length, self.description)
+    truncated_description.short_description = 'Short Description'
+
+    def __str__(self):
+        return self.name
+
+
+class Equipment(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Equipment'
+        verbose_name = 'Equipment'
+    name = models.CharField(max_length=50, unique=True)
+    ARMOR = 'Armor'
+    ARMOR_LIGHT = 'Armor - Light'
+    ARMOR_MEDIUM = 'Armor - Medium'
+    ARMOR_HEAVY = 'Armor - Heavy'
+    WEAPON = 'Weapon'
+    WEAPON_LIGHT = 'Weapon - Light'
+    WEAPON_MEDIUM = 'Weapon - Medium'
+    WEAPON_HEAVY = 'Weapon - Heavy'
+    OTHER = 'Other'
+    SPECIAL = 'Special'
+    EQUIPMENT_TYPE_CHOICES = (
+        (ARMOR, 'Armor'),
+        (ARMOR_LIGHT, 'Armor - Light'),
+        (ARMOR_MEDIUM, 'Armor - Medium'),
+        (ARMOR_HEAVY, 'Armor - Heavy'),
+        (WEAPON, 'Weapon'),
+        (WEAPON_LIGHT, 'Weapon - Light'),
+        (WEAPON_MEDIUM, 'Weapon - Medium'),
+        (WEAPON_HEAVY, 'Weapon - Heavy'),
+        (OTHER, 'Other'),
+        (SPECIAL, 'Special'),
+    )
+    type = models.CharField(max_length=30, choices=EQUIPMENT_TYPE_CHOICES)
+    base_cost = models.CharField(blank=True, max_length=30)
+    notes = models.TextField(blank=True)
+    slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
+
+    def truncated_notes(self):
+        return truncate_to(truncate_length, self.notes)
+    truncated_notes.short_description = 'Notes'
+
+    def __str__(self):
+        return self.name
+
+
+class Focus(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Focus'
+        verbose_name_plural = 'Foci'
+    name = models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True)
+    connections = models.TextField(blank=True)
+    other_details = models.TextField(blank=True)
+    slug = models.SlugField(max_length=50)
+    abilities = models.ManyToManyField(Ability, through='FocusAbility')
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
+
+    def truncated_description(self):
+        return truncate_to(truncate_length, self.description)
+    truncated_description.short_description = 'Short Description'
+
+    def __str__(self):
+        return self.name
+
+
+class FocusAbility(models.Model):
+    class Meta:
+        ordering = ['tier', 'ability__name']
+        verbose_name = 'Focus Ability'
+        verbose_name_plural = 'Focus Abilities'
+    tier = models.IntegerField(default=1)
+    focus = models.ForeignKey(Focus, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.ability.name
+
+
+class Skill(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Skill'
+        verbose_name_plural = 'Skills'
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Type(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Type'
+        verbose_name_plural = 'Types'
+    name = models.CharField('type name', max_length=20, unique=True)
+    might_pool = models.IntegerField(default=10)
+    might_edge = models.IntegerField(default=0)
+    speed_pool = models.IntegerField(default=10)
+    speed_edge = models.IntegerField(default=0)
+    intellect_pool = models.IntegerField(default=10)
+    intellect_edge = models.IntegerField(default=0)
+    effort = models.IntegerField(default=1)
+    cypher_limit = models.IntegerField(default=2)
+    pool_points = models.IntegerField(default=6)
+    description = models.TextField(blank=True)
+    base_abilities = models.TextField(blank=True)
+    slug = models.SlugField(max_length=50)
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
+    abilities = models.ManyToManyField(Ability, through='TypeAbility')
+
+    def truncated_description(self):
+        return truncate_to(truncate_length, self.description)
+    truncated_description.short_description = 'Short Description'
+
+    def __str__(self):
+        return self.name
+
+
+class TypeAbility(models.Model):
+    class Meta:
+        ordering = ['tier', 'ability__name']
+        verbose_name = 'Type Ability'
+        verbose_name_plural = 'Type Abilities'
+    tier = models.IntegerField(default=1)
+    type = models.ForeignKey(
+        Type, blank=False, null=False, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, blank=False, null=False,
+                                on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.ability.name
+
+
+class Player(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Player'
+        verbose_name_plural = 'Players'
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254, unique=True)
+    is_active = models.BooleanField(default=True)
+    slug = models.SlugField(default=uuid.uuid4)
+
+    def get_absolute_url(self):
+        return "/cyphercore/players/%s/" % self.slug
+
+    def __str__(self):
+        return self.name + ' (' + self.email + ')'
+
+
+class Campaign(models.Model):
+    class Meta:
         ordering = ['name']
         verbose_name = 'Campaign'
         verbose_name_plural = 'Campaigns'
@@ -91,14 +279,18 @@ class baseCampaign(models.Model):
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(default=uuid.uuid4)
+    gm = models.ForeignKey(Player, verbose_name='GM',
+                           on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return "/cyphercore/players/campaign/%s/" % self.slug
 
     def __str__(self):
         return self.name
 
 
-class baseCharacter(models.Model):
+class Character(models.Model):
     class Meta:
-        abstract = True
         ordering = ['name']
         verbose_name = 'Character'
         verbose_name_plural = 'Characters'
@@ -159,63 +351,97 @@ class baseCharacter(models.Model):
     tier_6_skills = models.BooleanField(default=False)
     tier_6_other = models.BooleanField(default=False)
     slug = models.SlugField(default=uuid.uuid4)
+    player = models.ForeignKey(
+        Player, blank=True, null=True, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(
+        Campaign, blank=True, null=True, on_delete=models.CASCADE)
+    descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
+    type = models.ForeignKey(Type, on_delete=models.PROTECT)
+    focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
+    abilities = models.ManyToManyField(Ability, through='CharacterAbility')
+    skills = models.ManyToManyField(Skill, through='CharacterSkill')
+    equipment = models.ManyToManyField(
+        Equipment, through='CharacterEquipment')
+    cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
+    artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
+
+    def get_absolute_url(self):
+        return "/cyphercore/players/character/%s" % self.slug
 
     def __str__(self):
         return self.name
 
 
-class baseCharacterAbility(models.Model):
+class CharacterAbility(models.Model):
     class Meta:
-        abstract = True
         ordering = ['ability__name']
         verbose_name = 'Ability'
         verbose_name_plural = 'Abilities'
     note = models.CharField(max_length=100, blank=True)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.ability.name
 
 
-class baseCharacterArtifact(models.Model):
+class CharacterArtifact(models.Model):
     class Meta:
-        abstract = True
         ordering = ['artifact__name']
         verbose_name = 'Artifact'
         verbose_name_plural = 'Artifacts'
     level = models.IntegerField(default=1)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    artifact = models.ForeignKey(Artifact, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.artifact.name
 
 
-class baseCharacterCypher(models.Model):
+class Attack(models.Model):
     class Meta:
-        abstract = True
+        ordering = ['name']
+        verbose_name = 'Attack'
+        verbose_name_plural = 'Attacks'
+    name = models.CharField(max_length=50)
+    modifier = models.IntegerField(default=0)
+    damage = models.IntegerField(default=0)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class CharacterCypher(models.Model):
+    class Meta:
         ordering = ['cypher__name']
         verbose_name = 'Cypher'
         verbose_name_plural = 'Cyphers'
     level = models.IntegerField(default=1)
     appearance = models.TextField(blank=True)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    cypher = models.ForeignKey(Cypher, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.cypher.name
 
 
-class baseCharacterEquipment(models.Model):
+class CharacterEquipment(models.Model):
     class Meta:
-        abstract = True
         ordering = ['equipment__name']
         verbose_name = 'Equipment'
         verbose_name_plural = 'Equipment'
     brief_note = models.CharField(max_length=50, blank=True)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return self.equipment.name
 
 
-class baseCharacterSkill(models.Model):
+class CharacterSkill(models.Model):
     class Meta:
-        abstract = True
         ordering = ['-skill_level', 'skill__name']
         verbose_name = 'Skill'
         verbose_name_plural = 'Skills'
@@ -232,14 +458,15 @@ class baseCharacterSkill(models.Model):
         choices=SKILL_LEVEL_CHOICES,
         default=TRAINED
     )
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.skill.name
 
 
-class baseCreature(models.Model):
+class Creature(models.Model):
     class Meta:
-        abstract = True
         ordering = ['name']
         verbose_name = 'Creature'
         verbose_name_plural = 'Creatures'
@@ -260,6 +487,8 @@ class baseCreature(models.Model):
     use = models.TextField(blank=True)
     loot = models.TextField(blank=True)
     gm_intrusion = models.TextField('GM intrusion', blank=True)
+    sourcebook = models.ForeignKey(
+        Sourcebook, default=1, on_delete=models.PROTECT)
 
     def truncated_description(self):
         return truncate_to(truncate_length, self.description)
@@ -268,327 +497,8 @@ class baseCreature(models.Model):
     def target(self):
         return self.level * 3
 
-    def __str__(self):
-        return self.name
-
-
-class baseCypher(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name = 'Cypher'
-        verbose_name_plural = 'Cyphers'
-    name = models.CharField(max_length=50, unique=True)
-    level_range = models.CharField(max_length=10)
-    effect = models.TextField()
-    slug = models.SlugField(max_length=50)
-
-    def truncated_effect(self):
-        return truncate_to(truncate_length, self.effect)
-    truncated_effect.short_description = 'Effect'
-
-    def __str__(self):
-        return self.name
-
-
-class baseDescriptor(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name = 'Descriptor'
-        verbose_name_plural = 'Descriptors'
-    name = models.CharField('descriptor name', max_length=50, unique=True)
-    prefix = models.CharField(max_length=5, default='a')
-    description = models.TextField(blank=True)
-    characteristics = models.TextField(blank=True)
-    starting_link = models.TextField(blank=True)
-    slug = models.SlugField(max_length=50)
-
-    def truncated_description(self):
-        return truncate_to(truncate_length, self.description)
-    truncated_description.short_description = 'Short Description'
-
-    def __str__(self):
-        return self.name
-
-
-class baseEquipment(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name_plural = 'Equipment'
-        verbose_name = 'Equipment'
-    name = models.CharField(max_length=50, unique=True)
-    ARMOR = 'Armor'
-    ARMOR_LIGHT = 'Armor - Light'
-    ARMOR_MEDIUM = 'Armor - Medium'
-    ARMOR_HEAVY = 'Armor - Heavy'
-    WEAPON = 'Weapon'
-    WEAPON_LIGHT = 'Weapon - Light'
-    WEAPON_MEDIUM = 'Weapon - Medium'
-    WEAPON_HEAVY = 'Weapon - Heavy'
-    OTHER = 'Other'
-    SPECIAL = 'Special'
-    EQUIPMENT_TYPE_CHOICES = (
-        (ARMOR, 'Armor'),
-        (ARMOR_LIGHT, 'Armor - Light'),
-        (ARMOR_MEDIUM, 'Armor - Medium'),
-        (ARMOR_HEAVY, 'Armor - Heavy'),
-        (WEAPON, 'Weapon'),
-        (WEAPON_LIGHT, 'Weapon - Light'),
-        (WEAPON_MEDIUM, 'Weapon - Medium'),
-        (WEAPON_HEAVY, 'Weapon - Heavy'),
-        (OTHER, 'Other'),
-        (SPECIAL, 'Special'),
-    )
-    type = models.CharField(max_length=30, choices=EQUIPMENT_TYPE_CHOICES)
-    base_cost = models.CharField(blank=True, max_length=30)
-    notes = models.TextField(blank=True)
-    slug = models.SlugField(max_length=50)
-
-    def truncated_notes(self):
-        return truncate_to(truncate_length, self.notes)
-    truncated_notes.short_description = 'Notes'
-
-    def __str__(self):
-        return self.name
-
-
-class baseFocus(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name = 'Focus'
-        verbose_name_plural = 'Foci'
-    name = models.CharField(max_length=50, unique=True)
-    description = models.TextField(blank=True)
-    connections = models.TextField(blank=True)
-    other_details = models.TextField(blank=True)
-    slug = models.SlugField(max_length=50)
-
-    def truncated_description(self):
-        return truncate_to(truncate_length, self.description)
-    truncated_description.short_description = 'Short Description'
-
-    def __str__(self):
-        return self.name
-
-
-class baseFocusAbility(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['tier', 'ability__name']
-        verbose_name = 'Focus Ability'
-        verbose_name_plural = 'Focus Abilities'
-    tier = models.IntegerField(default=1)
-
-    def __str__(self):
-        return self.ability.name
-
-
-class basePlayer(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name = 'Player'
-        verbose_name_plural = 'Players'
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=254, unique=True)
-    is_active = models.BooleanField(default=True)
-    slug = models.SlugField(default=uuid.uuid4)
-
-    def __str__(self):
-        return self.name + ' (' + self.email + ')'
-
-
-class baseSkill(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name = 'Skill'
-        verbose_name_plural = 'Skills'
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class baseSourcebook(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name = 'Sourcebook'
-        verbose_name_plural = 'Sourcebooks'
-    name = models.CharField('sourcebook', max_length=100, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class baseType(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['name']
-        verbose_name = 'Type'
-        verbose_name_plural = 'Types'
-    name = models.CharField('type name', max_length=20, unique=True)
-    might_pool = models.IntegerField(default=10)
-    might_edge = models.IntegerField(default=0)
-    speed_pool = models.IntegerField(default=10)
-    speed_edge = models.IntegerField(default=0)
-    intellect_pool = models.IntegerField(default=10)
-    intellect_edge = models.IntegerField(default=0)
-    effort = models.IntegerField(default=1)
-    cypher_limit = models.IntegerField(default=2)
-    pool_points = models.IntegerField(default=6)
-    description = models.TextField(blank=True)
-    base_abilities = models.TextField(blank=True)
-    slug = models.SlugField(max_length=50)
-
-    def truncated_description(self):
-        return truncate_to(truncate_length, self.description)
-    truncated_description.short_description = 'Short Description'
-
-    def __str__(self):
-        return self.name
-
-
-class baseTypeAbility(models.Model):
-    class Meta:
-        abstract = True
-        ordering = ['tier', 'ability__name']
-        verbose_name = 'Type Ability'
-        verbose_name_plural = 'Type Abilities'
-    tier = models.IntegerField(default=1)
-
-    def __str__(self):
-        return self.ability.name
-
-# Inherited models
-
-
-class Sourcebook(baseSourcebook):
-    pass
-
-
-class Ability(baseAbility):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-
-
-class Artifact(baseArtifact):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-
-
-class Cypher(baseCypher):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-
-
-class Descriptor(baseDescriptor):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-
-
-class Equipment(baseEquipment):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-
-
-class Focus(baseFocus):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-    abilities = models.ManyToManyField(Ability, through='FocusAbility')
-
-
-class FocusAbility(baseFocusAbility):
-    focus = models.ForeignKey(Focus, on_delete=models.CASCADE)
-    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
-
-
-class Skill(baseSkill):
-    pass
-
-
-class Type(baseType):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-    abilities = models.ManyToManyField(Ability, through='TypeAbility')
-
-
-class TypeAbility(baseTypeAbility):
-    type = models.ForeignKey(
-        Type, blank=False, null=False, on_delete=models.CASCADE)
-    ability = models.ForeignKey(Ability, blank=False, null=False,
-                                on_delete=models.CASCADE)
-
-
-class Player(basePlayer):
-    def get_absolute_url(self):
-        return "/cyphercore/players/%s/" % self.slug
-
-
-class Campaign(baseCampaign):
-    gm = models.ForeignKey(Player, verbose_name='GM',
-                           on_delete=models.CASCADE)
-
-    def get_absolute_url(self):
-        return "/cyphercore/players/campaign/%s/" % self.slug
-
-
-class Character(baseCharacter):
-    player = models.ForeignKey(
-        Player, blank=True, null=True, on_delete=models.CASCADE)
-    campaign = models.ForeignKey(
-        Campaign, blank=True, null=True, on_delete=models.CASCADE)
-    descriptor = models.ForeignKey(Descriptor, on_delete=models.PROTECT)
-    type = models.ForeignKey(Type, on_delete=models.PROTECT)
-    focus = models.ForeignKey(Focus, on_delete=models.PROTECT)
-    abilities = models.ManyToManyField(Ability, through='CharacterAbility')
-    skills = models.ManyToManyField(Skill, through='CharacterSkill')
-    equipment = models.ManyToManyField(
-        Equipment, through='CharacterEquipment')
-    cyphers = models.ManyToManyField(Cypher, through='CharacterCypher')
-    artifacts = models.ManyToManyField(Artifact, through='CharacterArtifact')
-
-    def get_absolute_url(self):
-        return "/cyphercore/players/character/%s" % self.slug
-
-
-class CharacterAbility(baseCharacterAbility):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
-
-
-class CharacterArtifact(baseCharacterArtifact):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    artifact = models.ForeignKey(Artifact, on_delete=models.CASCADE)
-
-
-class Attack(baseAttack):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-
-
-class CharacterCypher(baseCharacterCypher):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    cypher = models.ForeignKey(Cypher, on_delete=models.CASCADE)
-
-
-class CharacterEquipment(baseCharacterEquipment):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-
-
-class CharacterSkill(baseCharacterSkill):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-
-
-class Creature(baseCreature):
-    sourcebook = models.ForeignKey(
-        Sourcebook, default=1, on_delete=models.PROTECT)
-
     def get_absolute_url(self):
         return "/cyphercore/creatures/%s/" % self.slug
+
+    def __str__(self):
+        return self.name
