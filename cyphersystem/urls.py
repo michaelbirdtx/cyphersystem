@@ -17,13 +17,15 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('cyphercore/', include('cyphercore.urls')),
+    url(r'^favicon\.ico$',
+        RedirectView.as_view(url='/static/images/favicon.ico')),
 ]
 if settings.DEBUG:
     import debug_toolbar

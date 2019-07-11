@@ -19,6 +19,17 @@ class Sourcebook(models.Model):
         return self.name
 
 
+class Skill(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Skill'
+        verbose_name_plural = 'Skills'
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Ability(models.Model):
     class Meta:
         ordering = ['name']
@@ -39,6 +50,7 @@ class Ability(models.Model):
         default='Action')
     cost = models.CharField(blank=False, default='-', max_length=30)
     description = models.TextField(blank=True)
+    imparts_skills = models.ManyToManyField(Skill, blank=True)
     slug = models.SlugField(max_length=50)
     sourcebook = models.ForeignKey(
         Sourcebook, default=1, on_delete=models.PROTECT)
@@ -195,17 +207,6 @@ class FocusAbility(models.Model):
 
     def __str__(self):
         return self.ability.name
-
-
-class Skill(models.Model):
-    class Meta:
-        ordering = ['name']
-        verbose_name = 'Skill'
-        verbose_name_plural = 'Skills'
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Type(models.Model):

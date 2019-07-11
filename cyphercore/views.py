@@ -226,8 +226,8 @@ def character_create_step_2(request, slug, pk):
         formset = AbilityFormSet(
             request.POST, request.FILES, form_kwargs={'char_pk': pk})
         for i in range(4):
-            insert_type_ability(character,
-                                request.POST['form-'+str(i)+'-ability'])
+            insert_character_ability(character,
+                                     request.POST['form-'+str(i)+'-ability'])
         return HttpResponseRedirect(
             '/cyphercore/players/' + slug
             + '/character_create_step_3/' + str(pk)
@@ -238,7 +238,7 @@ def character_create_step_2(request, slug, pk):
                   {'formset': formset, 'character': character})
 
 
-def insert_type_ability(character, ability_pk):
+def insert_character_ability(character, ability_pk):
     ta = TypeAbility.objects.get(pk=ability_pk)
     cax = CharacterAbility(character=character, ability=ta.ability)
     cax.save()

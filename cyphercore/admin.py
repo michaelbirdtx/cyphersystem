@@ -118,9 +118,11 @@ class AbilityTypesInline(admin.TabularInline):
 
 @admin.register(Ability)
 class AbilityAdmin(admin.ModelAdmin):
+    filter_horizontal = ['imparts_skills']
     inlines = [AbilityFociInline, AbilityTypesInline]
     list_display = ('name', 'usage', 'cost',
-                    'truncated_description', 'slug', 'sourcebook')
+                    'truncated_description',
+                    'slug', 'sourcebook')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
 
