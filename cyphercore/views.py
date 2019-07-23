@@ -7,7 +7,7 @@ from django.views import generic
 
 from .models import (Ability, Descriptor, Equipment, Focus, Skill, Type,
                      Character, Cypher, Creature, Artifact, Player, Campaign,
-                     CharacterAbility, TypeAbility)
+                     CharacterAbility, CharacterSkill, TypeAbility)
 from .forms import SelectTypeAbilityForm
 
 BASE_LOGIN_URL = '/admin/login/'
@@ -202,7 +202,7 @@ class CampaignDetailView(generic.DetailView):
 class CharacterCreateView(generic.CreateView):
     model = Character
     template_name = 'cyphercore/character_create_step_1.html'
-    fields = ['name', 'descriptor', 'type', 'focus']
+    fields = ['name', 'descriptor', 'type', 'focus', 'background']
 
     def form_valid(self, form):
         character = form.save(commit=False)
@@ -221,6 +221,7 @@ class CharacterCreateView(generic.CreateView):
 
 def character_create_step_2(request, slug, pk):
     character = Character.objects.get(pk=pk)
+    type_ability_list = TypeAbility.objects.filter(tier=1, type=character.type)
     AbilityFormSet = formset_factory(SelectTypeAbilityForm, extra=4)
     if request.method == 'POST':
         formset = AbilityFormSet(
@@ -235,10 +236,17 @@ def character_create_step_2(request, slug, pk):
     else:
         formset = AbilityFormSet(form_kwargs={'char_pk': pk})
     return render(request, 'cyphercore/character_create_step_2.html',
-                  {'formset': formset, 'character': character})
+                  {'formset': formset, 'character': character,
+                   'type_ability_list': type_ability_list})
 
 
 def insert_character_ability(character, ability_pk):
     ta = TypeAbility.objects.get(pk=ability_pk)
     cax = CharacterAbility(character=character, ability=ta.ability)
     cax.save()
+
+
+def insert_character_skill(character, skill_pk):
+    s = Skill.objects.get(pk=skill_pk)
+    csx = CharacterSkill(character=character, skill=s)
+    csx.save()
