@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'cyphersystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cyphersystem',
+        'NAME': 'cyphercore',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'PASSWORD': 'dJt452020',
+        'HOST': '192.168.1.201',
         'PORT': '5432',
     }
 }
