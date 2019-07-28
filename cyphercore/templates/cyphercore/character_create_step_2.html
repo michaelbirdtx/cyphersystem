@@ -4,7 +4,16 @@
 <h1>{% block header_text %}Cypher System{% endblock %} &mdash; Create Character &mdash; Step Two</h1>
 <hr />
 <h2>{{ character.name }} is {{ character.descriptor.prefix }} {{ character.descriptor }} {{ character.type }} who {{ character.focus }}</h2>
-<p>Select four different initial Tier 1 abilities for your chosen Type.</p>
+<hr/>
+<h2>Focus Abilities</h2>
+<p>Your character's Focus grants the following Tier 1 abilities:
+{% for item in focus_ability_list %}
+<h3>{{ item.ability.name }}:</h3>
+<p class="indent">{{ item.ability.description }}</p>
+{% endfor %}
+<hr>
+<h2>Type Abilites</h2>
+<p>Select four different Tier 1 abilities for your chosen Type.</p>
 <form class="form-list" method="post" action="">
     {{ formset.as_p }}
     <p><input type="submit" value="Next"></p>
@@ -16,5 +25,4 @@
 <h3>{{ item.ability.name }}:</h3>
 <p class="indent">{{ item.ability.description }}</p>
 {% endfor %}
-
 {% endblock %}

@@ -7,7 +7,8 @@ from django.views import generic
 
 from .models import (Ability, Descriptor, Equipment, Focus, Skill, Type,
                      Character, Cypher, Creature, Artifact, Player, Campaign,
-                     CharacterAbility, CharacterSkill, TypeAbility)
+                     CharacterAbility, CharacterSkill, TypeAbility,
+                     FocusAbility)
 from .forms import SelectTypeAbilityForm
 
 BASE_LOGIN_URL = '/admin/login/'
@@ -222,6 +223,8 @@ class CharacterCreateView(generic.CreateView):
 def character_create_step_2(request, slug, pk):
     character = Character.objects.get(pk=pk)
     type_ability_list = TypeAbility.objects.filter(tier=1, type=character.type)
+    focus_ability_list = FocusAbility.objects.filter(
+        tier=1, focus=character.focus)
     AbilityFormSet = formset_factory(SelectTypeAbilityForm, extra=4)
     if request.method == 'POST':
         formset = AbilityFormSet(
@@ -237,7 +240,8 @@ def character_create_step_2(request, slug, pk):
         formset = AbilityFormSet(form_kwargs={'char_pk': pk})
     return render(request, 'cyphercore/character_create_step_2.html',
                   {'formset': formset, 'character': character,
-                   'type_ability_list': type_ability_list})
+                   'type_ability_list': type_ability_list,
+                   'focus_ability_list': focus_ability_list})
 
 
 def insert_character_ability(character, ability_pk):
