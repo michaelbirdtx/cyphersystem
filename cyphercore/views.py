@@ -227,6 +227,8 @@ def character_create_step_2(request, slug, pk):
         tier=1, focus=character.focus)
     AbilityFormSet = formset_factory(SelectTypeAbilityForm, extra=4)
     if request.method == 'POST':
+        for item in focus_ability_list:
+            insert_character_ability(character, item.ability_id)
         formset = AbilityFormSet(
             request.POST, request.FILES, form_kwargs={'char_pk': pk})
         for i in range(4):
@@ -244,9 +246,9 @@ def character_create_step_2(request, slug, pk):
                    'focus_ability_list': focus_ability_list})
 
 
-def insert_character_ability(character, ability_pk):
-    ta = TypeAbility.objects.get(pk=ability_pk)
-    cax = CharacterAbility(character=character, ability=ta.ability)
+def insert_character_ability(character, ability_id):
+    a = Ability.objects.get(pk=ability_id)
+    cax = CharacterAbility(character=character, ability=a)
     cax.save()
 
 
