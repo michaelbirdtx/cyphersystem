@@ -8,3 +8,4 @@ logfile
 staticfiles/*
 *~
 env/
+.vscode/database-client-config.json
